@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-MakeuApplication<makeu>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.bangbum.makeu.MakeuApplication",
+            "projectName": "makeu",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
