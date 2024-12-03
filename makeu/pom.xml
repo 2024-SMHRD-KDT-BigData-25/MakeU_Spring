@@ -9,7 +9,7 @@
 		<version>3.4.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.bangbum</groupId>
+	<groupId>com.bangbumdae</groupId>
 	<artifactId>makeu</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>makeu</name>
