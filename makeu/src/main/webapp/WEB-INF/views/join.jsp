@@ -14,7 +14,7 @@
         <jsp:include page="header.jsp" />
         <div class="main_content">
             <div class="login_form">
-                <form action="/makeu/members" method="post">
+                <form action="/makeu/members" method="post" onsubmit="return validateForm()">
                     <table class="login_form_table">
                         <tr>
                             <td class="login_title nanum-gothic-regular" colspan="2">Join
@@ -54,6 +54,7 @@
                 </form>
             </div>
         </div>
+        <script src="js/join.js"></script>
     </body>
 
     </html>
