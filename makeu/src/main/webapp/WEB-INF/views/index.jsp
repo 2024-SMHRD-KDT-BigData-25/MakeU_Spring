@@ -5,10 +5,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/eystyle.css">
     <title>Document</title>
 </head>
 <body>
     <jsp:include page="header.jsp"/>
-    hello
+    <button onclick="location.href='login'">login</button>
+    <button onclick="location.href='update'">update</button>
 </body>
 </html>

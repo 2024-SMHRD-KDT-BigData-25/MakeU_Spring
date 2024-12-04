@@ -1,0 +1,83 @@
+* {
+    font-size: 16px;
+    font-family: "SUITE-Regular";
+}
+.title_bar {
+    margin: auto;
+    padding: 2% 1% 2% 1%;
+    border-bottom: #DDDDDD solid 1px;
+}
+
+.menu_bar {
+    width: 40%;
+}
+.title_td {
+    color: #666666;
+    width: 8%;
+    text-align: center;
+}
+
+.title_bar td:nth-child(2) {
+    text-align: center;
+}
+.title_bar td:nth-child(2) img {
+    width: 20%;
+}
+
+.main_content {
+    background-color: #EFF2F3;
+    display: flex;
+    align-items: flex-end;
+}
+
+.login_title {
+    font-size: 3em;
+    text-align: center;
+    height: 15vh;
+    padding: 3vh;
+}
+
+.login_form {
+    padding: 5vh;
+    margin: 5% auto 0 auto;
+    background-color: white;
+    width: 60%;
+}
+
+.login_form input {
+    width: 80%;
+    height: 2em;
+    margin-bottom: 5%;
+    border: #DEDEDE solid 1px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.login_form_table {
+    text-align: center;
+    margin: auto;
+    width: 80%;
+}
+
+#login_btn {
+    background-color: #E01013;
+    color: white;
+    border: none;
+    width: 82%;
+    border-radius: 10px;
+    padding: 2% 0 2% 0;
+}
+
+.login_more {
+    padding: 5%;
+    width: 50%;
+}
+
+.login_more:hover {
+    color: #E01013;
+    text-decoration: underline;
+}
+
+.readonly {
+    background-color: rgb(233, 233, 233);
+}
