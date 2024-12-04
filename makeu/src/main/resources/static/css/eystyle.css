@@ -44,7 +44,15 @@
     width: 60%;
 }
 
-.login_form input {
+.confirm_td {
+    width: 80%;
+    height: 2em;
+    margin: auto;
+    padding: 10px;
+    display: none;
+}
+
+.login_form input{
     width: 80%;
     height: 2em;
     margin-bottom: 5%;
@@ -80,4 +88,8 @@
 
 .readonly {
     background-color: rgb(233, 233, 233);
+}
+
+#errorMessage {
+    width: 80%;
 }

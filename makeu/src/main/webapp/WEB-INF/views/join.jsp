@@ -36,6 +36,11 @@
                             </td>
                         </tr>
                         <tr>
+                            <td class="confirm_td" id="errorMessage">
+                                
+                            </td>
+                        </tr>
+                        <tr>
                             <td colspan="2">
                                 <input type="text" placeholder="이름을 입력해주세요" name="mem_name" id="mem_name"><br>
                             </td>

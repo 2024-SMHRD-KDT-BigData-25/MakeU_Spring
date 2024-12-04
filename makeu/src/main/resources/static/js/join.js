@@ -32,5 +32,31 @@ function validateForm() {
 		return false;
 	}
 
-	return false;
+	return true;
 }
+
+const errorMessage = document.getElementById('errorMessage');
+
+mem_pw.addEventListener('input', function() {
+    if (mem_pw.value !== pw_confirm.value) {
+        errorMessage.style.display = 'block';
+        errorMessage.style.textAlign = 'left';
+        errorMessage.style.color = 'red';
+        errorMessage.textContent = '비밀번호를 확인해주세요!';
+    } else {
+        errorMessage.style.color = 'green';
+        errorMessage.textContent = '비밀번호가 일치합니다!';
+    }
+});
+
+pw_confirm.addEventListener('input', function() {
+    if (mem_pw.value !== pw_confirm.value) {
+        errorMessage.style.display = 'block';
+        errorMessage.style.textAlign = 'left';
+		errorMessage.style.color = 'red';
+        errorMessage.textContent = '비밀번호를 확인해주세요!';
+    } else {
+        errorMessage.style.color = 'green';
+        errorMessage.textContent = '비밀번호가 일치합니다!';
+    }
+});

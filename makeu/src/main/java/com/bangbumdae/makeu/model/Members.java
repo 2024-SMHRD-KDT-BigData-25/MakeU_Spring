@@ -19,6 +19,6 @@ public class Members {
     private String mem_nickname;
     @Column(length = 50, nullable = false)
     private String mem_name;
-    private int personal_color_idx;
-    private int face_type_idx;
+    private int personal_color_idx = 0;
+    private int face_type_idx = 0;
 }
