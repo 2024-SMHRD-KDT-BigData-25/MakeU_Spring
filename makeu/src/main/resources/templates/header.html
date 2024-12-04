@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/eystyle.css">
+    <title>Make U</title>
+</head>
+
+<body>
+<header>
+    <table class="title_bar">
+        <tr>
+            <td class="title_td">
+                <img src="img/menu_bar.png" class="menu_bar" alt="menu_bar">
+            </td>
+            <td th:onclick="|location.href='@{/}'|">
+                <img src="img/title.png" alt="MakeU Title">
+            </td>
+            <td class="inria-serif-regular title_td">
+                Shops
+            </td>
+            <td th:if="${session.members == null}" th:onclick="|location.href='@{/login}'|" th:text="Login" class="inria-serif-regular title_td">
+            </td>
+            <td th:if="${session.members != null}" th:onclick="|location.href='@{/mypage}'|" th:text="'MyPage (' + ${session.members.memId} + ')'"class="inria-serif-regular title_td">
+            </td>
+        </tr>
+    </table>
+</header>
+
+</body>
+</html>

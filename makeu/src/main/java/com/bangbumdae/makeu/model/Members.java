@@ -12,13 +12,15 @@ import lombok.Data;
 public class Members {
     @Id
     @Column(name = "mem_id")
-    private String mem_id;
-    @Column(length = 50, nullable = false)
-    private String mem_pw;
-    @Column(length = 50, nullable = false)
-    private String mem_nickname;
-    @Column(length = 50, nullable = false)
-    private String mem_name;
+    private String memId;
+    @Column(name = "mem_pw", length = 50, nullable = false)
+    private String memPw;
+    @Column(name = "mem_nickname", length = 50, nullable = false)
+    private String memNickname;
+    @Column(name = "mem_name", length = 50, nullable = false)
+    private String memName;
+    @Column(name = "personal_color_idx")
     private int personal_color_idx = 0;
+    @Column(name = "face_type_idx")
     private int face_type_idx = 0;
 }

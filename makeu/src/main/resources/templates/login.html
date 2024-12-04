@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/eystyle.css">
+    <title>login</title>
+</head>
+
+<body>
+    <div th:replace="~{header}"></div> 
+    <div class="main_content">
+        <div th:if="${session.error!= null}">
+            <script type="text/javascript">
+                alert("[[${session.error}]]");
+            </script>
+        </div>
+        <div class="login_form">
+            <form action="Login" method="post">
+                <table class="login_form_table">
+                    <tr>
+                        <td class="login_title nanum-gothic-regular" colspan="2">Login
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="text" name="memId" placeholder="아이디를 입력해주세요"><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="password" name="memPw" placeholder="비밀번호를 입력해주세요"><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button id="login_btn">Login</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="login_more">비밀번호 찾기</td>
+                        <td class="login_more" onclick="location.href='join'">회원이 아니신가요?</td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
