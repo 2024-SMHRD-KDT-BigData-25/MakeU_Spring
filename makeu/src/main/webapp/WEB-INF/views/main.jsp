@@ -11,8 +11,5 @@
 </head>
 <body>
     <jsp:include page="header.jsp"/>
-    <button onclick="location.href='login'">login</button>
-    <button onclick="location.href='update'">update</button>
-    <button onclick="location.href='main'">main</button>
 </body>
 </html>
