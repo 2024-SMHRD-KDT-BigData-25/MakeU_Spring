@@ -23,7 +23,9 @@
             </td>
             <td th:if="${session.members == null}" th:onclick="|location.href='@{/login}'|" th:text="Login" class="inria-serif-regular title_td">
             </td>
-            <td th:if="${session.members != null}" th:onclick="|location.href='@{/mypage}'|" th:text="'MyPage (' + ${session.members.memId} + ')'"class="inria-serif-regular title_td">
+            <td th:if="${session.members != null}" th:onclick="|location.href='@{/mypage}'|" th:text="'MyPage (' + ${session.members.memNickname} + ')'"class="inria-serif-regular title_td">
+            </td>
+            <td th:if="${session.members != null}" th:onclick="|location.href='@{/logout}'|" th:text="Logout"class="inria-serif-regular title_td">
             </td>
         </tr>
     </table>

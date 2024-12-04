@@ -12,11 +12,7 @@
 <body>
     <div th:replace="~{header}"></div> 
     <div class="main_content">
-        <div th:if="${session.error!= null}">
-            <script type="text/javascript">
-                alert("[[${session.error}]]");
-            </script>
-        </div>
+
         <div class="login_form">
             <form action="Login" method="post">
                 <table class="login_form_table">
@@ -35,6 +31,11 @@
                         </td>
                     </tr>
                     <tr>
+                        <td class="error_td" colspan="2" th:attr="hidden=${session.error == null}" th:if="${session.error != null}">
+                            <div id="loginErrorMessage" th:text="${session.error}"></div>
+                        </td>
+                    </tr>
+                    <tr>
                         <td colspan="2">
                             <button id="login_btn">Login</button>
                         </td>
@@ -47,6 +48,7 @@
             </form>
         </div>
     </div>
+
 </body>
 
 </html>

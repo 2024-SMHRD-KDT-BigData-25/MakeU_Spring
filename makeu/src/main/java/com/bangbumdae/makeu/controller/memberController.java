@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class memberController {
     @Autowired
     private final memberService memberService;
+
     @GetMapping("/login")
     public String loginPage() {
         return "login";
@@ -32,12 +33,23 @@ public class memberController {
     public String joinPage() {
         return "join";
     }
-    
+
+    @GetMapping("/mypage")
+    public String mypage() {
+        return "mypage";
+    }
+
     // 회원가입
     @PostMapping("/members")
     public String addMember(Members m) {
         memberService.addMember(m);
         return "index";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // 세션 무효화
+        return "redirect:/";
     }
 
     @PostMapping("/Login")
@@ -46,16 +58,27 @@ public class memberController {
     
         // Service를 통해 로그인 처리
         List<Members> result = memberService.authenticate(m.getMemId(), m.getMemPw());
-        
+    
         if (result.isEmpty()) {
-            System.out.println("아이디와 비밀번호를 확인하세요!");
-            session.setAttribute("error", "아이디와 비밀번호를 확인하세요!");
-            return "login"; // 실패 시 로그인 페이지로 이동
+            // 로그인 실패: 세션에 에러 메시지 설정
+            session.setAttribute("error", "아이디 또는 비밀번호가 잘못되었습니다.");
+            return "redirect:/login";  // 로그인 페이지로 리다이렉트
         } else {
-            System.out.println("로그인 성공!");
-            session.setAttribute("members", result.get(0));
-            return "redirect:/"; // 성공 시 메인 페이지로 이동
+            // 로그인 성공: 세션에서 에러 메시지 제거
+            session.removeAttribute("error");
+            session.setAttribute("members", result.get(0));  // 로그인한 회원 정보 저장
+            return "redirect:/";  // 메인 페이지로 리다이렉트
         }
+    }
+    //회원정보수정
+    @PostMapping("/update")
+    public String updateMember(Members m, HttpSession session) {
+        System.out.println(m.toString());
+        Members result = memberService.updateMember(m);
+        if (result != null) {
+            session.setAttribute("members", result);
+        }
+        return "index";
     }
 
 }

@@ -13,7 +13,7 @@
     <div th:replace="~{header}"></div> 
     <div class="main_content">
         <div class="login_form">
-            <form action="">
+            <form action="update" method="post" onsubmit="return validateForm()">
                 <table class="login_form_table">
                     <tr>
                         <td class="login_title nanum-gothic-regular" colspan="2">Update
@@ -21,13 +21,13 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input class="readonly" type="text" placeholder="아이디를 입력해주세요" name="mem_id" id="mem_id"
+                            <input class="readonly" type="text" placeholder="아이디를 입력해주세요" name="memId" id="memId" th:value="${session.members.memId}"
                                 readonly><br>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input type="password" placeholder="비밀번호를 입력해주세요" name="mem_pw" id="mem_pw"><br>
+                            <input type="password" placeholder="비밀번호를 입력해주세요" name="memPw" id="memPw"><br>
                         </td>
                     </tr>
                     <tr>
@@ -36,13 +36,18 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">
-                            <input type="text" placeholder="이름을 입력해주세요" name="mem_name" id="mem_name"><br>
+                        <td class="confirm_td" id="errorMessage">
+
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input type="text" placeholder="닉네임을 입력해주세요" name="mem_nickname" id="mem_nickname"><br>
+                            <input type="text" placeholder="이름을 입력해주세요" name="memName" id="memName" th:value="${session.members.memName}"><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="text" placeholder="닉네임을 입력해주세요" name="memNickname" id="memNickname" th:value="${session.members.memNickname}"><br>
                         </td>
                     </tr>
                     <tr>
@@ -54,6 +59,7 @@
             </form>
         </div>
     </div>
+    <script src="js/update.js"></script>
 </body>
 
 </html>
