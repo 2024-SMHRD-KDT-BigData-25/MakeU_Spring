@@ -16,4 +16,11 @@
 .name_font{
     font-size: 25px;
     font-weight: bold;
+    
+}
+
+.img_result{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
 }
