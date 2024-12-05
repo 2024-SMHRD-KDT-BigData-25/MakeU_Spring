@@ -39,6 +39,16 @@ public class memberController {
         return "mypage";
     }
 
+    @GetMapping("/matching")
+    public String matchingPage() {
+        return "matching";
+    }
+
+    @GetMapping("/result")
+    public String resultPage() {
+        return "matching_result";
+    }
+
     // 회원가입
     @PostMapping("/members")
     public String addMember(Members m) {
