@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/jwstyle.css">
-    <!-- Suite 폰트 추가 -->
-    <link href="https://fonts.googleapis.com/css2?family=SUITE:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -19,45 +18,21 @@
             </button>
         </div>
         
-        
         <div class="gallery">
-            <div class="image" style="background-image: url('makeup/WOOSUN\ \ \(1\).jpg');"><span>#가을 웜톤<br>#따뜻함</span>   <div class="heart-container">
-                <div class="heart-button"></div>
-            </div></div>
-            <div class="image" style="background-image: url('makeup/WOOSUN\ \ \(2\).jpg');"><span>Text 2</span>  <div class="heart-container">
-                <div class="heart-button"></div>
-            </div></div>
-            <div class="image" style="background-image: url('makeup/WOOSUN\ \ \(3\).jpg');"><span>Text 3</span>   <div class="heart-container">
-                <div class="heart-button"></div>
-            </div></div>
-            <div class="image" style="background-image: url('makeup/WOOSUN\ \ \(4\).jpg');"><span>Text 4</span>   <div class="heart-container">
-                <div class="heart-button"></div>
-            </div></div>
-            <div class="image" style="background-image: url('makeup/WOOSUN\ \ \(5\).jpg');"><span>Text 5</span>  <div class="heart-container">
-                <div class="heart-button"></div>
-            </div></div>
-            <div class="image" style="background-image: url('makeup/WOOSUN\ \ \(6\).jpg');"><span>Text 6</span>  <div class="heart-container">
-                <div class="heart-button"></div>
-            </div></div>
-            <div class="image" style="background-image: url('makeup/WOOSUN\ \ \(7\).jpg');"><span>Text 7</span>   <div class="heart-container">
-                <div class="heart-button"></div>
-            </div></div>
-            <div class="image" style="background-image: url('makeup/벨르메종\ \(1\).jpg');"><span>Text 8</span>  <div class="heart-container">
-                <div class="heart-button"></div>
-            </div></div>
-            <div class="image" style="background-image: url('makeup/프롬헤어메이크업\ \(1\).jpg');"><span>Text 9</span>   <div class="heart-container">
-                <div class="heart-button"></div>
-            </div></div>
+            <div class="image" 
+                 th:each="port, iterStat : ${portpolios}" 
+                 th:style="|background-image: url('makeup/${port.portfolioImg}');|"
+                 th:onclick="|addLikes('${port.portfoliIdx}')|"
+                 th:text="${port.portfolioImg}"
+                 >
+                <span class="tags">#가을 웜톤<br>#따뜻함</span>
+                <div class="heart-container">
+                    <div class="heart-button"></div>
+                </div>
+            </div>
         </div>
-        <script>
-            // 하트 버튼 클릭 이벤트 추가
-            document.querySelectorAll(".heart-container").forEach((container) => {
-                container.addEventListener("click", (e) => {
-                    const heart = e.currentTarget.querySelector(".heart-button");
-                    heart.classList.toggle("filled"); // 색상 채우기/비우기 토글
-                });
-            });
-        </script>
+    
     </main>
+    <script src="js/main.js"></script>
 </body>
 </html>
