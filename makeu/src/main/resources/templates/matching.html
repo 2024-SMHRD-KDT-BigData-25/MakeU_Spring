@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>페이스 매칭</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/jhstyle.css">
 </head>
 <body>
     <div th:replace="~{header}"></div> 
@@ -12,16 +13,60 @@
         <section class="intro">
             <h1>메이크업 할 때 참고하기 좋은 닮은 뷰티 크리에이터를 찾아드릴게요!</h1>
         </section>
-        <section class="matching">
-            <h2>Matching</h2>
-            <p>얼굴을 중앙에 위치시켜 주세요!</p>
-            <div class="face-area">
-                <!-- 얼굴 매칭을 위한 영역 -->
-            </div>
-        </section>
+        <div class="matching">
+            
+                <video id="webcam" autoplay></video>   
+                <div class="face-frame">
+                    <div class="corner top-left"></div>
+                    <div class="corner top-right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="corner bottom-right"></div>
+                </div>
+             
+            <p class="instruction">얼굴을 중앙에 위치시켜 주세요!</p>
+        </div>
+        <button class="capture"><img src="img/match_button.png"></button><br>
+        
+        
     </main>
-    <footer class="footer">
-        <p>&copy; 2024 Face Matching Page</p>
-    </footer>
+    <script>
+        const video = document.getElementById('webcam');
+        const canvas = document.getElementById('snapshot');
+        const captureButton = document.getElementById('capture');
+        console.log(captureButton)
+        // 웹캠 접근
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                video.srcObject = stream;
+            })
+            .catch((error) => {
+                console.error("웹캠 접근 실패: ", error);
+            });
+
+        // 스냅샷 캡처
+        captureButton.addEventListener('click', () => {
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL('image/png');
+
+            // 이미지 데이터 서버로 전송 (AJAX 요청)
+            fetch('/upload', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ image: imageData }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("이미지 업로드 성공: ", data);
+            })
+            .catch((error) => {
+                console.error("이미지 업로드 실패: ", error);
+            });
+        });
+    </script>
 </body>
 </html>
