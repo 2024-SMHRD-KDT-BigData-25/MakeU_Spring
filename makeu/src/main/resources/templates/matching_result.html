@@ -4,11 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/eystyle.css">
+    <link rel="stylesheet" href="css/nystyle.css">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Document</title>
 </head>
 <body>
     <div th:replace="~{header}"></div> 
+
+    <div class="main_back">
+
+        <div class="result_form">
+            <form action="matching_result" method="get">
+                <table align="center">
+                    <tr >
+                        <td>
+                            <span class="name_font">홍길동</span>
+                            <span>님의 얼굴 분석 결과</span>
+                        </td>
+                    </tr>
+                    <tr >
+                        <td>
+                            <img src="img\maching_result\KakaoTalk_20240927_133710126_06.jpg" alt="">
+                            <img src="img\maching_result\KakaoTalk_20240927_133710126.jpg" alt="">
+                        </td>
+                    </tr>
+                </table>
+            </form> 
+        </div>
+
+    </div>
 </body>
 </html>
