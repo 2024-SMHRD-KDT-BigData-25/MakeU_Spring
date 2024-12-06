@@ -19,8 +19,10 @@ public class Members {
     private String memNickname;
     @Column(name = "mem_name", length = 50, nullable = false)
     private String memName;
+
     @Column(name = "personal_color_idx")
-    private int personal_color_idx = 0;
+    private int personalColorIdx = 0;
+
     @Column(name = "face_type_idx")
-    private int face_type_idx = 0;
+    private int faceTypeIdx = 0;
 }
