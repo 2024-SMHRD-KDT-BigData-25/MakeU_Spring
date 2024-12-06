@@ -1,8 +1,6 @@
 package com.bangbumdae.makeu.service;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bangbumdae.makeu.model.Members;
@@ -14,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class memberService {
-    @Autowired
     private final memberRepository memberRepository;
     public Members addMember(Members m) {
         return memberRepository.save(m);
