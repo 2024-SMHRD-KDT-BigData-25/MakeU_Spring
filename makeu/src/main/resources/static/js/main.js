@@ -15,11 +15,11 @@ function addLikes(idx) {
         $.ajax({
             url: "likes/" + mem_id + "/" + idx, // 쿼리 파라미터로 idx 전달
             type: "GET",
-    
-            success: function () {
-                console.log("호출 성공");
+
+            success: function (status) {
                 const imageDiv = document.getElementById("heart_img_"+idx);
-                imageDiv.style.opacity="1";
+                imageDiv.style.opacity=status ? "1" : "0";
+                
             },
             error: function (xhr, status, error) {
                 console.error("AJAX 실패!");

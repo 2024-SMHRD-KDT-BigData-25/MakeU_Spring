@@ -21,10 +21,6 @@ import lombok.RequiredArgsConstructor;
 public class IndexController {
     private final portpolioService pService;
     private final makeuplikesService makeuplikesService;
-    @GetMapping("/")
-    public String indexPage() {
-        return "index";
-    }
 
     @GetMapping("/shopmatching")
     public String shopmatchingPage() {
@@ -32,7 +28,7 @@ public class IndexController {
     }
     
     
-    @GetMapping("/main")
+    @GetMapping("/")
     public String mainPage(Model model, HttpSession session) {
         List<ShopPortfolio> list = pService.getPortfolios();
         model.addAttribute("portpolios", list);
