@@ -13,6 +13,7 @@ import com.bangbumdae.makeu.service.memberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
+
 @Controller
 @RequiredArgsConstructor
 public class memberController {
@@ -90,5 +91,4 @@ public class memberController {
         }
         return "index";
     }
-
 }
