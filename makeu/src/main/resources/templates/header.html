@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,27 +10,37 @@
 </head>
 
 <body>
-<header>
-    <table class="title_bar">
-        <tr>
-            <td class="title_td">
-                <img src="img/menu_bar.png" class="menu_bar" alt="menu_bar">
-            </td>
-            <td th:onclick="|location.href='@{/}'|">
-                <img src="img/title.png" alt="MakeU Title">
-            </td>
-            <td class="inria-serif-regular title_td">
-                Shops
-            </td>
-            <td th:if="${session.members == null}" th:onclick="|location.href='@{/login}'|" th:text="Login" class="inria-serif-regular title_td">
-            </td>
-            <td th:if="${session.members != null}" th:onclick="|location.href='@{/mypage}'|" th:text="'MyPage (' + ${session.members.memNickname} + ')'"class="inria-serif-regular title_td">
-            </td>
-            <td th:if="${session.members != null}" th:onclick="|location.href='@{/logout}'|" th:text="Logout"class="inria-serif-regular title_td">
-            </td>
-        </tr>
-    </table>
-</header>
+    <header>
+        <div class="title_img" th:onclick="|location.href='@{/main}'|">
+            <img id="make_u_title" src="img/title.png" alt="MakeU Title">
+        </div>
+        <div class="header_menu_bar">
+            <table class="header_menu_bar_table">
+                <tr>
+                    <td class="header_menu_bar_td" th:onclick="|location.href='@{/matching}'|">
+                        페이스 매칭
+                    </td>
+                    <td class="header_menu_bar_td" th:onclick="|location.href='@{/shopmatching}'|">
+                        샵 둘러보기
+                    </td>
+                    <td class="header_menu_bar_td" th:onclick="|location.href='@{/main}'|">
+                        메이크업 둘러보기
+                    </td>
+                    <td id="header_menu_bar_empty"></td>
+                    <td th:if="${session.members == null}" th:onclick="|location.href='@{/login}'|"
+                        class="header_menu_bar_td"> SHOPS</td>
+                    <td th:if="${session.members != null}" th:onclick="|location.href='@{/mypage}'|"
+                        class="header_menu_bar_td">MyPage</td>
+                    <td th:if="${session.members == null}" th:onclick="|location.href='@{/login}'|"
+                        class="header_menu_bar_td">Login</td>
+                    <td th:if="${session.members != null}" th:onclick="|location.href='@{/logout}'|"
+                        class="header_menu_bar_td">Logout</td>
+                </tr>
+            </table>
+        </div>
+
+    </header>
 
 </body>
+
 </html>

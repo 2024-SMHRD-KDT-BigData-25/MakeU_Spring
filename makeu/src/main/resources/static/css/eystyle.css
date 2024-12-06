@@ -2,6 +2,7 @@
     font-size: 16px;
     font-family: "SUITE-Regular";
 }
+
 .title_bar {
     margin: auto;
     padding: 2% 1% 2% 1%;
@@ -11,6 +12,7 @@
 .menu_bar {
     width: 40%;
 }
+
 .title_td {
     color: #666666;
     width: 8%;
@@ -20,6 +22,7 @@
 .title_bar td:nth-child(2) {
     text-align: center;
 }
+
 .title_bar td:nth-child(2) img {
     width: 20%;
 }
@@ -28,6 +31,7 @@
     background-color: #EFF2F3;
     display: flex;
     align-items: flex-end;
+    height: 77vh;
 }
 
 .login_title {
@@ -44,6 +48,12 @@
     width: 60%;
 }
 
+.join_form {
+    margin: 5% auto 0 auto;
+    background-color: white;
+    width: 60%;
+}
+
 .confirm_td {
     width: 80%;
     height: 2em;
@@ -52,7 +62,16 @@
     display: none;
 }
 
-.login_form input{
+.join_form input {
+    width: 80%;
+    height: 2em;
+    margin-bottom: 3%;
+    border: #DEDEDE solid 1px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.login_form input {
     width: 80%;
     height: 2em;
     margin-bottom: 3%;
@@ -64,20 +83,26 @@
 .login_form_table {
     text-align: center;
     margin: auto;
-    width: 80%;
+    width: 70%;
+}
+
+.join_form_table {
+    text-align: center;
+    margin: auto;
+    width: 70%;
 }
 
 #login_btn {
     background-color: #E01013;
     color: white;
     border: none;
-    width: 82%;
+    width: 87%;
     border-radius: 10px;
     padding: 2% 0 2% 0;
 }
 
 .login_more {
-    padding: 5%;
+    padding: 3% 5% 3% 5%;
     width: 50%;
 }
 
@@ -112,36 +137,52 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 .main .cta-button {
-    text-align: center; /* 버튼을 중앙에 정렬 */
+    text-align: center;
+    /* 버튼을 중앙에 정렬 */
     margin: 20px 0;
     display: flex;
-    justify-content: center; /* 버튼을 수평 중앙 정렬 */
-    align-items: center; /* 수직 정렬 */
+    justify-content: center;
+    /* 버튼을 수평 중앙 정렬 */
+    align-items: center;
+    /* 수직 정렬 */
 }
 
 .main .cta-button button {
-    background-color: #E01013; /* 버튼 색상 */
+    background-color: #E01013;
+    /* 버튼 색상 */
     color: #fff;
     border: none;
-    width: 335px; /* 버튼 너비 */
-    height: 80px; /* 버튼 높이 */
-    font-size: 24px; /* 버튼 폰트 크기 */
-    font-weight: bold; /* 글씨를 bold로 설정 */
-    border-radius: 15px; /* 버튼 모서리 둥글게 */
+    width: 335px;
+    /* 버튼 너비 */
+    height: 80px;
+    /* 버튼 높이 */
+    font-size: 24px;
+    /* 버튼 폰트 크기 */
+    font-weight: bold;
+    /* 글씨를 bold로 설정 */
+    border-radius: 15px;
+    /* 버튼 모서리 둥글게 */
     cursor: pointer;
     font-family: 'SUITE', sans-serif;
-    display: flex; /* 버튼 내부에서 이미지와 텍스트 정렬을 위해 flex 사용 */
-    align-items: center; /* 세로 중앙 정렬 */
-    justify-content: center; /* 가로 중앙 정렬 */
-    gap: 18px; /* 이미지와 글자 사이 간격 */
+    display: flex;
+    /* 버튼 내부에서 이미지와 텍스트 정렬을 위해 flex 사용 */
+    align-items: center;
+    /* 세로 중앙 정렬 */
+    justify-content: center;
+    /* 가로 중앙 정렬 */
+    gap: 18px;
+    /* 이미지와 글자 사이 간격 */
     padding: 0;
     position: relative;
 }
 
 .main .cta-button button img {
-    width: 40px; /* 아이콘 크기 */
-    height: 40px; /* 아이콘 크기 */
+    width: 40px;
+    /* 아이콘 크기 */
+    height: 40px;
+    /* 아이콘 크기 */
     display: inline-block;
     vertical-align: middle;
 }
@@ -150,77 +191,111 @@
 
 .gallery {
     display: grid;
-    grid-template-columns: repeat(3, 285px); /* 고정된 이미지 크기 */
-    justify-content: center; /* 중앙 정렬 */
-    column-gap: 30px; /* 열 간격 */
-    row-gap: 40px;    /* 행 간격 */
+    grid-template-columns: repeat(3, 285px);
+    /* 고정된 이미지 크기 */
+    justify-content: center;
+    /* 중앙 정렬 */
+    column-gap: 30px;
+    /* 열 간격 */
+    row-gap: 40px;
+    /* 행 간격 */
     padding: 20px;
 }
 
 .gallery .image {
-    height: 250px; /* 이미지 높이 */
-    width: 285px;  /* 이미지 너비 */
+    height: 250px;
+    /* 이미지 높이 */
+    width: 285px;
+    /* 이미지 너비 */
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #333;
     font-weight: bold;
-    font-size: 24px; /* 이미지 텍스트 폰트 크기 */
+    font-size: 24px;
+    /* 이미지 텍스트 폰트 크기 */
     text-align: center;
-    background-size: cover; /* 배경 이미지 크기 */
-    background-position: center; /* 배경 이미지 중앙 정렬 */
-    position: relative; /* 상대 위치 지정 */
-    overflow: hidden; /* 내용 잘림 방지 */
+    background-size: cover;
+    /* 배경 이미지 크기 */
+    background-position: center;
+    /* 배경 이미지 중앙 정렬 */
+    position: relative;
+    /* 상대 위치 지정 */
+    overflow: hidden;
+    /* 내용 잘림 방지 */
     cursor: pointer;
 }
+
 .gallery .image::before {
-    content: ""; /* 가상 요소 추가 */
-    position: absolute; /* 절대 위치 */
+    content: "";
+    /* 가상 요소 추가 */
+    position: absolute;
+    /* 절대 위치 */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(224, 16, 19, 0.45); /* hover 시 색상 및 투명도 설정 */
-    z-index: 1; /* 배경색을 이미지 위로 */
-    opacity: 0; /* 기본적으로 투명 */
-    transition: opacity 0.3s ease; /* 부드러운 전환 */
+    background-color: rgba(224, 16, 19, 0.45);
+    /* hover 시 색상 및 투명도 설정 */
+    z-index: 1;
+    /* 배경색을 이미지 위로 */
+    opacity: 0;
+    /* 기본적으로 투명 */
+    transition: opacity 0.3s ease;
+    /* 부드러운 전환 */
 }
 
 .gallery .image:hover::before {
-    opacity: 1; /* hover 시 배경색 보이게 설정 */
+    opacity: 1;
+    /* hover 시 배경색 보이게 설정 */
 }
 
 .gallery .image span {
-    position: absolute; /* 텍스트를 이미지 위에 고정 */
-    top: 50%; /* 세로 중앙 정렬 */
-    left: 50%; /* 가로 중앙 정렬 */
-    transform: translate(-50%, -50%); /* 정확히 중앙에 배치 */
-    color: #fff; /* 글자 색상 */
+    position: absolute;
+    /* 텍스트를 이미지 위에 고정 */
+    top: 50%;
+    /* 세로 중앙 정렬 */
+    left: 50%;
+    /* 가로 중앙 정렬 */
+    transform: translate(-50%, -50%);
+    /* 정확히 중앙에 배치 */
+    color: #fff;
+    /* 글자 색상 */
     font-size: 24px;
     font-weight: bold;
-    z-index: 2; /* 텍스트를 배경색 위로 */
-    opacity: 0; /* 기본적으로 보이지 않음 */
-    transition: opacity 0.3s ease; /* 부드러운 전환 */
+    z-index: 2;
+    /* 텍스트를 배경색 위로 */
+    opacity: 0;
+    /* 기본적으로 보이지 않음 */
+    transition: opacity 0.3s ease;
+    /* 부드러운 전환 */
 }
 
 .gallery .image:hover span {
-    opacity: 1; /* hover 시 텍스트 나타남 */
+    opacity: 1;
+    /* hover 시 텍스트 나타남 */
 }
+
 .gallery .image .heart-container {
-    position: absolute; /* 이미지 내부에서 고정 위치 */
-    bottom: 10px; /* 하단에서 10px 간격 */
-    left: 10px; /* 왼쪽에서 10px 간격 */
+    position: absolute;
+    /* 이미지 내부에서 고정 위치 */
+    bottom: 10px;
+    /* 하단에서 10px 간격 */
+    left: 10px;
+    /* 왼쪽에서 10px 간격 */
     width: 30px;
     height: 30px;
-    cursor: pointer; /* 클릭 가능한 커서 */
+    cursor: pointer;
+    /* 클릭 가능한 커서 */
 }
 
 .gallery .image .heart-container .heart-button {
     position: relative;
     width: 30px;
     height: 30px;
-    transform: rotate(-45deg); /* 하트 모양 만들기 */
+    transform: rotate(-45deg);
+    /* 하트 모양 만들기 */
     margin: 0 auto;
     cursor: pointer;
 }
@@ -231,12 +306,16 @@
     position: absolute;
     width: 30px;
     height: 30px;
-    border: 4px solid #E01013; /* 굵은 테두리 추가 (bold 효과) */
-    border-radius: 50%; /* 원 모양 만들기 */
+    border: 4px solid #E01013;
+    /* 굵은 테두리 추가 (bold 효과) */
+    border-radius: 50%;
+    /* 원 모양 만들기 */
     top: 0;
     left: 0;
-    background: transparent; /* 기본 투명 */
-    transition: background 0.3s ease, border-color 0.3s ease; /* 부드러운 전환 효과 */
+    background: transparent;
+    /* 기본 투명 */
+    transition: background 0.3s ease, border-color 0.3s ease;
+    /* 부드러운 전환 효과 */
 }
 
 .gallery .image .heart-container .heart-button::after {
@@ -246,10 +325,50 @@
 
 .gallery .image .heart-container .heart-button.filled::before,
 .gallery .image .heart-container .heart-button.filled::after {
-    background: #E01013; /* 클릭 후 채워지는 색상 */
-    border-color: #E01013; /* 채워질 때 테두리 색 변경 */
+    background: #E01013;
+    /* 클릭 후 채워지는 색상 */
+    border-color: #E01013;
+    /* 채워질 때 테두리 색 변경 */
 }
 
-.tags{
+.tags {
     font-family: "SUITE-Regular";
+}
+
+.header_menu_bar_table {
+    width: 100%;
+    font-family: "SUITE-Regular";
+}
+
+.header_menu_bar_td {
+    text-align: center;
+    /* 가로 정렬 */
+    vertical-align: middle;
+    /* 세로 정렬 */
+    width: fit-content;
+}
+#header_menu_bar_empty {
+    width: 55%;
+}
+.header_menu_bar_td:hover {
+    cursor: pointer;
+}
+
+.header_menu_bar {
+    width: 100%;
+    background-color: #666666;
+    color: white;
+}
+.header_menu_bar_table {
+    height: 6vh;
+}
+.title_img {
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#make_u_title {
+    height: 50%;
 }
