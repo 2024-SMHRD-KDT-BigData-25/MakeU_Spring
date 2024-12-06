@@ -145,3 +145,59 @@ body {
 .tags{
     font-family: "SUITE-Regular";
 }
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center; /* 좌우 중앙 정렬 */
+    align-items: flex-start; /* 상단 정렬 후 아래로 배치 */
+    height: 100vh;
+}
+
+.main {
+    display: flex;
+    justify-content: center; /* 영역 좌우 중앙 정렬 */
+    align-items: flex-start; /* 영역 수직 중앙 기준 아래로 배치 */
+    gap: 5px; /* 영역 간 간격 */
+    margin-top: 90px; /* 전체를 아래로 이동 */
+}
+
+/* 각 섹션 스타일 */
+.section {
+    width: 230px; /* 가로 크기 */
+    height: 530px; /* 세로 크기 */
+    border: 1px solid #ddd; /* 영역 구분 테두리 */
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    overflow-y: auto; /* 내부 스크롤 가능 */
+    padding: 10px;
+}
+
+/* 배경색으로 영역 구분 */
+.section-left {
+    background-color: #ffcccc; /* 연한 빨간색 */
+}
+
+.section-center {
+    background-color: #cce5ff; /* 연한 파란색 */
+}
+
+.section-right {
+    background-color: #d4edda; /* 연한 초록색 */
+    position: relative; /* Kakao Map을 위한 설정 */
+}
+
+/* Kakao Map 스타일 */
+#map {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
