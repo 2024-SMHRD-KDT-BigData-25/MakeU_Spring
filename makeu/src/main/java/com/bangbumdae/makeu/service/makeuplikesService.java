@@ -26,4 +26,8 @@ private final makeuplikesRepository makeuplikesRepository;
     public List<MakeUpLikes> getLikesAll() {
         return makeuplikesRepository.findAll();
     }
+
+    public List<Integer> getLikedPortpolios(String mem_id) {
+        return makeuplikesRepository.findPortfolioIdxByMemId(mem_id);
+    }
 }

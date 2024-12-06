@@ -25,10 +25,9 @@
             <div class="image" 
                  th:each="port, iterStat : ${portpolios}" 
                  th:style="|background-image: url('makeup/${port.portfolioImg}');|"
-                 th:onclick="|addLikes('${port.portfoliIdx}')|"
-                 >
-                <span class="tags">#가을 웜톤<br>#따뜻함</span>
-                <div style="align-content: center;justify-items: center;" class="heart-container">
+                 th:onclick="|addLikes('${port.portfoliIdx}')|">
+                <span class="tags" th:text="${likes}">#가을 웜톤<br>#따뜻함</span>
+                <div th:if="${likes.contains(port.portfoliIdx)}" style="align-content: center;justify-items: center;" class="heart-container">
                     <img style="width:70%;opacity:0.6;" src="img/red_full_heart.png">
                 </div>
             </div>
