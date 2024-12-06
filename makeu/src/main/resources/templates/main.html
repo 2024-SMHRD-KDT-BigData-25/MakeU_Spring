@@ -5,28 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/jwstyle.css">
+    <link rel="stylesheet" href="css/eystyle.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Document</title>
 </head>
-<body>
+<body class="main_body">
     <div th:replace="~{header}"></div> 
-    <main class="main">
+     <main class="main">
+        <!-- 조건에 맞으면 mem_id가 출력되고, 조건에 맞지 않으면 숨겨짐 -->
+        <span th:if="${session.members != null}" style="display: none;" id="mem_id" th:text="${session.members.memId}"></span>
         <div class="cta-button">
-            <button>
+            <button th:onclick="|location.href='@{/matching}'|">
                 <img src="img/Frame.png" alt="icon" id="button-icon"> 나의 타입 확인하기!
             </button>
         </div>
         
         <div class="gallery">
             <div class="image" 
-                 th:each="port, iterStat : ${portpolios}" 
-                 th:style="|background-image: url('makeup/${port.portfolioImg}');|"
-                 th:onclick="|addLikes('${port.portfoliIdx}')|">
-                <span class="tags" th:text="${likes}">#가을 웜톤<br>#따뜻함</span>
-                <div th:if="${likes.contains(port.portfoliIdx)}" style="align-content: center;justify-items: center;" class="heart-container">
-                    <img style="width:70%;opacity:0.6;" src="img/red_full_heart.png">
-                </div>
+                th:if="${portpolios != null}"
+                th:each="port, iterStat : ${portpolios}" 
+                th:style="|background-image: url('makeup/${port.portfolioImg}');|"
+                th:onclick="|addLikes(${port.portfoliIdx})|">
+                <div th:id="'heart_img_' + ${port.portfoliIdx}"  th:style="|opacity: ${likes != null and likes.contains(port.portfoliIdx) ? 1 : 0}; align-content: center; justify-items: center;|" class="heart-container">
+                    <img style="width:70%; opacity: 0.6;" src="img/red_full_heart.png">
+                </div>                
             </div>
         </div>
     

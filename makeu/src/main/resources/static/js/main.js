@@ -18,6 +18,8 @@ function addLikes(idx) {
     
             success: function () {
                 console.log("호출 성공");
+                const imageDiv = document.getElementById("heart_img_"+idx);
+                imageDiv.style.opacity="1";
             },
             error: function (xhr, status, error) {
                 console.error("AJAX 실패!");
