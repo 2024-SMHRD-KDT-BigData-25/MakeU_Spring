@@ -14,7 +14,6 @@ import com.bangbumdae.makeu.service.portpolioService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RequiredArgsConstructor
@@ -39,7 +38,7 @@ public class IndexController {
         model.addAttribute("portpolios", list);
         Members m = (Members)session.getAttribute("members");
         if (m != null) {
-            List<MakeUpLikes> likes = makeuplikesService.getLikesAll();
+            List<Integer> likes = makeuplikesService.getLikedPortpolios(m.getMemId());
             model.addAttribute("likes", likes);
         }
         return "main";
