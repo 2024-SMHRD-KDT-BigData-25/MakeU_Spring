@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.bangbumdae.makeu.model.MakeUpLikes;
 import com.bangbumdae.makeu.model.Members;
 import com.bangbumdae.makeu.model.ShopPortfolio;
 import com.bangbumdae.makeu.service.makeuplikesService;
