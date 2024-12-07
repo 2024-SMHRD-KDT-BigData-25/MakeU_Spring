@@ -20,7 +20,6 @@ private final makeuplikesRepository makeuplikesRepository;
         System.out.println(mem_id);
         System.out.println(portfolio_idx);
         List<MakeUpLikes> result = makeuplikesRepository.findByMemidAndPortfolioidx(mem_id, portfolio_idx);
-        System.out.println(result.size());
         if (result.isEmpty()) {
             makeuplikesRepository.save(new MakeUpLikes(mem_id, portfolio_idx));
             return true;
