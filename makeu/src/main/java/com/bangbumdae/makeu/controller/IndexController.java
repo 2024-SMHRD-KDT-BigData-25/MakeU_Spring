@@ -33,7 +33,7 @@ public class IndexController {
         model.addAttribute("portpolios", list);
         Members m = (Members)session.getAttribute("members");
         if (m != null) {
-            List<Integer> likes = makeuplikesService.getLikedPortpolios(m.getMemId());
+            List<Integer> likes = makeuplikesService.getLikedPortpolios(m.getMemid());
             model.addAttribute("likes", likes);
         }
         return "main";

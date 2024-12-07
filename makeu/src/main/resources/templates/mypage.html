@@ -35,12 +35,12 @@
                                     <img class="mypage_img" src="img/face_shape/round.png">
                                 </div>
                             </td>
-            
+
                             <td class="img_tds">
                                 <div class="season_img_div">
                                     <img class="mypage_img" src="img/season/여름2.jpeg">
                             </td>
-            
+
                         </tr>
 
                         <tr>
@@ -101,7 +101,13 @@
                     </table>
                 </td>
                 <td rowspan="3">
-                    <div class="mypage_liked_div"></div>
+                    <div class="mypage_liked_div">
+                        <div class="gallary" th:if="${session.members!=null}">
+                            <div class="image" th:if="${liked != null}" th:each="photo : ${liked}"
+                                th:style="|background-image: url('makeup/${photo.portfolioimg}');|">
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </table>

@@ -17,8 +17,8 @@ public class memberService {
         return memberRepository.save(m);
     }
 
-    public List<Members> authenticate(String memId, String memPw) {
-        return memberRepository.findByMemIdAndMemPw(memId, memPw);
+    public List<Members> authenticate(String memid, String memPw) {
+        return memberRepository.findByMemidAndMempw(memid, memPw);
     }
 
     @Transactional

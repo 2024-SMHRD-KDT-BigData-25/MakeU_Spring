@@ -11,12 +11,12 @@ import lombok.Data;
 @Table(name="Shop_info")
 public class ShopInfo {
     @Id
-    @Column(name = "shop_idx")
-    private int shopIdx;
-    @Column(name = "shop_name", length = 100, nullable = false)
-    private int shopName;
-    @Column(name = "shop_location", length = 500, nullable = false)
-    private String shopLocation;
-    @Column(name = "shop_category", nullable = false, updatable = false)
-    private int shopCategory;
+    @Column(name = "shopidx")
+    private int shopidx;
+    @Column(name = "shopname", length = 100, nullable = false)
+    private int shopname;
+    @Column(name = "shoplocation", length = 500, nullable = false)
+    private String shoplocation;
+    @Column(name = "shopcategory", nullable = false, updatable = false)
+    private int shopcategory;
 }

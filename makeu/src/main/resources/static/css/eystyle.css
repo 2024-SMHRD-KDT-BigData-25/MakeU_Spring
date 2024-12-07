@@ -419,6 +419,7 @@ body {
 
 
 #mypage_table_tr1 td, #mypage_table_tr2 td {
+    width: 50%;
     text-align: left;
     height: 1vh;
 }

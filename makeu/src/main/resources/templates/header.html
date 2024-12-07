@@ -29,7 +29,8 @@
                     <td id="header_menu_bar_empty"></td>
                     <td th:if="${session.members == null}" th:onclick="|location.href='@{/login}'|"
                         class="header_menu_bar_td"> SHOPS</td>
-                    <td th:if="${session.members != null}" th:onclick="|location.href='@{/mypage}'|"
+                    <td th:if="${session.members != null}"
+                        th:onclick="|location.href='@{/mypage(memid=${session.members.memid})}'|"
                         class="header_menu_bar_td">MyPage</td>
                     <td th:if="${session.members == null}" th:onclick="|location.href='@{/login}'|"
                         class="header_menu_bar_td">Login</td>

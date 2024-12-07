@@ -11,10 +11,10 @@ import lombok.Data;
 @Table(name="personal_color")
 public class PersonalColor {
     @Id
-    @Column(name = "personal_color_idx")
-    private int personalColorIdx;
-    @Column(name = "personal_color_name", length = 50, nullable = false)
-    private String personalColorName;
-    @Column(name = "personal_color_description", length = 1000)
-    private String personalColorDescription;
+    @Column(name = "personalcoloridx")
+    private int personalcoloridx;
+    @Column(name = "personalcolorname", length = 50, nullable = false)
+    private String personalcolorname;
+    @Column(name = "personalcolordescription", length = 1000)
+    private String personalcolordescription;
 }
