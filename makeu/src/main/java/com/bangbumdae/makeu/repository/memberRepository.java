@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface memberRepository extends JpaRepository<Members, String> {
-    List<Members> findByMemIdAndMemPw(String mem_id, String mem_pw);
+    List<Members> findByMemidAndMempw(String memid, String mempw);
 }

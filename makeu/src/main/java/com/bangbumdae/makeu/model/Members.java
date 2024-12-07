@@ -11,16 +11,18 @@ import lombok.Data;
 @Table(name="members")
 public class Members {
     @Id
-    @Column(name = "mem_id")
-    private String memId;
-    @Column(name = "mem_pw", length = 50, nullable = false)
-    private String memPw;
-    @Column(name = "mem_nickname", length = 50, nullable = false)
-    private String memNickname;
-    @Column(name = "mem_name", length = 50, nullable = false)
-    private String memName;
-    @Column(name = "personal_color_idx")
-    private int personal_color_idx = 0;
-    @Column(name = "face_type_idx")
-    private int face_type_idx = 0;
+    @Column(name = "memid")
+    private String memid;
+    @Column(name = "mempw", length = 50, nullable = false)
+    private String mempw;
+    @Column(name = "memnickname", length = 50, nullable = false)
+    private String memnickname;
+    @Column(name = "memname", length = 50, nullable = false)
+    private String memname;
+
+    @Column(name = "personalcoloridx")
+    private int personalcoloridx = 0;
+
+    @Column(name = "facetypeidx")
+    private int facetypeidx = 0;
 }
