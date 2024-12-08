@@ -24,16 +24,17 @@
                 </div>
              
             <p class="instruction">얼굴을 중앙에 위치시켜 주세요!</p>
+            <canvas id="snapshot" style="display: none;"></canvas>
         </div>
-        <button class="capture"><img src="img/match_button.png"></button><br>
-        
+        <button class="capture" id="female"><img src="img/match_female.png"></button>
+        <button class="capture" id="male"><img src="img/match_male.png"></button>
         
     </main>
     <script>
         const video = document.getElementById('webcam');
-        const canvas = document.getElementById('snapshot');
-        const captureButton = document.getElementById('capture');
-        console.log(captureButton)
+        const femaleButton = document.getElementById('female');
+        const maleButton = document.getElementById('male');
+
         // 웹캠 접근
         navigator.mediaDevices.getUserMedia({ video: true })
             .then((stream) => {
@@ -43,30 +44,37 @@
                 console.error("웹캠 접근 실패: ", error);
             });
 
-        // 스냅샷 캡처
-        captureButton.addEventListener('click', () => {
+        // 버튼 클릭 이벤트: 얼굴 이미지 캡처 및 서버로 전송 후 결과 페이지 이동
+        function captureAndSend(gender) {
+            const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const imageData = canvas.toDataURL('image/png');
 
-            // 이미지 데이터 서버로 전송 (AJAX 요청)
-            fetch('/upload', {
+            // 현재 비디오 프레임 캡처
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL('image/png'); // Base64 인코딩
+
+            // Python 서버에 데이터 전송
+            fetch('http://127.0.0.1:5000/analyze', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ image: imageData }),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ gender, image: imageData }),
             })
             .then((response) => response.json())
             .then((data) => {
-                console.log("이미지 업로드 성공: ", data);
+                console.log("분석 결과:", data);
+                // 결과 페이지로 이동
+                window.location.href = `/makeU/result?faceShape=${data.faceShape}&confidence=${data.confidence}`;
             })
             .catch((error) => {
-                console.error("이미지 업로드 실패: ", error);
+                console.error("분석 실패: ", error);
             });
-        });
+        }
+
+        // 버튼 이벤트 연결
+        femaleButton.addEventListener('click', () => captureAndSend('female'));
+        maleButton.addEventListener('click', () => captureAndSend('male'));
     </script>
 </body>
 </html>
