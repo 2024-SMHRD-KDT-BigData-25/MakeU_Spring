@@ -21,11 +21,15 @@
         </div>
         
         <div class="gallery">
-            <div class="image" 
+            <div class="image"
                 th:if="${portpolios != null}"
                 th:each="port, iterStat : ${portpolios}" 
+                th:id="|img_div_${port.portfolioidx}|" 
                 th:style="|background-image: url('makeup/${port.portfolioimg}');|"
-                th:onclick="|addLikes(${port.portfolioidx})|">
+                th:onclick="|addLikes(${port.portfolioidx})|"
+                th:onmouseover="|hoverFunction(${port.portfolioidx})|"
+                >
+                <span th:id="|image_tags${port.portfolioidx}|" class="tags"></span>
                 <div th:id="'heart_img_' + ${port.portfolioidx}"  th:style="|opacity: ${likes != null and likes.contains(port.portfolioidx) ? 1 : 0}; align-content: center; justify-items: center;|" class="heart-container">
                     <img style="width:70%; opacity: 0.6;" src="img/red_full_heart.png">
                 </div>                

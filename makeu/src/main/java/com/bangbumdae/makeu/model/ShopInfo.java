@@ -14,7 +14,7 @@ public class ShopInfo {
     @Column(name = "shopidx")
     private int shopidx;
     @Column(name = "shopname", length = 100, nullable = false)
-    private int shopname;
+    private String shopname;
     @Column(name = "shoplocation", length = 500, nullable = false)
     private String shoplocation;
     @Column(name = "shopcategory", nullable = false, updatable = false)

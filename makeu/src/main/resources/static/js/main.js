@@ -33,3 +33,25 @@ function addLikes(idx) {
     }
     
 }
+
+function hoverFunction(idx) {
+    const tagSpan = document.getElementById("image_tags"+idx); 
+    if (tagSpan.textContent !=  "") {
+        return;
+    }
+    $.ajax({
+        url: "tags/" + idx, // 쿼리 파라미터로 idx 전달
+        type: "GET",
+
+        success: function (tags) {
+            console.log(tags);
+            tagSpan.textContent = tags;
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX 실패!");
+            console.error("Status:", status);
+            console.error("Error:", error);
+            console.error("Response Text:", xhr.responseText);
+        },
+    });
+}
