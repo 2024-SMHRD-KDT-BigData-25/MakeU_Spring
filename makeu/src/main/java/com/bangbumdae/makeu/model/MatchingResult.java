@@ -18,12 +18,12 @@ public class MatchingResult {
     private  int resultidx;
     @Column(name = "memid", length = 50, nullable = false)
     private String memid;
-    @Column(name = "matched1")
+    @Column(name = "matched1", nullable = false)
     private int matched1;
-    @Column(name = "matched2")
+    @Column(name = "matched2", nullable = false)
     private int matched2;
-    @Column(name = "matched3")
+    @Column(name = "matched3", nullable = false)
     private int matched3;
-    @Column(name = "createdat")
+    @Column(name = "createdat", nullable = false)
     private Timestamp createdat = new Timestamp(System.currentTimeMillis());
 }

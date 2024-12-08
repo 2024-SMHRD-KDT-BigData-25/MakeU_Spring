@@ -8,9 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bangbumdae.makeu.model.Creator;
+import com.bangbumdae.makeu.model.FaceType;
 import com.bangbumdae.makeu.model.Members;
+import com.bangbumdae.makeu.model.PersonalColor;
 import com.bangbumdae.makeu.model.ShopPortfolio;
 import com.bangbumdae.makeu.service.makeuplikesService;
+import com.bangbumdae.makeu.service.matchingresultService;
 import com.bangbumdae.makeu.service.memberService;
 
 import jakarta.servlet.http.HttpSession;
@@ -21,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class memberController {
     private final memberService memberService;
     private final makeuplikesService makeuplikesService;
+    private final matchingresultService matchingresultService;
     @GetMapping("/login")
     public String loginPage() {
         return "login";
@@ -42,7 +47,18 @@ public class memberController {
         // memId 파라미터 값 출력
         List<ShopPortfolio> liked = makeuplikesService.getAllLikedPortpolios(memid);
         model.addAttribute("liked", liked);
+        Creator[] mathcedCreators = new Creator[3];
+        mathcedCreators[0] = matchingresultService.getMatched1(memid);
+        mathcedCreators[1] = matchingresultService.getMatched2(memid);
+        mathcedCreators[2] = matchingresultService.getMatched3(memid);
+
+        model.addAttribute("matched", mathcedCreators);
         
+        FaceType mFaceType = memberService.getFaceType(memid);
+        model.addAttribute("mFacetype", mFaceType);
+
+        PersonalColor mPersonalColor = memberService.getPersonalColor(memid);
+        model.addAttribute("mPersonalcolor", mPersonalColor);
         // 뷰 반환
         return "mypage"; // mypage.html로 이동
     }

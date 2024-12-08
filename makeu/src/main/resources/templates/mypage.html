@@ -20,32 +20,34 @@
         <table id="mypage_table">
             <tr id="mypage_table_tr1">
                 <td>
-                    <span id="member_name">홍길동</span>님
+                    <span th:if="${session.members != nul}" id="member_name" th:text="${session.members.memname}"></span>님
                 </td>
                 <td>
                     메이크업 샵 예약 내역
                 </td>
             </tr>
-            <tr>
+            <tr> 
                 <td>
-                    <table class="mypage_face_info">
+                    <div class="mypage_creator_warning" th:if="${session.members == nul}">로그인을 해주세요!</div>
+                    <div class="mypage_creator_warning" th:if="${session.members != null && mFacetype.facetypeidx == 0}">facematching을 해주세요!</div>
+                    <table th:if="${mFacetype.facetypeidx != 0 && mPersonalcolor.personalcoloridx != 0}" class="mypage_face_info">
                         <tr>
                             <td class="img_tds">
                                 <div class="season_img_div">
-                                    <img class="mypage_img" src="img/face_shape/round.png">
+                                    <img class="mypage_img" th:src="|img/face_shape/${mFacetype.facetypename}.png|">
                                 </div>
                             </td>
 
                             <td class="img_tds">
                                 <div class="season_img_div">
-                                    <img class="mypage_img" src="img/season/여름2.jpeg">
+                                    <img class="mypage_img" th:src="|img/season/${mPersonalcolor.personalcolorname}.jpeg|">
                             </td>
 
                         </tr>
 
                         <tr>
-                            <td class="mypage_info">둥근형</td>
-                            <td class="mypage_info">여름 쿨톤</td>
+                            <td class="mypage_info" th:text="${mFacetype.facetypename}"></td>
+                            <td class="mypage_info" th:text="${mPersonalcolor.personalcolorname}"></td>
                         </tr>
                     </table>
                 </td>
@@ -60,31 +62,37 @@
                 <td>좋아한 메이크업 사진</td>
             </tr>
             <tr>
-                <td>
-                    <table th:if="${session.members != null}" class="mypage_creator_table">
+                <td class="mypage_matching_result_td">
+                    <div class="mypage_creator_warning" th:if="${session.members == nul}">로그인을 해주세요!</div>
+                    <div class="mypage_creator_warning" th:if="${session.members != null && matched[0] == null}">facematching을 해주세요!</div>
+                    
+                    <table th:if="${session.members != null && matched[0] != null}" class="mypage_creator_table">
                         <tr class="mypage_creator_profile_tr">
                             <td>
                                 <div class="creator_profile_div"><img class="creator_profile"
-                                        src="img/creator_profile/Yoo True.jpg" alt=""></div>
+                                    th:src="|img/creator_profile/${matched[0].creatorname}.jpg|" 
+                                    th:alt="${matched[0].creatorname}"></div>
                             </td>
                             <td>
                                 <div class="creator_profile_div"><img class="creator_profile"
-                                        src="img/creator_profile/김크리스탈 KimCrystal.jpg" alt=""></div>
+                                    th:src="|img/creator_profile/${matched[1].creatorname}.jpg|" 
+                                    th:alt="${matched[1].creatorname}"></div>
                             </td>
                             <td>
                                 <div class="creator_profile_div"><img class="creator_profile"
-                                        src="img/creator_profile/지냐 Jinyaa.jpg" alt=""></div>
+                                    th:src="|img/creator_profile/${matched[2].creatorname}.jpg|" 
+                                    th:alt="${matched[2].creatorname}"></div>
                             </td>
                         </tr>
                         <tr class="mypage_creator_name_tr">
                             <td>
-                                <div class="mypage_creator_name_div">유트루</div>
+                                <div class="mypage_creator_name_div" th:text="${matched[0].creatorname}"></div>
                             </td>
                             <td>
-                                <div class="mypage_creator_name_div">김크리스탈</div>
+                                <div class="mypage_creator_name_div" th:text="${matched[1].creatorname}"></div>
                             </td>
                             <td>
-                                <div class="mypage_creator_name_div">지냐</div>
+                                <div class="mypage_creator_name_div" th:text="${matched[2].creatorname}"></div>
                             </td>
                         </tr>
                         <tr class="mypage_creator_desc_tr">
@@ -101,7 +109,9 @@
                     </table>
                 </td>
                 <td rowspan="3">
-                    <div class="mypage_liked_div">
+                    <div class="mypage_creator_warning" th:if="${session.members == null}">로그인을 해주세요!</div>
+                    <div class="mypage_creator_warning" th:if="${session.members != null && liked.size() == 0}">좋아한 메이크업 사진이 없어요 ㅜㅜ</div>
+                    <div class="mypage_liked_div" th:if="${liked.size() > 0}">
                         <div class="liked_img_div" th:if="${session.members != null}" th:each="port : ${liked}">
                         <img class="liked_img" th:src="|makeup/${port.portfolioimg}|">
                         </div>

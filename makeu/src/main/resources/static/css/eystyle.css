@@ -442,7 +442,7 @@ body {
 #mypage_table_tr1 td, #mypage_table_tr2 td {
     width: 50%;
     text-align: left;
-    height: 1vh;
+    height: 8%;
 }
 .season_img_div {
     width: 15vh;
@@ -505,4 +505,11 @@ body {
 
 .mypage_face_info {
     width: 80%;
+}
+.mypage_matching_result_td {
+    height: 40%;
+}
+
+.mypage_creator_warning {
+    justify-items: center;
 }
