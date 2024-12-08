@@ -40,12 +40,9 @@ public class memberController {
     @GetMapping("/mypage")
     public String showMyPage(@RequestParam("memid") String memid, Model model) {
         // memId 파라미터 값 출력
-        System.out.println("Received memid: " + memid);
         List<ShopPortfolio> liked = makeuplikesService.getAllLikedPortpolios(memid);
-        for(ShopPortfolio o : liked) {
-            System.out.println(o.toString());
-        }
         model.addAttribute("liked", liked);
+        
         // 뷰 반환
         return "mypage"; // mypage.html로 이동
     }
