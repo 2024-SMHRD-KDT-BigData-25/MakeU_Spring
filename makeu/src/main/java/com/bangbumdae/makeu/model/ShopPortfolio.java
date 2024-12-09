@@ -1,5 +1,7 @@
 package com.bangbumdae.makeu.model;
 
+import java.sql.Timestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,5 +20,5 @@ public class ShopPortfolio {
     @Column(name = "portfolioimg", length = 500, nullable = false)
     private String portfolioimg;
     @Column(name = "createdat")
-    private String createdat;
+    private Timestamp createdat;
 }

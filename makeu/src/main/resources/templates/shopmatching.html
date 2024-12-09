@@ -5,30 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop Page</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/jwstyle.css">
+    <link rel="stylesheet" href="css/eystyle.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=051ade627d04c4dcc0483ff63a0d3a07"></script> <!-- Kakao Map API -->
+    
 </head>
 <body>
     <header>
         <div th:replace="~{header}"></div> <!-- 헤더가 삽입될 위치 -->
     </header>
+    
     <main class="shopMain">
-        <div class="section section-left">Left Section</div>
-        <div class="section section-center">Center Section</div>
-        <div class="section section-right">
-            <div id="map"></div>
+        <div class="section-left">
+            <div id="shop_list_div">
+                <div class="shop_info_table" th:if="${slist!=null}" th:each="shop, iter : ${slist}" th:onclick="|shop_info(${shop.shopidx})|">
+                    <table>
+                        <tr>
+                            <td class="shop_info_img" rowspan="3">
+                                <div class="shops_img_div">
+                                    <img th:src="|makeup/${shop.shopname}1.jpg|" alt="메이크업 사진">
+                                </div>
+                            </td>
+                            <td th:text="${shop.shopname}"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div th:id="|shop_tag_div_${shop.shopidx}|" class="shop_tag_div" th:text="${shop_tags[iter.index]}"></div>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td th:text="${shop.shoplocation}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
         </div>
+        <div id="map"></div>
+        <div id="shop_detail_div" style="display: none;" class="section-center">
+            <div class="shop_detail_info" id="shop_title">
+                <img style="width:8%;" src="img/back.png" alt="" onclick="closeShopDetail()">
+                <div id="shop_detail_title"></div>
+            </div>
+            <div class="shop_detail_info" id="shop_detail_portpolio"></div>
+            <div class="shop_detail_info" id="shop_location">
+                <img style="width:8%;" src="img/location.png" alt="">
+                <div id="shop_detail_location">
+                </div>
+            </div>
+            <div class="shop_detail_info" id="shop_detail_tags"></div>
+            <div id="shop_detail_btns">
+                <button>리뷰보기</button>
+                <button>예약하기</button>
+            </div>
+        </div>
+
     </main>
 
-    <script>
-        // Kakao Map API Initialization
-        const mapContainer = document.getElementById('map'); // Map container
-        const mapOption = {
-            center: new kakao.maps.LatLng(37.5665, 126.9780), // Default center (Seoul)
-            level: 3 // Zoom level
-        };
-        const map = new kakao.maps.Map(mapContainer, mapOption);
-    </script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=022c4e54ddaeae02f226257bb5a95f38"></script> <!-- Kakao Map API -->
+    <script src="js/shopmatching.js"></script>
 </body>
 </html>
