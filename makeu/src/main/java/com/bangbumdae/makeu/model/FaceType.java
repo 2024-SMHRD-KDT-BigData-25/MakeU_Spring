@@ -11,8 +11,8 @@ import lombok.Data;
 @Table(name="face_type")
 public class FaceType {
     @Id
-    @Column(name = "face_type_idx")
-    private int faceTypeIdx;
-    @Column(name = "face_type_name", length = 50, nullable = false)
-    private String faceTypeName;
+    @Column(name = "facetypeidx")
+    private int facetypeidx;
+    @Column(name = "facetypename", length = 50, nullable = false)
+    private String facetypename;
 }

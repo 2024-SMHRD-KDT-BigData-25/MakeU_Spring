@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +9,117 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Document</title>
 </head>
+
 <body>
     <!-- 헤더를 Thymeleaf 템플릿으로 변경 (예시로 header.html 파일을 불러옴) -->
-    <div th:replace="~{header}"></div> 
+    <div th:replace="~{header}"></div>
 
     <!-- 버튼 클릭 시 이동할 URL을 Spring 컨트롤러에서 처리하도록 설정 -->
-    <button th:onclick="|location.href='@{/update}'|">update</button>
+    <!-- <button th:onclick="|location.href='@{/update}'|">update</button> -->
+    <div class="mypage_container">
+        <table id="mypage_table">
+            <tr id="mypage_table_tr1">
+                <td>
+                    <span th:if="${session.members != nul}" id="member_name" th:text="${session.members.memname}"></span>님
+                </td>
+                <td>
+                    메이크업 샵 예약 내역
+                </td>
+            </tr>
+            <tr> 
+                <td>
+                    <div class="mypage_creator_warning" th:if="${session.members == nul}">로그인을 해주세요!</div>
+                    <div class="mypage_creator_warning" th:if="${session.members != null && mFacetype.facetypeidx == 0}">facematching을 해주세요!</div>
+                    <table th:if="${mFacetype.facetypeidx != 0 && mPersonalcolor.personalcoloridx != 0}" class="mypage_face_info">
+                        <tr>
+                            <td class="img_tds">
+                                <div class="season_img_div">
+                                    <img class="mypage_img" th:src="|img/face_shape/${mFacetype.facetypename}.png|">
+                                </div>
+                            </td>
+
+                            <td class="img_tds">
+                                <div class="season_img_div">
+                                    <img class="mypage_img" th:src="|img/season/${mPersonalcolor.personalcolorname}.jpeg|">
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td class="mypage_info" th:text="${mFacetype.facetypename}"></td>
+                            <td class="mypage_info" th:text="${mPersonalcolor.personalcolorname}"></td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <div class="reservation_div">
+
+                    </div>
+                </td>
+            </tr>
+            <tr id="mypage_table_tr2">
+                <td>뷰티 크리에이터 추천</td>
+                <td>좋아한 메이크업 사진</td>
+            </tr>
+            <tr>
+                <td class="mypage_matching_result_td">
+                    <div class="mypage_creator_warning" th:if="${session.members == nul}">로그인을 해주세요!</div>
+                    <div class="mypage_creator_warning" th:if="${session.members != null && matched[0] == null}">facematching을 해주세요!</div>
+                    
+                    <table th:if="${session.members != null && matched[0] != null}" class="mypage_creator_table">
+                        <tr class="mypage_creator_profile_tr">
+                            <td>
+                                <div class="creator_profile_div"><img class="creator_profile"
+                                    th:src="|img/creator_profile/${matched[0].creatorname}.jpg|" 
+                                    th:alt="${matched[0].creatorname}"></div>
+                            </td>
+                            <td>
+                                <div class="creator_profile_div"><img class="creator_profile"
+                                    th:src="|img/creator_profile/${matched[1].creatorname}.jpg|" 
+                                    th:alt="${matched[1].creatorname}"></div>
+                            </td>
+                            <td>
+                                <div class="creator_profile_div"><img class="creator_profile"
+                                    th:src="|img/creator_profile/${matched[2].creatorname}.jpg|" 
+                                    th:alt="${matched[2].creatorname}"></div>
+                            </td>
+                        </tr>
+                        <tr class="mypage_creator_name_tr">
+                            <td>
+                                <div class="mypage_creator_name_div" th:text="${matched[0].creatorname}"></div>
+                            </td>
+                            <td>
+                                <div class="mypage_creator_name_div" th:text="${matched[1].creatorname}"></div>
+                            </td>
+                            <td>
+                                <div class="mypage_creator_name_div" th:text="${matched[2].creatorname}"></div>
+                            </td>
+                        </tr>
+                        <tr class="mypage_creator_desc_tr">
+                            <td>
+                                <div class="mypage_creator_decs_div">설명1</div>
+                            </td>
+                            <td>
+                                <div class="mypage_creator_decs_div">설명2</div>
+                            </td>
+                            <td>
+                                <div class="mypage_creator_decs_div">설명2</div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td rowspan="3">
+                    <div class="mypage_creator_warning" th:if="${session.members == null}">로그인을 해주세요!</div>
+                    <div class="mypage_creator_warning" th:if="${session.members != null && liked.size() == 0}">좋아한 메이크업 사진이 없어요 ㅜㅜ</div>
+                    <div class="mypage_liked_div" th:if="${liked.size() > 0}">
+                        <div class="liked_img_div" th:if="${session.members != null}" th:each="port : ${liked}">
+                        <img class="liked_img" th:src="|makeup/${port.portfolioimg}|">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
 </body>
+
 </html>

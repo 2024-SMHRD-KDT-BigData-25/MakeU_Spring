@@ -2,24 +2,30 @@ package com.bangbumdae.makeu.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bangbumdae.makeu.model.Creator;
+import com.bangbumdae.makeu.model.FaceType;
 import com.bangbumdae.makeu.model.Members;
+import com.bangbumdae.makeu.model.PersonalColor;
+import com.bangbumdae.makeu.model.ShopPortfolio;
+import com.bangbumdae.makeu.service.makeuplikesService;
+import com.bangbumdae.makeu.service.matchingresultService;
 import com.bangbumdae.makeu.service.memberService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
-
 @Controller
 @RequiredArgsConstructor
 public class memberController {
-    @Autowired
     private final memberService memberService;
-
+    private final makeuplikesService makeuplikesService;
+    private final matchingresultService matchingresultService;
     @GetMapping("/login")
     public String loginPage() {
         return "login";
@@ -35,9 +41,26 @@ public class memberController {
         return "join";
     }
 
+    // 마이페이지
     @GetMapping("/mypage")
-    public String mypage() {
-        return "mypage";
+    public String showMyPage(@RequestParam("memid") String memid, Model model) {
+        // memId 파라미터 값 출력
+        List<ShopPortfolio> liked = makeuplikesService.getAllLikedPortpolios(memid);
+        model.addAttribute("liked", liked);
+        Creator[] mathcedCreators = new Creator[3];
+        mathcedCreators[0] = matchingresultService.getMatched1(memid);
+        mathcedCreators[1] = matchingresultService.getMatched2(memid);
+        mathcedCreators[2] = matchingresultService.getMatched3(memid);
+
+        model.addAttribute("matched", mathcedCreators);
+        
+        FaceType mFaceType = memberService.getFaceType(memid);
+        model.addAttribute("mFacetype", mFaceType);
+
+        PersonalColor mPersonalColor = memberService.getPersonalColor(memid);
+        model.addAttribute("mPersonalcolor", mPersonalColor);
+        // 뷰 반환
+        return "mypage"; // mypage.html로 이동
     }
 
     @GetMapping("/matching")
@@ -66,22 +89,23 @@ public class memberController {
     @PostMapping("/Login")
     public String memberLogin(Members m, HttpSession session) {
         System.out.println(m.toString());
-    
+
         // Service를 통해 로그인 처리
-        List<Members> result = memberService.authenticate(m.getMemId(), m.getMemPw());
-    
+        List<Members> result = memberService.authenticate(m.getMemid(), m.getMempw());
+
         if (result.isEmpty()) {
             // 로그인 실패: 세션에 에러 메시지 설정
             session.setAttribute("error", "아이디 또는 비밀번호가 잘못되었습니다.");
-            return "redirect:/login";  // 로그인 페이지로 리다이렉트
+            return "redirect:/login"; // 로그인 페이지로 리다이렉트
         } else {
             // 로그인 성공: 세션에서 에러 메시지 제거
             session.removeAttribute("error");
-            session.setAttribute("members", result.get(0));  // 로그인한 회원 정보 저장
-            return "redirect:/";  // 메인 페이지로 리다이렉트
+            session.setAttribute("members", result.get(0)); // 로그인한 회원 정보 저장
+            return "redirect:/"; // 메인 페이지로 리다이렉트
         }
     }
-    //회원정보수정
+
+    // 회원정보수정
     @PostMapping("/update")
     public String updateMember(Members m, HttpSession session) {
         System.out.println(m.toString());

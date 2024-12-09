@@ -15,9 +15,11 @@ function addLikes(idx) {
         $.ajax({
             url: "likes/" + mem_id + "/" + idx, // 쿼리 파라미터로 idx 전달
             type: "GET",
-    
-            success: function () {
-                console.log("호출 성공");
+
+            success: function (status) {
+                const imageDiv = document.getElementById("heart_img_"+idx);
+                imageDiv.style.opacity=status ? "1" : "0";
+                
             },
             error: function (xhr, status, error) {
                 console.error("AJAX 실패!");
@@ -30,4 +32,26 @@ function addLikes(idx) {
         console.log("mem_id가 존재하지 않음");  // mem_id가 존재하지 않으면 처리
     }
     
+}
+
+function hoverFunction(idx) {
+    const tagSpan = document.getElementById("image_tags"+idx); 
+    if (tagSpan.textContent !=  "") {
+        return;
+    }
+    $.ajax({
+        url: "tags/" + idx, // 쿼리 파라미터로 idx 전달
+        type: "GET",
+
+        success: function (tags) {
+            console.log(tags);
+            tagSpan.textContent = tags;
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX 실패!");
+            console.error("Status:", status);
+            console.error("Error:", error);
+            console.error("Response Text:", xhr.responseText);
+        },
+    });
 }
