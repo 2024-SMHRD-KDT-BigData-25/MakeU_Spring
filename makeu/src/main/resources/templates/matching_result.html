@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/nystyle.css">
+    <link rel="stylesheet" href="css/jhstyle.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Document</title>
@@ -13,32 +13,67 @@
     <div th:replace="~{header}"></div> 
 
     <div class="main_back">
-
+        <h2>홍길동님의 얼굴 분석 결과</h2>
         <div class="result_form">
-            <form action="matching_result" method="get">
-                <table align="center">
-                    <tr > 
-                        <td align="center">
-                            <span class="name_font">홍길동</span>
-                            <span>님의 얼굴 분석 결과</span>
-                        </td>
-                    </tr>
-                    <tr><td><br></td></tr>
-
-                    <tr>
-                        <td align="center">
-                            <img class="img_result" src="img/face_shape/egg.png" alt="">
-                            <img class="img_result" src="img/season/가을1.jpeg" alt="">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center">
-                            <span>계란형          </span>
-                            <span>         가을 웜톤</span>
-                        </td>
-                    </tr>
-                </table>
-            </form> 
+            <div class="analysis">
+                <div class="results">
+                  
+                  <div class="face-shape">
+                    <div class="shapes">
+                      <div class="row">
+                        <div class="shape"><img src="img/face_shape/smiling-face.png" alt="둥근형"><p>둥근형</p></div>
+                        <div class="shape"><img src="img/face_shape/heart.png" alt="하트형"><p>하트형</p></div>
+                        <div class="shape"><img src="img/face_shape/egg.png" alt="계란형"><p>계란형</p></div>
+                      </div>
+                      <div class="row">
+                        <div class="shape"><img src="img/face_shape/square.png" alt="사각형"><p>사각형</p></div>
+                        <div class="shape"><img src="img/face_shape/oval.png" alt="타원형"><p>타원형</p></div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="personal-color">
+                    <div class="colors">
+                      <div class="color"><img src="img/season/봄 웜톤.jpeg" alt="봄"><p>봄 웜톤</p></div>
+                      <div class="color"><img src="img/season/여름 쿨톤.jpeg" alt="여름"><p>여름 쿨톤</p></div>
+                      <div class="color"><img src="img/season/가을 웜톤.jpeg" alt="가을"><p>가을 웜톤</p></div>
+                      <div class="color"><img src="img/season/겨울 쿨톤.jpeg" alt="겨울"><p>겨울 쿨톤</p></div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          
+            <div class="recommendation">
+                
+                
+                <div class="creators">
+                  <div class="creator_category">
+                    <h3>얼굴형 + 퍼스널 컬러</h3>
+                    <p>전체적인 메이크업 분위기를 참고하기 좋아요</p>
+                    <div class="creator">
+                        <div class="youtuber_img"><img src="img/creator_profile/Yoo True.jpg" alt="Yoo True"></div>
+                        <h4>Yoo True</h4>
+                        <p>구독자 57.4만명</p>
+                        <p>#데일리, #완벽베이스, #도구장인, #라이트톤</p>
+                    </div>
+                  </div>
+                  <div class="creator_category">
+                    <h3>눈 모양</h3>
+                    <p>눈 화장을 집중적으로 참고해 보세요!</p>
+                    <div class="creator">
+                        <div class="youtuber_img"><img src="img/creator_profile/Minsco 민스코.jpg" alt="Minsco"></div>
+                        <h4>Minsco</h4>
+                        <p>구독자 71.2만명</p>
+                        <p>#힙, #매트베이스, #드로잉, #아이라인</p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          
+              <div class="buttons">
+                <button class="btn home">HOME</button>
+                <button class="btn save">SAVE</button>
+              </div>
         </div>
 
     </div>

@@ -65,7 +65,13 @@
             .then((data) => {
                 console.log("분석 결과:", data);
                 // 결과 페이지로 이동
-                window.location.href = `/makeU/result?faceShape=${data.faceShape}&confidence=${data.confidence}`;
+                const faceShape = data.faceShape.label;
+                const faceConfidence = data.faceShape.confidence;
+                const personalColor = data.personalColor.label;
+                const colorConfidence = data.personalColor.confidence;
+                
+                // URL에 결과값 전달
+                window.location.href = `/makeU/result?faceShape=${faceShape}&faceConfidence=${faceConfidence}&personalColor=${personalColor}&colorConfidence=${colorConfidence}`;
             })
             .catch((error) => {
                 console.error("분석 실패: ", error);

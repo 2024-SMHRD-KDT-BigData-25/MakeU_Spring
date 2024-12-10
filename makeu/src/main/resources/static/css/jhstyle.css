@@ -1,5 +1,11 @@
 /* 기본 스타일 초기화 */
-body, h1, h2, p, ul, li, a {
+body,
+h1,
+h2,
+p,
+ul,
+li,
+a {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -15,7 +21,7 @@ body {
     color: #333;
     padding: 0;
     margin: 0;
-    
+
 }
 
 /* Header 스타일 */
@@ -66,7 +72,7 @@ body {
     max-width: 600px;
     align-items: center;
     height: 400px;
-    display : flex;
+    display: flex;
 }
 
 .matching h2 {
@@ -101,77 +107,267 @@ body {
     font-size: 0.9rem;
     color: #555;
 }
+
 /* 얼굴 프레임 */
 .face-frame {
-    position: absolute; /* 부모 요소(.matching)를 기준으로 절대 위치 설정 */
-    left: 50%; /* 수평 중앙 정렬 */
-    transform: translate(-50%); /* 정확히 중앙으로 이동 */
+    position: absolute;
+    /* 부모 요소(.matching)를 기준으로 절대 위치 설정 */
+    left: 50%;
+    /* 수평 중앙 정렬 */
+    transform: translate(-50%);
+    /* 정확히 중앙으로 이동 */
     width: 250px;
     height: 250px;
-    pointer-events: none; /* 상호작용 비활성화 (video 클릭 가능) */
+    pointer-events: none;
+    /* 상호작용 비활성화 (video 클릭 가능) */
 }
 
 
 /* 각 모서리 스타일 */
 .corner {
     position: absolute;
-    width: 40px; /* 모서리 선 길이 */
-    height: 40px; /* 모서리 선 길이 */
-    border: 3px solid #5A4635; /* 선 색상 */
+    width: 40px;
+    /* 모서리 선 길이 */
+    height: 40px;
+    /* 모서리 선 길이 */
+    border: 3px solid #5A4635;
+    /* 선 색상 */
 }
 
 /* 각 모서리 둥글기 설정 */
 .corner.top-left {
     top: 0;
     left: 0;
-    border-right: none; /* 오른쪽 선 제거 */
-    border-bottom: none; /* 아래쪽 선 제거 */
-    border-top-left-radius: 30px; /* 왼쪽 위 둥글기 */
+    border-right: none;
+    /* 오른쪽 선 제거 */
+    border-bottom: none;
+    /* 아래쪽 선 제거 */
+    border-top-left-radius: 30px;
+    /* 왼쪽 위 둥글기 */
 }
 
 .corner.top-right {
     top: 0;
     right: 0;
-    border-left: none; /* 왼쪽 선 제거 */
-    border-bottom: none; /* 아래쪽 선 제거 */
-    border-top-right-radius: 30px; /* 오른쪽 위 둥글기 */
+    border-left: none;
+    /* 왼쪽 선 제거 */
+    border-bottom: none;
+    /* 아래쪽 선 제거 */
+    border-top-right-radius: 30px;
+    /* 오른쪽 위 둥글기 */
 }
 
 .corner.bottom-left {
     bottom: 0;
     left: 0;
-    border-right: none; /* 오른쪽 선 제거 */
-    border-top: none; /* 위쪽 선 제거 */
-    border-bottom-left-radius: 30px; /* 왼쪽 아래 둥글기 */
+    border-right: none;
+    /* 오른쪽 선 제거 */
+    border-top: none;
+    /* 위쪽 선 제거 */
+    border-bottom-left-radius: 30px;
+    /* 왼쪽 아래 둥글기 */
 }
 
 .corner.bottom-right {
     bottom: 0;
     right: 0;
-    border-left: none; /* 왼쪽 선 제거 */
-    border-top: none; /* 위쪽 선 제거 */
-    border-bottom-right-radius: 30px; /* 오른쪽 아래 둥글기 */
+    border-left: none;
+    /* 왼쪽 선 제거 */
+    border-top: none;
+    /* 위쪽 선 제거 */
+    border-bottom-right-radius: 30px;
+    /* 오른쪽 아래 둥글기 */
 }
 
 /* 설명 텍스트 */
 .instruction {
-    position: absolute; /* 박스 내부에서 절대 위치 지정 */
-    left: 50%; /* 수평 중앙 정렬 */
-    transform: translateX(-50%); /* 정확히 중앙으로 이동 */
+    position: absolute;
+    /* 박스 내부에서 절대 위치 지정 */
+    left: 50%;
+    /* 수평 중앙 정렬 */
+    transform: translateX(-50%);
+    /* 정확히 중앙으로 이동 */
     font-size: 14px;
     color: #5e4a3b;
     padding: 5px 10px;
     border-radius: 5px;
 }
 
-.capture{
+.capture {
     border: 1px solid transparent;
-    background-color:transparent;
+    background-color: transparent;
     left: 50%;
 }
 
 video {
-    width: 100%; /* 부모 요소의 너비에 맞추기 */
-    height: 100%; /* 부모 요소의 높이에 맞추기 */
-    display: block; /* 불필요한 공백 제거 */
+    width: 100%;
+    /* 부모 요소의 너비에 맞추기 */
+    height: 100%;
+    /* 부모 요소의 높이에 맞추기 */
+    display: block;
+    /* 불필요한 공백 제거 */
 }
+
+.main_back {
+    background-color: #EFF2F3;
+    display: flex;
+    align-items: flex-end;
+}
+
+.result_form {
+    padding: 5vh;
+    margin: 5% auto 5% auto;
+    background-color: white;
+    width: 1600px;
+    height: 80%;
+    border-radius: 130px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.analysis {
+    background:transparent;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.analysis h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.results {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    position:relative;
+    width: 100%; /* 부모 컨테이너의 크기를 제한 */
+}
+
+.face-shape,
+.personal-color {
+    width: 100%;
+    height:auto;
+    position:relative;
+}
+
+.shapes{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width:100%;
+}
+.colors {
+    display: flex;
+    gap:20px;
+    max-width:100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.shape,
+.color {
+    text-align: center;
+}
+
+.shape img{
+    width: 150px;
+    height: 150px;
+}
+
+.color img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.recommendation {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.recommendation h3 {
+    font-size: 18px;
+}
+
+.creators {
+    display: flex;
+    gap:30px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
+.creator img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background: #c0392b;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+.creator_category{
+    width:50%;
+}
+
+.creator {
+    display: flex;
+    align-items: center; /* 이미지와 텍스트를 수직 정렬 */
+    gap: 15px; /* 이미지와 텍스트 간격 */
+    padding: 10px; /* 내부 여백 */
+    max-width: 800px; /* 컨테이너 크기 제한 */
+    height:120px;
+    margin: 0 auto; /* 중앙 정렬 */
+    
+    border-radius: 8px; /* 둥근 모서리 */
+    background-color: #fff; /* 배경색 */
+    
+  }
+  
+  
+  
+  .creator h4 {
+    font-size: 18px; /* 이름 크기 */
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .creator p {
+    font-size: 17px;
+    margin: 5px 0;
+    color: #555; /* 텍스트 색상 */
+  }
+  
+  .creator small {
+    font-size: 12px;
+    color: #888;
+  }
