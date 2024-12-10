@@ -58,6 +58,7 @@ function getPortpolios(idx) {
 
 function shop_info(idx) {
     $("#shop_detail_div").show();
+    $("#shop_reservation_div").hide();
     // jQuery 방식
     $("#reserv_btn").on("click", function () {
         openReservDiv(idx);
@@ -96,6 +97,7 @@ function closeShopReserv() {
 }
 
 function openReservDiv(idx) {
+    $("#shop_reservation_div").show();
     console.log(idx);
 }
 
