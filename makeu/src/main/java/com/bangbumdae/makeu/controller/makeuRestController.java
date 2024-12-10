@@ -14,7 +14,8 @@ import com.bangbumdae.makeu.service.portpolioService;
 import com.bangbumdae.makeu.service.shopTagsService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestParam;
+
+
 
 
 @RequiredArgsConstructor
@@ -31,15 +32,21 @@ public class makeuRestController {
         return pService.getPortfolios();
     }
 
+    @GetMapping("ports/{idx}")
+    public List<ShopPortfolio> getMethodName(@PathVariable int idx) {
+        System.out.println(idx);
+        return portpolioService.getPortfolioByidx(idx);
+    }
+    
+
     @GetMapping("/likes/{mem_id}/{idx}")
     public boolean likes(@PathVariable String mem_id, @PathVariable int idx) {
         return makeuplikesService.addLikes(mem_id, idx);
     }
     @GetMapping("/tags/{idx}")
     public String getTags(@PathVariable int idx) {
-        ShopPortfolio p = portpolioService.gePortfolio(idx);
+        ShopPortfolio p = portpolioService.getPortfolio(idx);
         ShopInfo shop = shopInfoService.getShopInfo(p.getShopidx());
-        System.out.println(shop.toString());
         String tags = "";
         char[] category = Integer.toBinaryString(shop.getShopcategory()).toCharArray();
         List<String> tagNames = shopTagsService.getTagsName();
@@ -50,5 +57,11 @@ public class makeuRestController {
         }
         return tags;
     }
+    @GetMapping("/shop/{idx}")
+    public ShopInfo getShopInfo(@PathVariable int idx) {
+        ShopInfo result = shopInfoService.getShopInfo(idx);
+        return result;
+    }
+    
     
 }

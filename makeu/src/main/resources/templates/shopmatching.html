@@ -1,34 +1,226 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop Page</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/jwstyle.css">
+    <link rel="stylesheet" href="css/eystyle.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=051ade627d04c4dcc0483ff63a0d3a07"></script> <!-- Kakao Map API -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+    <script src="https://kit.fontawesome.com/30d3b7fa39.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <header>
         <div th:replace="~{header}"></div> <!-- 헤더가 삽입될 위치 -->
     </header>
+
     <main class="shopMain">
-        <div class="section section-left">Left Section</div>
-        <div class="section section-center">Center Section</div>
-        <div class="section section-right">
-            <div id="map"></div>
+        <div class="section-left">
+            <div class="shop_info_table" th:if="${slist!=null}" th:each="shop, iter : ${slist}"
+                th:onclick="|shop_info(${shop.shopidx})|">
+                <table>
+                    <tr>
+                        <td class="shop_info_img" rowspan="3">
+                            <div class="shops_img_div">
+                                <img th:src="|makeup/${shop.shopname}1.jpg|" alt="메이크업 사진">
+                            </div>
+                        </td>
+                        <td th:text="${shop.shopname}"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div th:id="|shop_tag_div_${shop.shopidx}|" class="shop_tag_div"
+                                th:text="${shop_tags[iter.index]}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td th:text="${shop.shoplocation}"></td>
+                    </tr>
+                </table>
+            </div>
+
         </div>
+        <div id="map"></div>
+        <div id="shop_detail_div" style="display: none;" class="section-center">
+            <div class="shop_detail_info" id="shop_title">
+                <img style="width:8%;" src="img/back.png" alt="" onclick="closeShopDetail()">
+                <div id="shop_detail_title"></div>
+            </div>
+            <div class="shop_detail_info" id="shop_detail_portpolio"></div>
+            <div class="shop_detail_info" id="shop_location">
+                <img style="width:8%;" src="img/location.png" alt="">
+                <div id="shop_detail_location">
+                </div>
+            </div>
+            <div class="shop_detail_info" id="shop_detail_tags"></div>
+            <div id="shop_detail_btns">
+                <button>리뷰보기</button>
+                <button id="reserv_btn">예약하기</button>
+            </div>
+        </div>
+
+        <div id="shop_reservation_div" class="section-center">
+            <div class="shop_detail_info" id="reserv_title">
+                <img style="width:6%;" src="img/back.png" alt="" onclick="closeShopReserv()">
+                <div id="reserv_detail_title">메종드아띠</div>
+            </div>
+            <div id="reserve_cal">
+                <div class="cal_title">
+                    <img style="width:6%;margin-right: 1%;" src="img/calendar.png" alt="">
+                    날짜 선택하기
+                </div>
+                <table id="calendar" align="center">
+                    <tr>
+                        <td align="center"><label onclick="prevCalendar()"> &lt; </label></td>
+                        <td colspan="5" align="center" id="calendarTitle">yyyy년 m월</td>
+                        <td align="center"><label onclick="nextCalendar()">&gt;</label></td>
+                    </tr>
+                    <tr>
+                        <td align="center">일
+                        </td>
+                        <td align="center">월</td>
+                        <td align="center">화</td>
+                        <td align="center">수</td>
+                        <td align="center">목</td>
+                        <td align="center">금</td>
+                        <td align="center">토
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="display: none;" id="date"></div>
+            <div id="reserv_time">
+                오전
+                <div class="time_table">
+                    <div>6:00</div>
+                    <div>7:00</div>
+                    <div>8:00</div>
+                    <div>9:00</div>
+                    <div>10:00</div>
+                    <div>11:00</div>
+                    <div>12:00</div>
+                </div>
+                오후
+                <div class="time_table">
+                    <div>1:00</div>
+                    <div>2:00</div>
+                    <div>3:00</div>
+                    <div>4:00</div>
+                    <div>5:00</div>
+                    <div>6:00</div>
+                </div>
+            </div>
+            <div style="display: none;" id="time"></div>
+            <div class="cal_title">
+                <img style="width:6%;margin-right: 1%;" src="img/widgets.png" alt="">
+                서비스 선택하기
+            </div>
+            <div class="reserv_warning">가격은 현장에서 변동될 수 있습니다.</div>
+            <table class="service_table">
+                <tr>
+                    <td class="check_td">
+                        <div id="service_1" class="service_checkbox"></div>
+                    </td>
+                    <td class="service_name"><div>데일리 메이크업</div></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td class="service_desc">퍼스널 컬러, 얼굴형을 반영한 데일리 메이크업</td>
+                </tr>
+                <tr>
+                    <td class="check_td">
+                        <div id="service_2" class="service_checkbox"></div>
+                    </td>
+                    <td class="service_name"><div>면접 메이크업</div></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td class="service_desc">깔끔한 첫 인상을 선물해 드릴게요!</td>
+                </tr>
+                <tr>
+                    <td class="check_td">
+                        <div id="service_3" class="service_checkbox"></div>
+                    </td>
+                    <td class="service_name"><div>증명 사진 메이크업</div></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td class="service_desc">흑역사는 그만! 세월이 지나도 예쁜 증명사진 메이크업</td>
+                </tr>
+                <tr>
+                    <td class="check_td">
+                        <div id="service_4" class="service_checkbox"></div>
+                    </td>
+                    <td class="service_name"><div>스냅 사진 메이크업</div></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td class="service_desc">스냅 사진 컨셉에 딱 맞는 메이크업을 해드릴게요!</td>
+                </tr>
+                <tr>
+                    <td class="check_td">
+                        <div id="service_5" class="service_checkbox"></div>
+                    </td>
+                    <td class="service_name"><div>웨딩 메이크업</div></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td class="service_desc">평생에 단 한 번! 가장 아름다운 신부가 되세요!</td>
+                </tr>
+            </table>
+            <div style="display: none;"  id="service"></div>
+            <div class="cal_title">
+                <img style="width:6%;margin-right: 1%;" src="img/lightbulb.png" alt="">
+                추가 요청 사항
+            </div>
+            <div class="reserv_warning">
+                <div>
+                아티스트에게 추가로 전달하고 싶은 사항을 적어주세요!<br>
+                (예 : 민감성 피부에요, 악건성입니다, 애교살 포인트를 주고 싶어요)
+                </div>
+            </div>
+            <textarea name="requirement" id="requirement"></textarea>
+            <div class="cal_title">
+                <img style="width:6%;margin-right: 1%;" src="img/notification.png" alt="">
+                페이스 매칭 결과 전달
+            </div>
+            <div class="reserv_warning">
+                <div style="color: black;font-size: 1.2vw;">
+                    Make you에서 분석한 <span id="name_span">홍길동</span>님의 얼굴 정보를 전달할까요?<br>
+                    (아티스트가 메이크업 시 참고할 수 있습니다.)
+                </div>
+            </div>
+            <div id="info_table">
+                    <div id="yes_checked" class="info_checkbox"></div>
+                    <div>YES</div>
+                    <div id="no_checked" class="info_checkbox"></div>
+                    <div>NO</div>
+            </div>
+            <div style="display: none;" id="information"></div>
+            <div class="reserv_button_div">
+                <button id="make_reserv_btn" onclick="makeReservation()">예약하기</button>
+            </div>
+        </div>
+        </div>
+
     </main>
 
-    <script>
-        // Kakao Map API Initialization
-        const mapContainer = document.getElementById('map'); // Map container
-        const mapOption = {
-            center: new kakao.maps.LatLng(37.5665, 126.9780), // Default center (Seoul)
-            level: 3 // Zoom level
-        };
-        const map = new kakao.maps.Map(mapContainer, mapOption);
-    </script>
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=022c4e54ddaeae02f226257bb5a95f38"></script> <!-- Kakao Map API -->
+    <script src="js/shopmatching.js"></script>
 </body>
+
 </html>

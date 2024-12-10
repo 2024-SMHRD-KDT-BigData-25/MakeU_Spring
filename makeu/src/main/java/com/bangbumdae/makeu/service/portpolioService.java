@@ -17,7 +17,11 @@ public class portpolioService {
         return portpolioRepository.findAll();
     }
 
-    public ShopPortfolio gePortfolio(int idx) {
+    public ShopPortfolio getPortfolio(int idx) {
         return portpolioRepository.findById(idx).get();
+    }
+
+    public List<ShopPortfolio> getPortfolioByidx(int idx) {
+        return portpolioRepository.findByShopidx(idx);
     }
 }
