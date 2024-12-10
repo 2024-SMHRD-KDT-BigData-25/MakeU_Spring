@@ -73,12 +73,15 @@ function shop_info(idx) {
             var sloc = document.getElementById("shop_detail_location");
             var stag = document.getElementById("shop_detail_tags");
 
-            getPortpolios(idx);
-
             stitle.textContent = shop.shopname;
             sloc.textContent = shop.shoplocation;
             stag.textContent = tags;
 
+            document.getElementById("reserv_title").textContent = shop.shopname;
+            document.getElementById("reserv_idx").textContent = idx;
+
+            getPortpolios(idx);
+            
         },
         error: function (xhr, status, error) {
             console.error("AJAX 실패!(shop_info)");
@@ -91,6 +94,9 @@ function shop_info(idx) {
 
 function closeShopDetail() {
     shop_info_div.style.display = "none";
+    document.querySelectorAll(".shop_info_table table").forEach(item => {
+        item.classList.remove("selected_table");
+    });
 }
 function closeShopReserv() {
     shop_reservation_div.style.display = "none";
@@ -98,7 +104,6 @@ function closeShopReserv() {
 
 function openReservDiv(idx) {
     $("#shop_reservation_div").show();
-    console.log(idx);
 }
 
 var today = new Date();
@@ -240,6 +245,19 @@ document.querySelectorAll(".info_checkbox").forEach(checkbox => {
     });
 });
 
+
+document.querySelectorAll(".shop_info_table table").forEach(table => {
+    table.addEventListener("click", function () {
+        // 이미 선택된 체크박스가 있다면, 모두 해제
+        document.querySelectorAll(".shop_info_table table").forEach(item => {
+            item.classList.remove("selected_table");
+        });
+
+        // 현재 클릭된 체크박스에 "checked" 클래스를 추가
+        this.classList.add("selected_table");
+    });
+});
+
 function makeReservation() {
     var selected_date = document.getElementById("date").textContent;
     var selected_time = document.getElementById("time").textContent;
@@ -269,10 +287,29 @@ function makeReservation() {
         alert("정보 전송 여부를 선택해주세요!");
         return;
     }
+
+    // const shopname = $("#reserv_detail_title").text;
     
     console.log("selected_date " + selected_date);
     console.log("selected_time " + selected_time);
     console.log("selected_service " + selected_service);
     console.log("requirement " + requirement);
     console.log("selected_information " + selected_information);
+    // console.log(shopname)
+    $.ajax({
+        url: "reservation", // 쿼리 파라미터로 idx 전달
+        type: "post",
+        data: {
+            shopidx : $("#reserv_idx").text(),
+            reservationdatetime : selected_date + " " + selected_time,
+            servicetype : selected_service,
+            requirement : requirement
+        },
+        success : function () {
+            console.log("예약 완료");
+        },
+        error : function() {
+            alert("예약 불가!");
+        }
+    });
 }
