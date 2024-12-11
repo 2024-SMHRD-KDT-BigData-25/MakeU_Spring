@@ -22,7 +22,7 @@ public interface makeuplikesRepository extends JpaRepository<MakeUpLikes, Intege
     @Query("SELECT p FROM MakeUpLikes l JOIN ShopPortfolio p ON l.portfolioidx = p.portfolioidx WHERE l.memid = :memid")
     List<ShopPortfolio> findLikedShopPortfolios(@Param("memid") String memid);
 
-    @Query("select s from make_up_likes l join shop_portfolio p on l.portfolioidx = p.portfolioidx join shop_info s on p.shopidx = s.shopidx  WHERE l.memid = :memid")
+    @Query("select s from MakeUpLikes l join ShopPortfolio p on l.portfolioidx = p.portfolioidx join ShopInfo s on p.shopidx = s.shopidx  WHERE l.memid = :memid")
     List<ShopInfo> likedShops(@Param("memid") String memid);
 
 }
