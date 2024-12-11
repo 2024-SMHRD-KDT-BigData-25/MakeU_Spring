@@ -15,5 +15,5 @@ public interface matchingresultRepository extends JpaRepository<MatchingResult, 
     Creator findMatched2ByMemid(String memid);
     @Query("SELECT c FROM MatchingResult m JOIN Creator c  ON m.matched3 = c.creatoridx WHERE m.memid = :memid")
     Creator findMatched3ByMemid(String memid);
-
+ 
 }

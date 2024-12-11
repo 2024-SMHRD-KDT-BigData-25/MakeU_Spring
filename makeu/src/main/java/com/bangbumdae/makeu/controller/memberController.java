@@ -76,7 +76,18 @@ public class memberController {
     }
 
     @GetMapping("/result")
-    public String resultPage() {
+    public String resultPage(HttpSession session, Model model) {
+        String faceshape = (String)session.getAttribute("faceShape");
+        float faceConfidence = (float) session.getAttribute("faceConfidence");
+        String personalcolor = (String)session.getAttribute("personalColor");
+        float colorConfidence = (float) session.getAttribute("colorConfidence");
+
+        model.addAttribute("faceShape", faceshape);
+        model.addAttribute("faceConfidence", faceConfidence);
+        model.addAttribute("personalColor", personalcolor);
+        model.addAttribute("colorConfidence", colorConfidence);
+
+
         return "matching_result";
     }
 
@@ -135,20 +146,7 @@ public class memberController {
         reservationService.addReservation(newReservation);
     }
 
-    @PostMapping("/result")
-    public String resultRecieve(@RequestParam("faceShape") String faceShape, @RequestParam("faceConfidence") float faceConfidence, @RequestParam("personalColor") String personalColor, @RequestParam("colorConfidence") float colorConfidence, HttpSession session, Model model) {
-        session.setAttribute("faceShape", faceShape);
-        session.setAttribute("faceConfidence", faceConfidence);
-        session.setAttribute("personalColor", personalColor);
-        session.setAttribute("colorConfidence", colorConfidence);
-        
-        model.addAttribute("faceShape", faceShape);
-        model.addAttribute("faceConfidence", faceConfidence);
-        model.addAttribute("personalColor", personalColor);
-        model.addAttribute("colorConfidence", colorConfidence);
-
-        return "redirect:/result";
-    }
+    
     @GetMapping("/find-password")
     public String findPasswordPage() {
         return "find_password";

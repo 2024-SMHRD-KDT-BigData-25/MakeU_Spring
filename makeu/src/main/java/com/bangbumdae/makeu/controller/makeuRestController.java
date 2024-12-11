@@ -1,14 +1,18 @@
 package com.bangbumdae.makeu.controller;
 
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bangbumdae.makeu.model.Creator;
 import com.bangbumdae.makeu.model.Members;
 import com.bangbumdae.makeu.model.ShopInfo;
 import com.bangbumdae.makeu.model.ShopPortfolio;
+import com.bangbumdae.makeu.service.CreatorService;
 import com.bangbumdae.makeu.service.ShopInfoService;
 import com.bangbumdae.makeu.service.makeuplikesService;
 import com.bangbumdae.makeu.service.portpolioService;
@@ -18,6 +22,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,6 +33,7 @@ public class makeuRestController {
     private final ShopInfoService shopInfoService;
     private final portpolioService portpolioService;
     private final shopTagsService shopTagsService;
+    private final CreatorService creatorService;
 
     @GetMapping("/main/list")
     public List<ShopPortfolio> getPortpolios() {
@@ -82,4 +88,36 @@ public class makeuRestController {
         shopInfoService.updateShopInfo(entity);
     }
 
+    @PostMapping("/result")
+    public ResponseEntity<List<Creator>> getCreators(@RequestBody Map<String, String> request) {
+        
+        String faceShape = request.get("faceShape");
+        String personalColor = request.get("personalColor");
+
+        // Mapping faceShape와 personalColor 값을 인덱스로 변환
+        Map<String, Integer> faceShapeMap = Map.of(
+            "Heart", 1,
+            "Oval", 2,
+            "Oblong", 3,
+            "Round", 4,
+            "Square",5
+        );
+
+        Map<String, Integer> personalColorMap = Map.of(
+            "Spring", 1,
+            "Summer", 2,
+            "Autumn", 3,
+            "Winter", 4
+        );
+        
+        Integer facetypeidx = faceShapeMap.get(faceShape);
+        Integer personalcoloridx = personalColorMap.get(personalColor);
+
+        if (facetypeidx == null || personalcoloridx == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<Creator> creators = creatorService.getCreatorsByFaceTypeAndPersonalColor(facetypeidx, personalcoloridx);
+        return ResponseEntity.ok(creators);
+    }
 }

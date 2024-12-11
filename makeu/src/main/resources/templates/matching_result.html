@@ -50,10 +50,7 @@
                     <h3>얼굴형 + 퍼스널 컬러</h3>
                     <p>전체적인 메이크업 분위기를 참고하기 좋아요</p>
                     <div class="creator">
-                        <div class="youtuber_img"><img src="img/creator_profile/Yoo True.jpg" alt="Yoo True"></div>
-                        <h4>Yoo True</h4>
-                        <p>구독자 57.4만명</p>
-                        <p>#데일리, #완벽베이스, #도구장인, #라이트톤</p>
+                        <div class="youtuber_img"></div>
                     </div>
                   </div>
                   <div class="creator_category">
@@ -107,5 +104,50 @@
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  // sessionStorage에서 faceShape와 personalColor 값 가져오기
+  const faceShape = sessionStorage.getItem('faceShape');
+  const personalColor = sessionStorage.getItem('personalColor');
+
+  if (faceShape && personalColor) {
+    // faceShape와 personalColor 값을 서버로 전송
+    fetch('/result', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        faceShape: faceShape,
+        personalColor: personalColor
+      })
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(filteredData => {
+        // 필터링된 데이터 렌더링
+        const container = document.querySelector(".creator");
+        container.innerHTML = ""; // 기존 콘텐츠 초기화
+        filteredData.forEach(creator => {
+          container.innerHTML += `
+            <div class="youtuber_img">
+              <img src="${creator.creatorlink}" alt="${creator.creatorname}">
+            </div>
+            <h4>${creator.creatorname}</h4>
+            <p>${creator.craetordesc || "설명 없음"}</p>
+          `;
+        });
+      })
+      .catch(error => console.error("Error fetching creators:", error));
+  } else {
+    console.error("Face shape or personal color not found in sessionStorage.");
+  }
+});
+
+
 </script>
 </html>
