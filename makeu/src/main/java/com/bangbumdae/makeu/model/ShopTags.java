@@ -16,4 +16,6 @@ public class ShopTags {
     private int tagidx;
     @Column(name = "tagname", length = 20)
     private String tagname;
+
+    public int score = 0;
 }
