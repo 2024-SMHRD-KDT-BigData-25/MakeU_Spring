@@ -152,23 +152,6 @@ public class memberController {
         reservationService.addReservation(newReservation);
     }
 
-    @PostMapping("/result")
-    public String resultRecieve(@RequestParam("faceShape") String faceShape,
-            @RequestParam("faceConfidence") float faceConfidence, @RequestParam("personalColor") String personalColor,
-            @RequestParam("colorConfidence") float colorConfidence, HttpSession session, Model model) {
-        session.setAttribute("faceShape", faceShape);
-        session.setAttribute("faceConfidence", faceConfidence);
-        session.setAttribute("personalColor", personalColor);
-        session.setAttribute("colorConfidence", colorConfidence);
-
-        model.addAttribute("faceShape", faceShape);
-        model.addAttribute("faceConfidence", faceConfidence);
-        model.addAttribute("personalColor", personalColor);
-        model.addAttribute("colorConfidence", colorConfidence);
-
-        return "redirect:/result";
-    }
-
     // 장바구니 추가
     @PostMapping("/shops")
     public String addShop(@RequestParam int shopIdx, HttpSession session) {
