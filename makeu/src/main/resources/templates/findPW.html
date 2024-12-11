@@ -1,0 +1,26 @@
+ <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../static/css/style.css">
+        <link rel="stylesheet" href="../static/css/pwstyle.css">
+        <link href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css" rel="stylesheet"> <!-- NanumSquare 웹폰트 -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <title>Document</title>
+    </head>
+<body>
+    <div th:replace="~{header}"></div> 
+    <div class="container">
+        <div class="form-container">
+            <h1>Find Password</h1>
+            <form>
+                <input type="text" placeholder="아이디를 입력해주세요" required>
+                <input type="text" placeholder="닉네임 입력해주세요" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
