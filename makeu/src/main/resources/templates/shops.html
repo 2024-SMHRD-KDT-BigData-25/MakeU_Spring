@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장바구니</title>
+    <link rel="stylesheet" href="css/nystyle.css">
+</head>
+
+<body>
+    <!-- 장바구니 모달 -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <table>
+                <tr >
+                    <td >
+                        <h2 class="cart-title">  장바구니</h2>
+                    </td>
+                    <td class="cart-content">
+                        <span class="close-button" id="closeButton" onclick="printMdal()">&times;</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="cart-content">
+                        <p>장바구니에 상품이 없습니다.</p>                    
+                    </td>
+                </tr>
+            
+                
+                
+            </table>
+
+        </div>
+    </div>
+
+    <script src="./js/shops.js"></script>
+</body>
+
+</html>

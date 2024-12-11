@@ -78,7 +78,7 @@ def analyze():
                 "label": personal_color,
                 "confidence": color_confidence
             }    
-        })
+        });
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"error": "분석 실패"}), 500
