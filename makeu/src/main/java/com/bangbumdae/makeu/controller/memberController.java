@@ -68,6 +68,9 @@ public class memberController {
 
         PersonalColor mPersonalColor = memberService.getPersonalColor(memid);
         model.addAttribute("mPersonalcolor", mPersonalColor);
+ 
+        List<ShopReservation> reservations =reservationService.getReservations(memid);
+        model.addAttribute("reservations", reservations);
         // 뷰 반환
         return "mypage"; // mypage.html로 이동
     }

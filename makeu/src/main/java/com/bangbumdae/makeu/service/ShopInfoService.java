@@ -1,6 +1,5 @@
 package com.bangbumdae.makeu.service;
 
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
@@ -67,5 +66,9 @@ public class ShopInfoService {
 
     public void updateShopInfo(ShopInfo s) {
         shopInfoRepository.save(s);
+    }
+
+    public String getShopname(int idx) {
+        return shopInfoRepository.findShopnameByShopidx(idx);
     }
 }
