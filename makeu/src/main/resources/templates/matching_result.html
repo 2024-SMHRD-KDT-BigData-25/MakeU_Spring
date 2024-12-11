@@ -20,23 +20,23 @@
                   <div class="face-shape">
                     <div class="shapes">
                       <div class="row">
-                        <div class="shape"><img src="img/face_shape/smiling-face.png" data-shape="round"><p>둥근형</p></div>
-                        <div class="shape"><img src="img/face_shape/heart.png" alt="하트형"><p>하트형</p></div>
-                        <div class="shape"><img src="img/face_shape/egg.png" alt="계란형"><p>계란형</p></div>
+                        <div class="shape"><img src="img/face_shape/smiling-face.png" data-shape="Round" alt="둥근형"><p>둥근형</p></div>
+                        <div class="shape"><img src="img/face_shape/heart.png" data-shape="Heart" alt="하트형"><p>하트형</p></div>
+                        <div class="shape"><img src="img/face_shape/egg.png" data-shape="Oval" alt="계란형"><p>계란형</p></div>
                       </div>
                       <div class="row">
-                        <div class="shape"><img src="img/face_shape/square.png" alt="사각형"><p>사각형</p></div>
-                        <div class="shape"><img src="img/face_shape/oval.png" alt="타원형"><p>타원형</p></div>
+                        <div class="shape"><img src="img/face_shape/square.png" data-shape="Square" alt="사각형"><p>사각형</p></div>
+                        <div class="shape"><img src="img/face_shape/oval.png" data-shape="Oblong" alt="타원형"><p>타원형</p></div>
                       </div>
                     </div>
                   </div>
                   
                   <div class="personal-color">
                     <div class="colors">
-                      <div class="color"><img src="img/season/봄 웜톤.jpeg" alt="봄"><p>봄 웜톤</p></div>
-                      <div class="color"><img src="img/season/여름 쿨톤.jpeg" alt="여름"><p>여름 쿨톤</p></div>
-                      <div class="color"><img src="img/season/가을 웜톤.jpeg" alt="가을"><p>가을 웜톤</p></div>
-                      <div class="color"><img src="img/season/겨울 쿨톤.jpeg" alt="겨울"><p>겨울 쿨톤</p></div>
+                      <div class="color"><img src="img/season/봄 웜톤.jpeg" alt="Spring"><p>봄 웜톤</p></div>
+                      <div class="color"><img src="img/season/여름 쿨톤.jpeg" alt="Summer"><p>여름 쿨톤</p></div>
+                      <div class="color"><img src="img/season/가을 웜톤.jpeg" alt="Autumm"><p>가을 웜톤</p></div>
+                      <div class="color"><img src="img/season/겨울 쿨톤.jpeg" alt="Winter"><p>겨울 쿨톤</p></div>
                     </div>
                   </div>
                 </div>
@@ -76,24 +76,35 @@
         </div>
     </div>
     <h2>얼굴형: <span th:text="${session.faceShape}"></span></h2>
+    <h2>퍼스널컬러: <span th:text="${session.personalColor}"></span></h2>
 </body>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     // 세션에서 저장된 얼굴형 값을 가져옵니다
     const faceShape = sessionStorage.getItem('faceShape');  // 예: '계란형'
+    const personalColor = sessionStorage.getItem('personalColor'); // 퍼스널 컬러 값
+    // 얼굴형 요소를 선택
+    const faceShapeElements = document.querySelectorAll('.face-shape .shape img');
+    // 퍼스널 컬러 요소 선택
+    const personalColorElements = document.querySelectorAll('.personal-color .color img');
 
-    // 얼굴형 요소를 선택합니다
-    const faceShapeElements = document.querySelectorAll('.shape');
+    faceShapeElements.forEach((img) => {
+      if (img.dataset.shape === faceShape) {
+          img.style.opacity = "1"; // 일치하는 이미지 명확하게
+          img.style.filter = "none";
+      } else {
+          img.style.opacity = "0.1"; // 다른 이미지는 흐리게
+          img.style.filter = "grayscale(100%)";
+      }
+    });
 
-    // 각 요소를 확인하면서 스타일을 변경합니다
-    faceShapeElements.forEach((element) => {
-        if (element.getAttribute('data-shape') === faceShape) {
-            // 일치하는 경우 강조 표시 (선명하게)
-            element.style.border = "2px solid red";  // 테두리 강조
-            element.style.opacity = "1";  // 선명하게
+    personalColorElements.forEach((img) => {
+        if (img.alt === personalColor) { // 이미지의 alt 속성을 사용
+            img.style.opacity = "1"; // 일치하는 이미지 명확하게
+            img.style.filter = "none";
         } else {
-            // 일치하지 않는 경우 흐리게
-            element.style.opacity = "0.3";  // 흐리게
+            img.style.opacity = "0.1"; // 다른 이미지는 흐리게
+            img.style.filter = "grayscale(100%)";
         }
     });
 });

@@ -17,6 +17,12 @@ public class ShopInfo {
     private String shopname;
     @Column(name = "shoplocation", length = 500, nullable = false)
     private String shoplocation;
+    @Column(name = "shoplon")
+    private float shoplon = 0.0f;
+    @Column(name = "shoplat")
+    private float shoplat= 0.0f;
     @Column(name = "shopcategory", nullable = false, updatable = false)
     private int shopcategory;
+
+    public int score = 0;
 }
