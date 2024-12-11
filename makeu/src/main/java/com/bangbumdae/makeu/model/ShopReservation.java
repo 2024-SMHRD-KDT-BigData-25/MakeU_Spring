@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,9 @@ private int iscanceled;
 private String requirements;
 @Column(name = "createdat")
 private Timestamp createdat = new Timestamp(System.currentTimeMillis());
+
+@Transient
+private String shopname;
 
 public ShopReservation(int shopidx, String memid, Timestamp reservationdatetime, String servicetype, String requirements) {
     this.shopidx = shopidx;

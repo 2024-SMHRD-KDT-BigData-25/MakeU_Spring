@@ -71,16 +71,7 @@ public class makeuRestController {
         ShopInfo result = shopInfoService.getShopInfo(idx);
         return result;
     }
-
-    // @GetMapping("/shop")
-    // public List<ShopInfo> getShoplist(HttpSession session) {
-    //     Members member = (Members)session.getAttribute("members");
-    //     if (member == null)
-    //         return shopInfoService.getList();
-        
-        
-    // }
-
+    
     @PostMapping("/update_pos")
     public void updatePos(@RequestBody ShopInfo entity) {
         // TODO: process POST request

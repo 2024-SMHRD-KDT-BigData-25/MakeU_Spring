@@ -74,11 +74,12 @@
                 const faceConfidence = data.faceShape.confidence;
                 const personalColor = data.personalColor.label;
                 const colorConfidence = data.personalColor.confidence;
-                
+                const eyeValue = data.eye.label;
+
                 // sessionStorage에 데이터 저장
                 sessionStorage.setItem('faceShape', faceShape);
                 sessionStorage.setItem('personalColor', personalColor);
-                
+
                 $.ajax({
                     type: 'POST',
                     url:'result',

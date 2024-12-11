@@ -403,7 +403,7 @@ body {
 #mypage_table_tr1 td, #mypage_table_tr2 td {
     width: 50%;
     text-align: left;
-    height: 8%;
+    height: 10%;
 }
 .season_img_div {
     width: 15vh;
@@ -455,15 +455,25 @@ body {
     width: 70%;
     padding: 5%;
     margin: auto;
+    font-size: 1vw;
 }
 
 .reservation_div {
-    background-color: #D9D9D9;
+    background-color: #F7F7F7;
     height: 95%;
     border-radius: 10px;
     margin: 1%;
+    padding: 3%;
+    overflow-y: auto;
 }
 
+.reservation_service_name, .reservation_time_detail {
+    font-size: 1.1rem;
+}
+
+.mypage_reservation_shop {
+    font-size: 1.3rem;
+}
 .mypage_face_info {
     width: 80%;
 }
@@ -815,4 +825,61 @@ body {
 }
 #info_table div {
     font-size: 1.3vw;
+}
+
+.reservation_detail_table {
+    height: 30vh;
+}
+.icon_div {
+    background-color: #D9D9D9;
+    border-radius: 50%;
+    overflow: hidden;
+    height: 3vw;
+    width: 3vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.reservation_icon1 {
+    height: 2.5vw;
+    width: auto;
+}
+
+.reservation_div div {
+    text-align: left;
+    margin-bottom: 0.7vh;
+}
+
+.reservation_date {
+    text-align: left;
+    font-size: 1.3rem;
+}
+
+.reservation_shop_title {
+    display: flex;
+    align-items: center;
+}
+
+.reservation_time_detail {
+    padding-left: 3vw;
+    display: flex;
+    align-items: center;
+}
+
+.reservation_detail_div button {
+    background-color: #D9D9D9;
+    border: none;
+    padding: 1vh 1vw;
+    border-radius: 10px;
+}
+
+.reservation_service_name, .reservation_detail_div {
+    padding-left: 3vw;
+}
+
+.reservation_icon2 {
+    height: 2.2vw;
+    margin-right: 5px;
 }

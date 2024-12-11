@@ -10,6 +10,6 @@ import com.bangbumdae.makeu.model.ShopTags;
 
 @Repository
 public interface shoptagsRepository extends JpaRepository<ShopTags, Integer> {
-    @Query("SELECT t.tagname from ShopTags t")
+    @Query("SELECT t.tagname from ShopTags t order by t.tagidx")
     List<String> findTagnameList();
 }

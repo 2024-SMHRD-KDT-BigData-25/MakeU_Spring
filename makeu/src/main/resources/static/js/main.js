@@ -11,7 +11,6 @@ function addLikes(idx) {
 
     if (memIdElement) {
         const mem_id = memIdElement.textContent;
-        console.log(mem_id);  // mem_id를 사용하여 원하는 작업 수행
         $.ajax({
             url: "likes/" + mem_id + "/" + idx, // 쿼리 파라미터로 idx 전달
             type: "GET",
@@ -44,7 +43,6 @@ function hoverFunction(idx) {
         type: "GET",
 
         success: function (tags) {
-            console.log(tags);
             tagSpan.textContent = tags;
         },
         error: function (xhr, status, error) {

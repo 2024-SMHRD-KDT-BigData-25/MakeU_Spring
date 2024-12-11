@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Data
@@ -23,4 +24,6 @@ public class ShopInfo {
     private float shoplat= 0.0f;
     @Column(name = "shopcategory", nullable = false, updatable = false)
     private int shopcategory;
+    @Transient
+    public int score = 0;
 }

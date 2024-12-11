@@ -20,17 +20,21 @@
         <table id="mypage_table">
             <tr id="mypage_table_tr1">
                 <td>
-                    <span th:if="${session.members != nul}" id="member_name" th:text="${session.members.memname}"></span>님
+                    <span th:if="${session.members != nul}" id="member_name"
+                        th:text="${session.members.memname}"></span>님
                 </td>
                 <td>
                     메이크업 샵 예약 내역
                 </td>
             </tr>
-            <tr> 
+            <tr>
                 <td>
                     <div class="mypage_creator_warning" th:if="${session.members == nul}">로그인을 해주세요!</div>
-                    <div class="mypage_creator_warning" th:if="${session.members != null && mFacetype.facetypeidx == 0}">facematching을 해주세요!</div>
-                    <table th:if="${mFacetype.facetypeidx != 0 && mPersonalcolor.personalcoloridx != 0}" class="mypage_face_info">
+                    <div class="mypage_creator_warning"
+                        th:if="${session.members != null && mFacetype.facetypeidx == 0}">facematching을 해주세요!</div>
+                    <table
+                        th:if="${session.members != null && mFacetype.facetypeidx != 0 && mPersonalcolor.personalcoloridx != 0}"
+                        class="mypage_face_info">
                         <tr>
                             <td class="img_tds">
                                 <div class="season_img_div">
@@ -40,7 +44,8 @@
 
                             <td class="img_tds">
                                 <div class="season_img_div">
-                                    <img class="mypage_img" th:src="|img/season/${mPersonalcolor.personalcolorname}.jpeg|">
+                                    <img class="mypage_img"
+                                        th:src="|img/season/${mPersonalcolor.personalcolorname}.jpeg|">
                             </td>
 
                         </tr>
@@ -52,8 +57,21 @@
                     </table>
                 </td>
                 <td>
-                    <div class="reservation_div">
-
+                    <div th:if="${session.members != null}" th:each="reserv : ${reservations}" class="reservation_div">
+                        <div th:text="${#dates.format(reserv.reservationdatetime, 'yy.MM.dd')}" class="reservation_date">12.24(화)</div>
+                        <div class="reservation_shop_title">
+                            <div class="icon_div"><img class="reservation_icon1" src="img/makeup.png" alt=""></div>
+                            <span th:text="${reserv.shopname}" class="mypage_reservation_shop" style="font-weight: bold;"></span>
+                        </div>
+                        <div th:text="${reserv.servicetype + ', ' + #dates.format(reserv.reservationdatetime, 'HH:mm~')}"
+                        class="reservation_service_name">스냅 사진 메이크업, 전남 오천동</div>
+                        <div class="reservation_detail_div"><button>예약 내역 보기</button></div>
+                    </div>
+                    <div class="mypage_creator_warning" th:if="${session.members == null}">
+                        로그인을 해주세요!
+                    </div>
+                    <div class="mypage_creator_warning" th:if="${session.members != null && reservations.size() <= 0}">
+                        예약 내역이 없습니다.
                     </div>
                 </td>
             </tr>
@@ -64,24 +82,25 @@
             <tr>
                 <td class="mypage_matching_result_td">
                     <div class="mypage_creator_warning" th:if="${session.members == nul}">로그인을 해주세요!</div>
-                    <div class="mypage_creator_warning" th:if="${session.members != null && matched[0] == null}">facematching을 해주세요!</div>
-                    
+                    <div class="mypage_creator_warning" th:if="${session.members != null && matched[0] == null}">
+                        facematching을 해주세요!</div>
+
                     <table th:if="${session.members != null && matched[0] != null}" class="mypage_creator_table">
                         <tr class="mypage_creator_profile_tr">
                             <td>
                                 <div class="creator_profile_div"><img class="creator_profile"
-                                    th:src="|img/creator_profile/${matched[0].creatorname}.jpg|" 
-                                    th:alt="${matched[0].creatorname}"></div>
+                                        th:src="|img/creator_profile/${matched[0].creatorname}.jpg|"
+                                        th:alt="${matched[0].creatorname}"></div>
                             </td>
                             <td>
                                 <div class="creator_profile_div"><img class="creator_profile"
-                                    th:src="|img/creator_profile/${matched[1].creatorname}.jpg|" 
-                                    th:alt="${matched[1].creatorname}"></div>
+                                        th:src="|img/creator_profile/${matched[1].creatorname}.jpg|"
+                                        th:alt="${matched[1].creatorname}"></div>
                             </td>
                             <td>
                                 <div class="creator_profile_div"><img class="creator_profile"
-                                    th:src="|img/creator_profile/${matched[2].creatorname}.jpg|" 
-                                    th:alt="${matched[2].creatorname}"></div>
+                                        th:src="|img/creator_profile/${matched[2].creatorname}.jpg|"
+                                        th:alt="${matched[2].creatorname}"></div>
                             </td>
                         </tr>
                         <tr class="mypage_creator_name_tr">
@@ -110,10 +129,11 @@
                 </td>
                 <td rowspan="3">
                     <div class="mypage_creator_warning" th:if="${session.members == null}">로그인을 해주세요!</div>
-                    <div class="mypage_creator_warning" th:if="${session.members != null && liked.size() == 0}">좋아한 메이크업 사진이 없어요 ㅜㅜ</div>
-                    <div class="mypage_liked_div" th:if="${liked.size() > 0}">
+                    <div class="mypage_creator_warning" th:if="${session.members != null && liked.size() == 0}">좋아한 메이크업
+                        사진이 없어요 ㅜㅜ</div>
+                    <div class="mypage_liked_div" th:if="${session.members != null && liked.size() > 0}">
                         <div class="liked_img_div" th:if="${session.members != null}" th:each="port : ${liked}">
-                        <img class="liked_img" th:src="|makeup/${port.portfolioimg}|">
+                            <img class="liked_img" th:src="|makeup/${port.portfolioimg}|">
                         </div>
                     </div>
                 </td>

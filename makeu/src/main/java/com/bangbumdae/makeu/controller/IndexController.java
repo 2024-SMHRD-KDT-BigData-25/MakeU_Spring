@@ -26,8 +26,16 @@ public class IndexController {
     private final ShopInfoService shopInfoService;
     private final shopTagsService shopTagsService;
     @GetMapping("/shopmatching")
-    public String shopmatchingPage(Model model) {
-        List<ShopInfo> slist = shopInfoService.getList();
+    public String shopmatchingPage(Model model, HttpSession session) {
+        List<ShopInfo> slist;
+        Members member= (Members)session.getAttribute("members");
+        if (member != null) {
+            slist = shopInfoService.getList(member.getMemid());
+        }
+        else  {
+            slist = shopInfoService.getList();
+        }
+        
         model.addAttribute("slist", slist);
         String[] tags = new String[slist.size()];
         Arrays.fill(tags, "");
