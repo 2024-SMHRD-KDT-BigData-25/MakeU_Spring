@@ -1,22 +1,41 @@
 const cartDiv = document.getElementById('cartDiv');
-cartDiv.style.display="none"
+cartDiv.style.display = "none"
 // console.log('trEST')
 //const cartDivBtn = document.getElementById('cartDivBtn');
 
 let pos = false;
 
- function printMdal(){
-    if(pos){
-        pos=false;
-        cartDiv.style.display="none"
+function printMdal() {
+    if (pos) {
+        pos = false;
+        cartDiv.style.display = "none"
     }
-    else{
-        pos=true;
-        cartDiv.style.display="block"
+    else {
+        pos = true;
+        cartDiv.style.display = "block"
     }
- }
+}
 
 
+// 장바구니 담기 버튼 클릭 시
+$(document).on('click', '.add-to-cart', function () {
+    const shopIdx = $("#shop_detail_idx").text();
+
+    // AJAX 요청 보내기
+    $.ajax({
+        url: 'shops',  // 서버의 API 엔드포인트
+        type: 'POST',
+        data: {
+            shopIdx: shopIdx
+        },
+        success: function () {
+            alert('장바구니에 담겼습니다!');
+        },
+        error: function (xhr, status, error) {
+            alert('장바구니에 담기 실패');
+        }
+    });
+});
 
 
 

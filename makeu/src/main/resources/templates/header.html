@@ -33,7 +33,7 @@
                     <td id="header_menu_bar_empty"></td>
                     <!-- <td th:if="${session.members == null}" th:onclick="|location.href='@{/shops}'|"
                         class="header_menu_bar_td"> SHOPS</td> -->
-                    <td th:if="${session.members == null}" onclick="printMdal()"
+                    <td onclick="printMdal()"
                         class="header_menu_bar_td" id="cartDivBtn"> SHOPS</td>
                     <td th:if="${session.members != null}"
                         th:onclick="|location.href='@{/mypage(memid=${session.members.memid})}'|"

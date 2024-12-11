@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -13,22 +13,26 @@
     <div id="cartModal" class="modal">
         <div class="modal-content">
             <table>
-                <tr >
-                    <td >
-                        <h2 class="cart-title">  장바구니</h2>
+                <tr>
+                    <td>
+                        <h2 class="cart-title"> 장바구니</h2>
                     </td>
                     <td class="cart-content">
                         <span class="close-button" id="closeButton" onclick="printMdal()">&times;</span>
                     </td>
                 </tr>
+
                 <tr>
-                    <td class="cart-content">
-                        <p>장바구니에 상품이 없습니다.</p>                    
+                    <td class="" rowspan="3">
+                        <div class="cart-list">
+                            <span class="shop_name">샵이름</span>
+                            
+                        </div>
                     </td>
                 </tr>
-            
-                
-                
+
+
+
             </table>
 
         </div>

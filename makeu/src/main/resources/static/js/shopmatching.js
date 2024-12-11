@@ -83,7 +83,8 @@ function shop_info(idx) {
             document.getElementById("shop_detail_title").textContent = shop.shopname;
             document.getElementById("shop_detail_location").textContent = shop.shoplocation;
             document.getElementById("shop_detail_tags").textContent = tags;
-
+            document.getElementById("shop_detail_idx").textContent = idx;
+            
             document.getElementById("reserv_title").textContent = shop.shopname;
             document.getElementById("reserv_idx").textContent = idx;
 
