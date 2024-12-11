@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bangbumdae.makeu.model.Creator;
 import com.bangbumdae.makeu.model.FaceType;
@@ -22,7 +23,6 @@ import com.bangbumdae.makeu.service.memberService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -149,6 +149,28 @@ public class memberController {
 
         return "redirect:/result";
     }
+    @GetMapping("/find-password")
+    public String findPasswordPage() {
+        return "find_password";
+    }
+
+    @PostMapping("/find-password")
+@ResponseBody
+public String findPassword(@RequestParam String memid, @RequestParam String memnickname) {
+    try {
+        Members member = memberService.findByMemIdAndNickname(memid, memnickname);
+        if (member != null) {
+            return member.getMempw(); // 비밀번호 반환
+        } else {
+            return "틀렸습니다"; // 실패 메시지 반환
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "서버 오류 발생";
+    }
+}
+
+
     
 }
 

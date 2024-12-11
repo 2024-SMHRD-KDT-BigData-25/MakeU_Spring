@@ -24,6 +24,7 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     };
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
 function getPortpolios(idx) {
     var sport = document.getElementById("shop_detail_portpolio");
     $.ajax({
@@ -56,40 +57,79 @@ function getPortpolios(idx) {
     });
 }
 
+// 마커를 저장할 배열 선언
+var markers = [];
+
 function shop_info(idx) {
     $("#shop_detail_div").show();
     $("#shop_reservation_div").hide();
-    // jQuery 방식
+
+    // 예약 버튼 클릭 시 이벤트 설정
     $("#reserv_btn").on("click", function () {
         openReservDiv(idx);
     });
+
     $.ajax({
-        url: "shop/" + idx, // 쿼리 파라미터로 idx 전달
+        url: "shop/" + idx, // 서버 요청 URL
         type: "GET",
-
         success: function (shop) {
-            var tags = document.getElementById("shop_tag_div_" + idx).textContent;
-            var stitle = document.getElementById("shop_detail_title");
-            var sloc = document.getElementById("shop_detail_location");
-            var stag = document.getElementById("shop_detail_tags");
+            if (!shop) {
+                console.error("서버에서 받은 데이터가 없습니다.");
+                return;
+            }
 
-            stitle.textContent = shop.shopname;
-            sloc.textContent = shop.shoplocation;
-            stag.textContent = tags;
+            // 데이터 삽입
+            var tags = document.getElementById("shop_tag_div_" + idx).textContent;
+            document.getElementById("shop_detail_title").textContent = shop.shopname;
+            document.getElementById("shop_detail_location").textContent = shop.shoplocation;
+            document.getElementById("shop_detail_tags").textContent = tags;
 
             document.getElementById("reserv_title").textContent = shop.shopname;
             document.getElementById("reserv_idx").textContent = idx;
 
             getPortpolios(idx);
-            
+
+            // 지도 위치 이동
+            var geocoder = new kakao.maps.services.Geocoder();
+            geocoder.addressSearch(shop.shoplocation, function (result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                    // 이전 마커 제거
+                    removeMarkers();
+
+                    // 새로운 마커 생성
+                    var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: coords
+                    });
+
+                    // 마커를 배열에 저장
+                    markers.push(marker);
+
+
+                    // 지도의 중심 이동
+                    map.setCenter(coords);
+                } else {
+                    console.error("주소 검색 실패! 상태 코드:", status);
+                }
+            });
         },
         error: function (xhr, status, error) {
-            console.error("AJAX 실패!(shop_info)");
-            console.error("Status:", status);
-            console.error("Error:", error);
-            console.error("Response Text:", xhr.responseText);
-        },
+            console.error("AJAX 요청 실패");
+            console.error("상태:", status);
+            console.error("오류:", error);
+            console.error("응답 텍스트:", xhr.responseText);
+        }
     });
+}
+
+// 기존 마커를 모두 제거하는 함수
+function removeMarkers() {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null); // 지도에서 마커 제거
+    }
+    markers = []; // 배열 초기화
 }
 
 function closeShopDetail() {

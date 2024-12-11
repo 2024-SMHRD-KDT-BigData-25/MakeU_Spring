@@ -18,4 +18,7 @@ public interface memberRepository extends JpaRepository<Members, String> {
     FaceType findFacetypeByMemid(String memid);
     @Query("SELECT p FROM Members m JOIN PersonalColor p on m.personalcoloridx = p.personalcoloridx WHERE m.memid = :memid")
     PersonalColor findPersonalColorByMemid(String memid);
+     // 아이디와 닉네임으로 회원 검색
+     List<Members> findByMemidAndMemnickname(String memid, String memnickname);
 }
+
