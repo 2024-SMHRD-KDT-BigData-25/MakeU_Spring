@@ -70,7 +70,8 @@
                 const faceConfidence = data.faceShape.confidence;
                 const personalColor = data.personalColor.label;
                 const colorConfidence = data.personalColor.confidence;
-                
+                const eyeValue = data.eye.label;
+
                 $.ajax({
                     type: 'POST',
                     url:'result',
