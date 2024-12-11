@@ -23,7 +23,6 @@ import com.bangbumdae.makeu.service.memberService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
