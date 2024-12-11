@@ -80,12 +80,11 @@
 </body>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // 세션에서 저장된 얼굴형 값을 가져옵니다
-    const faceShape = sessionStorage.getItem('faceShape');  // 예: '계란형'
-    const personalColor = sessionStorage.getItem('personalColor'); // 퍼스널 컬러 값
-    // 얼굴형 요소를 선택
+    
+    const faceShape = sessionStorage.getItem('faceShape');  
+    const personalColor = sessionStorage.getItem('personalColor'); 
+    
     const faceShapeElements = document.querySelectorAll('.face-shape .shape img');
-    // 퍼스널 컬러 요소 선택
     const personalColorElements = document.querySelectorAll('.personal-color .color img');
 
     faceShapeElements.forEach((img) => {
