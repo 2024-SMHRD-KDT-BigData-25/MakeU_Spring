@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.bangbumdae.makeu.model.MakeUpLikes;
+import com.bangbumdae.makeu.model.ShopInfo;
 import com.bangbumdae.makeu.model.ShopPortfolio;
 
 import java.util.List;
@@ -20,5 +21,8 @@ public interface makeuplikesRepository extends JpaRepository<MakeUpLikes, Intege
 
     @Query("SELECT p FROM MakeUpLikes l JOIN ShopPortfolio p ON l.portfolioidx = p.portfolioidx WHERE l.memid = :memid")
     List<ShopPortfolio> findLikedShopPortfolios(@Param("memid") String memid);
+
+    @Query("select s from MakeUpLikes l join ShopPortfolio p on l.portfolioidx = p.portfolioidx join ShopInfo s on p.shopidx = s.shopidx  WHERE l.memid = :memid")
+    List<ShopInfo> likedShops(@Param("memid") String memid);
 
 }

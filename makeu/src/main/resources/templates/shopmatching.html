@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/eystyle.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
     <script src="https://kit.fontawesome.com/30d3b7fa39.js" crossorigin="anonymous"></script>
 </head>
 
@@ -49,6 +48,7 @@
             <div class="shop_detail_info" id="shop_title">
                 <img style="width:8%;" src="img/back.png" alt="" onclick="closeShopDetail()">
                 <div id="shop_detail_title"></div>
+                <div style="display: none;" id="shop_detail_idx"></div>
             </div>
             <div class="shop_detail_info" id="shop_detail_portpolio"></div>
             <div class="shop_detail_info" id="shop_location">
@@ -58,7 +58,7 @@
             </div>
             <div class="shop_detail_info" id="shop_detail_tags"></div>
             <div id="shop_detail_btns">
-                <button>장바구니</button>
+                <button class="add-to-cart">장바구니</button>
                 <button id="reserv_btn">예약하기</button>
             </div>
         </div>
@@ -220,9 +220,9 @@
 
     </main>
 
-    <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=022c4e54ddaeae02f226257bb5a95f38"></script> <!-- Kakao Map API -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=022c4e54ddaeae02f226257bb5a95f38&libraries=services"></script>
     <script src="js/shopmatching.js"></script>
+    <script src="js/shops.js"></script>
 </body>
 
 </html>

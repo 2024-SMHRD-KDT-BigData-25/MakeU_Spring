@@ -8,23 +8,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bangbumdae.makeu.model.Creator;
 import com.bangbumdae.makeu.model.FaceType;
 import com.bangbumdae.makeu.model.Members;
 import com.bangbumdae.makeu.model.PersonalColor;
+import com.bangbumdae.makeu.model.ShopCart;
 import com.bangbumdae.makeu.model.ShopPortfolio;
 import com.bangbumdae.makeu.model.ShopReservation;
 import com.bangbumdae.makeu.service.ReservationService;
 import com.bangbumdae.makeu.service.makeuplikesService;
 import com.bangbumdae.makeu.service.matchingresultService;
 import com.bangbumdae.makeu.service.memberService;
+import com.bangbumdae.makeu.service.shopcartService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 @Controller
 @RequiredArgsConstructor
@@ -33,6 +33,8 @@ public class memberController {
     private final makeuplikesService makeuplikesService;
     private final matchingresultService matchingresultService;
     private final ReservationService reservationService;
+    private final shopcartService shopcartService;
+
     @GetMapping("/login")
     public String loginPage() {
         return "login";
@@ -60,7 +62,7 @@ public class memberController {
         mathcedCreators[2] = matchingresultService.getMatched3(memid);
 
         model.addAttribute("matched", mathcedCreators);
-        
+
         FaceType mFaceType = memberService.getFaceType(memid);
         model.addAttribute("mFacetype", mFaceType);
 
@@ -124,24 +126,28 @@ public class memberController {
     }
 
     @PostMapping("reservation")
-    public void addReservation(@RequestParam int shopidx, @RequestParam String reservationdatetime, @RequestParam String servicetype, @RequestParam String requirement, HttpSession session) {
-        Members members = (Members)session.getAttribute("members");
+    public void addReservation(@RequestParam int shopidx, @RequestParam String reservationdatetime,
+            @RequestParam String servicetype, @RequestParam String requirement, HttpSession session) {
+        Members members = (Members) session.getAttribute("members");
         if (members == null) {
             System.out.println("로그인하세요");
             return;
         }
 
-        ShopReservation newReservation = new ShopReservation(shopidx, members.getMemid(), Timestamp.valueOf(reservationdatetime + ":00"), servicetype, requirement);
+        ShopReservation newReservation = new ShopReservation(shopidx, members.getMemid(),
+                Timestamp.valueOf(reservationdatetime + ":00"), servicetype, requirement);
         reservationService.addReservation(newReservation);
     }
 
     @PostMapping("/result")
-    public String resultRecieve(@RequestParam("faceShape") String faceShape, @RequestParam("faceConfidence") float faceConfidence, @RequestParam("personalColor") String personalColor, @RequestParam("colorConfidence") float colorConfidence, HttpSession session, Model model) {
+    public String resultRecieve(@RequestParam("faceShape") String faceShape,
+            @RequestParam("faceConfidence") float faceConfidence, @RequestParam("personalColor") String personalColor,
+            @RequestParam("colorConfidence") float colorConfidence, HttpSession session, Model model) {
         session.setAttribute("faceShape", faceShape);
         session.setAttribute("faceConfidence", faceConfidence);
         session.setAttribute("personalColor", personalColor);
         session.setAttribute("colorConfidence", colorConfidence);
-        
+
         model.addAttribute("faceShape", faceShape);
         model.addAttribute("faceConfidence", faceConfidence);
         model.addAttribute("personalColor", personalColor);
@@ -149,6 +155,39 @@ public class memberController {
 
         return "redirect:/result";
     }
-    
+
+    // 장바구니 추가
+    @PostMapping("/shops")
+    public String addShop(@RequestParam int shopIdx, HttpSession session) {
+        Members mem = (Members)session.getAttribute("members");
+        if (mem == null) {
+            System.out.println("로그인을 해주세요");
+            return "redirect:/";
+        }
+
+        shopcartService.addShop(new ShopCart(mem.getMemid(), shopIdx));
+        return "index";
+    }
+
+    @GetMapping("/find-password")
+    public String findPasswordPage() {
+        return "find_password";
+    }
+
+    @PostMapping("/find-password")
+@ResponseBody
+public String findPassword(@RequestParam String memid, @RequestParam String memnickname) {
+    try {
+        Members member = memberService.findByMemIdAndNickname(memid, memnickname);
+        if (member != null) {
+            return member.getMempw(); // 비밀번호 반환
+        } else {
+            return "틀렸습니다"; // 실패 메시지 반환
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "서버 오류 발생";
+    }
 }
 
+}

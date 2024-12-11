@@ -34,4 +34,12 @@ public class memberService {
     public FaceType getFaceType(String memid) {
         return memberRepository.findFacetypeByMemid(memid);
     }
+    public Members findByMemIdAndNickname(String memid, String memnickname) {
+        List<Members> members = memberRepository.findByMemidAndMemnickname(memid, memnickname);
+        if (members.isEmpty()) {
+            return null; // 결과가 없을 경우 null 반환
+        }
+        return members.get(0); // 첫 번째 결과 반환
+    }
+    
 }

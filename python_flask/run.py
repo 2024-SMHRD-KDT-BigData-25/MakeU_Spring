@@ -96,7 +96,7 @@ def analyze():
             "eye":{
                 "label" : yt_eye
             }    
-        })
+        });
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"error": "분석 실패"}), 500

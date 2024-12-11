@@ -7,12 +7,16 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/eystyle.css">
     <title>Make U</title>
+    
 </head>
 
 <body>
     <header>
         <div class="title_img" th:onclick="|location.href='@{/}'|">
             <img id="make_u_title" src="img/title.png" alt="MakeU Title">
+        </div>
+        <div id="cartDiv">
+        <div th:replace="~{shops}" ></div> 
         </div>
         <div class="header_menu_bar">
             <table class="header_menu_bar_table">
@@ -27,8 +31,10 @@
                         메이크업 둘러보기
                     </td>
                     <td id="header_menu_bar_empty"></td>
-                    <td th:if="${session.members == null}" th:onclick="|location.href='@{/login}'|"
-                        class="header_menu_bar_td"> SHOPS</td>
+                    <!-- <td th:if="${session.members == null}" th:onclick="|location.href='@{/shops}'|"
+                        class="header_menu_bar_td"> SHOPS</td> -->
+                    <td onclick="printMdal()"
+                        class="header_menu_bar_td" id="cartDivBtn"> SHOPS</td>
                     <td th:if="${session.members != null}"
                         th:onclick="|location.href='@{/mypage(memid=${session.members.memid})}'|"
                         class="header_menu_bar_td">MyPage</td>
@@ -41,7 +47,8 @@
         </div>
 
     </header>
-
+    <script src="./js/shops.js"></script>
+    
 </body>
 
 </html>
