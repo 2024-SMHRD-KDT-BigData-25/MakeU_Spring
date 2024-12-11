@@ -23,6 +23,4 @@ public class ShopInfo {
     private float shoplat= 0.0f;
     @Column(name = "shopcategory", nullable = false, updatable = false)
     private int shopcategory;
-
-    public int score = 0;
 }

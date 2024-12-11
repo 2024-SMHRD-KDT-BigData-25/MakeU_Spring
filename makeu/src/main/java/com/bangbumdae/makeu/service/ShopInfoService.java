@@ -2,6 +2,7 @@ package com.bangbumdae.makeu.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.bangbumdae.makeu.model.MakeUpLikes;
@@ -25,11 +26,12 @@ public class ShopInfoService {
     }
 
     public List<ShopInfo> getList(String memid){
-        List<MakeUpLikes> liked = makeuplikesRepository.findByMemid(memid);
-        for (MakeUpLikes l : liked) {
+        List<ShopInfo> liked = makeuplikesRepository.likedShops(memid);
+        for (ShopInfo s : liked) {
             
         }
-        List<ShopInfo> shops = shopInfoRepository.findAll();
+
+        List<ShopInfo> shops = shopInfoRepository.findAll(Sort.by("shopidx").ascending());
         
         return shopInfoRepository.findAll();
     }
