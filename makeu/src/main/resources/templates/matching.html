@@ -6,6 +6,7 @@
     <title>페이스 매칭</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/jhstyle.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div th:replace="~{header}"></div> 
@@ -70,8 +71,28 @@
                 const personalColor = data.personalColor.label;
                 const colorConfidence = data.personalColor.confidence;
                 
+                $.ajax({
+                    type: 'POST',
+                    url:'result',
+                    data : {
+                    faceShape: data.faceShape.label,
+                    faceConfidence: data.faceShape.confidence,
+                    personalColor: data.personalColor.label,
+                    colorConfidence: data.personalColor.confidence
+                },
+                    success: function () {
+                        window.location.href ="/makeu/result";
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX으로 전달 실패!");
+                        console.error("Status:", status);
+                        console.error("Error:", error);
+                        console.error("Response Text:", xhr.responseText);
+                        alert("에러!!");
+                    },
+                  });
                 // URL에 결과값 전달
-                window.location.href = `/makeU/result?faceShape=${faceShape}&faceConfidence=${faceConfidence}&personalColor=${personalColor}&colorConfidence=${colorConfidence}`;
+                //window.location.href = `http://localhost:8089/makeU/result?faceShape=${faceShape}&faceConfidence=${faceConfidence}&personalColor=${personalColor}&colorConfidence=${colorConfidence}`;
             })
             .catch((error) => {
                 console.error("분석 실패: ", error);

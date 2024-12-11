@@ -13,7 +13,6 @@
     <div th:replace="~{header}"></div> 
 
     <div class="main_back">
-        <h2>홍길동님의 얼굴 분석 결과</h2>
         <div class="result_form">
             <div class="analysis">
                 <div class="results">
@@ -21,7 +20,7 @@
                   <div class="face-shape">
                     <div class="shapes">
                       <div class="row">
-                        <div class="shape"><img src="img/face_shape/smiling-face.png" alt="둥근형"><p>둥근형</p></div>
+                        <div class="shape"><img src="img/face_shape/smiling-face.png" data-shape="round"><p>둥근형</p></div>
                         <div class="shape"><img src="img/face_shape/heart.png" alt="하트형"><p>하트형</p></div>
                         <div class="shape"><img src="img/face_shape/egg.png" alt="계란형"><p>계란형</p></div>
                       </div>
@@ -75,7 +74,28 @@
                 <button class="btn save">SAVE</button>
               </div>
         </div>
-
     </div>
+    <h2>얼굴형: <span th:text="${session.faceShape}"></span></h2>
 </body>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 세션에서 저장된 얼굴형 값을 가져옵니다
+    const faceShape = sessionStorage.getItem('faceShape');  // 예: '계란형'
+
+    // 얼굴형 요소를 선택합니다
+    const faceShapeElements = document.querySelectorAll('.shape');
+
+    // 각 요소를 확인하면서 스타일을 변경합니다
+    faceShapeElements.forEach((element) => {
+        if (element.getAttribute('data-shape') === faceShape) {
+            // 일치하는 경우 강조 표시 (선명하게)
+            element.style.border = "2px solid red";  // 테두리 강조
+            element.style.opacity = "1";  // 선명하게
+        } else {
+            // 일치하지 않는 경우 흐리게
+            element.style.opacity = "0.3";  // 흐리게
+        }
+    });
+});
+</script>
 </html>

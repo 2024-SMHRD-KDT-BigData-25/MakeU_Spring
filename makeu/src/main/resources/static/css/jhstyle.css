@@ -347,12 +347,11 @@ video {
     max-width: 800px; /* 컨테이너 크기 제한 */
     height:120px;
     margin: 0 auto; /* 중앙 정렬 */
-    
+    margin-top: 20px;
     border-radius: 8px; /* 둥근 모서리 */
     background-color: #fff; /* 배경색 */
     
   }
-  
   
   
   .creator h4 {
@@ -371,3 +370,5 @@ video {
     font-size: 12px;
     color: #888;
   }
+  
+  
