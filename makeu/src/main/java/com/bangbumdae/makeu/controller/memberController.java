@@ -1,5 +1,6 @@
 package com.bangbumdae.makeu.controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,8 @@ import com.bangbumdae.makeu.model.FaceType;
 import com.bangbumdae.makeu.model.Members;
 import com.bangbumdae.makeu.model.PersonalColor;
 import com.bangbumdae.makeu.model.ShopPortfolio;
+import com.bangbumdae.makeu.model.ShopReservation;
+import com.bangbumdae.makeu.service.ReservationService;
 import com.bangbumdae.makeu.service.makeuplikesService;
 import com.bangbumdae.makeu.service.matchingresultService;
 import com.bangbumdae.makeu.service.memberService;
@@ -22,12 +25,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
+
 @Controller
 @RequiredArgsConstructor
 public class memberController {
     private final memberService memberService;
     private final makeuplikesService makeuplikesService;
     private final matchingresultService matchingresultService;
+    private final ReservationService reservationService;
     @GetMapping("/login")
     public String loginPage() {
         return "login";
@@ -117,4 +122,18 @@ public class memberController {
         }
         return "index";
     }
+
+    @PostMapping("reservation")
+    public void addReservation(@RequestParam int shopidx, @RequestParam String reservationdatetime, @RequestParam String servicetype, @RequestParam String requirement, HttpSession session) {
+        Members members = (Members)session.getAttribute("members");
+        if (members == null) {
+            System.out.println("로그인하세요");
+            return;
+        }
+
+        ShopReservation newReservation = new ShopReservation(shopidx, members.getMemid(), Timestamp.valueOf(reservationdatetime + ":00"), servicetype, requirement);
+        reservationService.addReservation(newReservation);
+    }
+    
 }
+

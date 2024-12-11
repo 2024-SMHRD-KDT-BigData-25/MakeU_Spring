@@ -474,6 +474,17 @@ body {
 .mypage_creator_warning {
     justify-items: center;
 }
+
+.shop_info_title {
+    height: 10%;
+    text-align: center;
+    display: flex;            /* Flexbox 사용 */
+    justify-content: center;  /* 가로 가운데 정렬 */
+    align-items: center;      /* 세로 가운데 정렬 */
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
 /* 메인 섹션 */
 .shopMain {
     display: flex;
@@ -481,6 +492,7 @@ body {
     margin: 3% auto; /* 헤더 높이를 감안해 아래로 내림 */
     width: 90%; /* 전체 화면 너비에서 양쪽 여백 */
     height: 100%;
+    color: #56423D;
 }
 
 /* 각 섹션 */
@@ -497,7 +509,6 @@ body {
     left: 34.7%;
     background-color: white;
 }
-
 /* 배경색으로 영역 구분 */
 .section-left {
     width: 50%; /* 가로 크기 */
@@ -534,6 +545,13 @@ body {
 
 .shop_detail_info {
     margin: 0% 3% 2% 3%;
+    display: flex;
+    align-items: center;
+}
+
+.shopname {
+    font-size: 1.1em;
+    font-weight: bold;
 }
 
 .shop_tag_div {
@@ -558,7 +576,7 @@ body {
     color: white;
     border-radius: 10px;
 }
-#shop_title, #shop_location, #reserv_title {
+#shop_title, #shop_location {
     display: flex;
     align-items: center;
 }
@@ -599,6 +617,14 @@ body {
     overflow: hidden; /* 넘치는 요소 숨김 */
     margin: 3%;
     
+}
+
+.selected_table {
+    background-color: rgba(217, 217, 217, 0.3);
+}
+
+.shop_info_table table:hover {
+    background-color: rgba(217, 217, 217, 0.3);
 }
 
 .shop_info_table_inner {
@@ -668,10 +694,6 @@ body {
     font-size: 1.2em;
     background-color: rgba(217, 217, 217, 0.3);
     border-radius: 10px;
-}
-
-#reserv_title {
-    height: 4vh;
 }
 
 #reserv_detail_title {
