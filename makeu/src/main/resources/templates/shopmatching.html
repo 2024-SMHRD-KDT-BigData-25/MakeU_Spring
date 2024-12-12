@@ -126,7 +126,7 @@
                     <td class="check_td">
                         <div id="service_1" class="service_checkbox"></div>
                     </td>
-                    <td class="service_name"><div>데일리 메이크업</div></td>
+                    <td class="service_name"><div id="service_name_1">데일리 메이크업</div></td>
                 </tr>
                 <tr>
                     <td>
@@ -138,7 +138,7 @@
                     <td class="check_td">
                         <div id="service_2" class="service_checkbox"></div>
                     </td>
-                    <td class="service_name"><div>면접 메이크업</div></td>
+                    <td class="service_name"><div id="service_name_2">면접 메이크업</div></td>
                 </tr>
                 <tr>
                     <td>
@@ -150,7 +150,7 @@
                     <td class="check_td">
                         <div id="service_3" class="service_checkbox"></div>
                     </td>
-                    <td class="service_name"><div>증명 사진 메이크업</div></td>
+                    <td class="service_name"><div id="service_name_3">증명 사진 메이크업</div></td>
                 </tr>
                 <tr>
                     <td>
@@ -162,7 +162,7 @@
                     <td class="check_td">
                         <div id="service_4" class="service_checkbox"></div>
                     </td>
-                    <td class="service_name"><div>스냅 사진 메이크업</div></td>
+                    <td class="service_name"><div id="service_name_4">스냅 사진 메이크업</div></td>
                 </tr>
                 <tr>
                     <td>
@@ -174,7 +174,7 @@
                     <td class="check_td">
                         <div id="service_5" class="service_checkbox"></div>
                     </td>
-                    <td class="service_name"><div>웨딩 메이크업</div></td>
+                    <td class="service_name"><div id="service_name_5">웨딩 메이크업</div></td>
                 </tr>
                 <tr>
                     <td>
@@ -201,7 +201,7 @@
             </div>
             <div class="reserv_warning">
                 <div style="color: black;font-size: 1.2vw;">
-                    Make you에서 분석한 <span id="name_span">홍길동</span>님의 얼굴 정보를 전달할까요?<br>
+                    Make you에서 분석한 <span id="name_span" th:text="${session.members.memname}">홍길동</span>님의 얼굴 정보를 전달할까요?<br>
                     (아티스트가 메이크업 시 참고할 수 있습니다.)
                 </div>
             </div>
