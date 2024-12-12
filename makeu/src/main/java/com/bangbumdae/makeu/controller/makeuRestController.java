@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -91,46 +92,5 @@ public class makeuRestController {
     //     return ResponseEntity.ok(creators); // 200 OK와 결과 반환
     // }
 
-    // /result 엔드포인트: 결과 조회
-    @PostMapping("/result")
-    public ResponseEntity<List<Creator>> getCreators(@RequestBody HashMap<String, String> request) {
-        System.out.println("======================================================");
-        System.out.println(request);
-        String faceShape = request.get("faceShape");
-        String personalColor = request.get("personalColor");
-
-        // Mapping faceShape와 personalColor 값을 인덱스로 변환
-        Map<String, Integer> faceShapeMap = Map.of(
-            "Heart", 1,
-            "Oval", 2,
-            "Oblong", 3,
-            "Round", 4,
-            "Square", 5
-        );
-
-        Map<String, Integer> personalColorMap = Map.of(
-            "Spring", 1,
-            "Summer", 2,
-            "Autumn", 3,
-            "Winter", 4
-        );
-
-        // String 값을 Integer로 변환
-        Integer faceTypeIdx = faceShapeMap.get(faceShape);
-        Integer personalColorIdx = personalColorMap.get(personalColor);
-
-        // 변환된 값이 null일 경우 Bad Request 반환
-        if (faceTypeIdx == null || personalColorIdx == null) {
-            return ResponseEntity.badRequest().build(); // 400 Bad Request
-        }
-
-        // 서비스 메서드 호출
-        List<Creator> creators = creatorService.getCreatorsByFaceTypeAndPersonalColor(faceTypeIdx, personalColorIdx);
-
-        // 결과 처리
-        if (creators.isEmpty()) {
-            return ResponseEntity.noContent().build(); // 204 No Content
-        }
-        return ResponseEntity.ok(creators); // 200 OK
-    }
+   
 }

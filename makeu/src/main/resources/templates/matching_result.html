@@ -1,129 +1,80 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/jhstyle.css">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>Document</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/jhstyle.css">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>Document</title>
 </head>
+
 <body>
-  <div th:replace="~{header}"></div> 
+  <div th:replace="~{header}"></div>
 
   <div class="main_back">
-      <div class="result_form">
-          <div class="analysis">
-              <div class="results">
-                
-                <div class="face-shape">
-                  <div class="shapes">
-                    <div class="row">
-                      <div class="shape"><img src="img/face_shape/smiling-face.png" data-shape="Round" alt="둥근형"><p>둥근형</p></div>
-                      <div class="shape"><img src="img/face_shape/heart.png" data-shape="Heart" alt="하트형"><p>하트형</p></div>
-                      <div class="shape"><img src="img/face_shape/egg.png" data-shape="Oval" alt="계란형"><p>계란형</p></div>
-                    </div>
-                    <div class="row">
-                      <div class="shape"><img src="img/face_shape/square.png" data-shape="Square" alt="사각형"><p>사각형</p></div>
-                      <div class="shape"><img src="img/face_shape/oval.png" data-shape="Oblong" alt="타원형"><p>타원형</p></div>
-                    </div>
-                  </div>
+    <div class="result_form">
+      <div class="analysis">
+        <div class="results">
+
+          <div class="face-shape">
+            <div class="shapes">
+              <div class="row">
+                <div class="shape"><img src="img/face_shape/smiling-face.png" data-shape="Round" alt="둥근형">
+                  <p>둥근형</p>
                 </div>
-                
-                <div class="personal-color">
-                  <div class="colors">
-                    <div class="color"><img src="img/season/봄 웜톤.jpeg" alt="Spring"><p>봄 웜톤</p></div>
-                    <div class="color"><img src="img/season/여름 쿨톤.jpeg" alt="Summer"><p>여름 쿨톤</p></div>
-                    <div class="color"><img src="img/season/가을 웜톤.jpeg" alt="Autumn"><p>가을 웜톤</p></div>
-                    <div class="color"><img src="img/season/겨울 쿨톤.jpeg" alt="Winter"><p>겨울 쿨톤</p></div>
-                  </div>
+                <div class="shape"><img src="img/face_shape/heart.png" data-shape="Heart" alt="하트형">
+                  <p>하트형</p>
+                </div>
+                <div class="shape"><img src="img/face_shape/egg.png" data-shape="Oval" alt="계란형">
+                  <p>계란형</p>
                 </div>
               </div>
-          </div>
-        
-          <div class="recommendation">
-              <div id="result-container"></div>
-          </div>
-        
-            <div class="buttons">
-              <button class="btn home">HOME</button>
-              <button class="btn save">SAVE</button>
+              <div class="row">
+                <div class="shape"><img src="img/face_shape/square.png" data-shape="Square" alt="사각형">
+                  <p>사각형</p>
+                </div>
+                <div class="shape"><img src="img/face_shape/oval.png" data-shape="Oblong" alt="타원형">
+                  <p>타원형</p>
+                </div>
+              </div>
             </div>
+          </div>
+
+          <div class="personal-color">
+            <div class="colors">
+              <div class="color"><img src="img/season/봄 웜톤.jpeg" alt="Spring">
+                <p>봄 웜톤</p>
+              </div>
+              <div class="color"><img src="img/season/여름 쿨톤.jpeg" alt="Summer">
+                <p>여름 쿨톤</p>
+              </div>
+              <div class="color"><img src="img/season/가을 웜톤.jpeg" alt="Autumn">
+                <p>가을 웜톤</p>
+              </div>
+              <div class="color"><img src="img/season/겨울 쿨톤.jpeg" alt="Winter">
+                <p>겨울 쿨톤</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div class="recommendation">
+        <div th:each="c, iter : ${session.creators}" th:text="${c.creatorname}"></div>
+        
+      </div>
+
+      <div class="buttons">
+        <button class="btn home">HOME</button>
+        <button class="btn save">SAVE</button>
+      </div>
+    </div>
   </div>
   <h2>얼굴형: <span th:text="${faceShape}"></span></h2>
   <h2>퍼스널컬러: <span th:text="${personalColor}"></span></h2>
 </body>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // sessionStorage에서 데이터 가져오기
-    const faceShape = sessionStorage.getItem('faceShape');
-    const personalColor = sessionStorage.getItem('personalColor');
-
-    // 얼굴형과 퍼스널 컬러 강조
-    const faceShapeElements = document.querySelectorAll('.face-shape .shape img');
-    const personalColorElements = document.querySelectorAll('.personal-color .color img');
-
-    faceShapeElements.forEach((img) => {
-      if (img.dataset.shape === faceShape) {
-          img.style.opacity = "1";
-          img.style.filter = "none";
-      } else {
-          img.style.opacity = "0.1";
-          img.style.filter = "grayscale(100%)";
-      }
-    });
-
-    personalColorElements.forEach((img) => {
-        if (img.alt === personalColor) {
-            img.style.opacity = "1";
-            img.style.filter = "none";
-        } else {
-            img.style.opacity = "0.1";
-            img.style.filter = "grayscale(100%)";
-        }
-    });
-
-    // 결과 가져오기
-    function fetchCreators(faceShape, personalColor) {
-    fetch('http://localhost:8089/makeu/result', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ faceShape, personalColor }),
-    })
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then((data) => {
-        console.log("받은 크리에이터 데이터:", data);
-
-        // 화면에 데이터 표시
-        const resultContainer = document.getElementById('result-container');
-        resultContainer.innerHTML = ""; // 기존 결과 초기화
-        data.forEach((creator) => {
-            const creatorElement = document.createElement('div');
-            creatorElement.className = 'creator';
-            creatorElement.innerHTML = `
-                <div class="youtuber_img">
-                    <img src="${creator.creatorlink}" alt="${creator.creatorname}">
-                </div>
-                <h4>${creator.creatorname}</h4>
-                <p>${creator.creatorGender || "정보 없음"}</p>
-                <p>${creator.creatorDesc || "설명 없음"}</p>
-                <a href="${creator.creatorlink}" target="_blank">크리에이터 링크</a>
-            `;
-            resultContainer.appendChild(creatorElement);
-        });
-    })
-    .catch((error) => {
-        console.error("크리에이터 데이터 가져오기 오류:", error);
-        alert("데이터를 불러오는 중 오류가 발생했습니다.");
-    });
-}
-
-</script>
+<script src="js/result.js"></script>
 </html>
