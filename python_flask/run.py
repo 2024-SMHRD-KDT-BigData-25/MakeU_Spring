@@ -26,10 +26,71 @@ def test():
     return 'test222'
 
 
+# MediaPipe Face Mesh 모델 초기화
+mp_face_mesh = mp.solutions.face_mesh
+face_mesh = mp_face_mesh.FaceMesh(min_detection_confidence=0.5, min_tracking_confidence=0.5)
+
+# OpenCV로 이미지 읽기
+def process_image(img_path):
+    # 이미지를 읽고 RGB로 변환
+    # img = cv2.imread('/content/drive/MyDrive/실전프로젝트/data/봄웜/봄1142.jpg')
+    # 이미지 가져오기
+    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+    # 얼굴 랜드마크 예측
+    results = face_mesh.process(img_rgb)
+
+    if results.multi_face_landmarks:
+        # 얼굴이 감지되었을 경우
+        for face_landmarks in results.multi_face_landmarks:
+            # 얼굴 윤곽을 추출 (주로 0~17번 랜드마크)
+            face_coords = []
+            for i in range(0, 17):  # 얼굴 윤곽 (0~16번)
+                x = int(face_landmarks.landmark[i].x * img.shape[1])
+                y = int(face_landmarks.landmark[i].y * img.shape[0])
+                face_coords.append((x, y))
+
+            # 얼굴 윤곽에 사각형을 그려 얼굴 영역 자르기
+            x_min = min(face_coords, key=lambda x: x[0])[0]
+            x_max = max(face_coords, key=lambda x: x[0])[0]
+            y_min = min(face_coords, key=lambda x: x[1])[1]
+            y_max = max(face_coords, key=lambda x: x[1])[1]
+
+            # 얼굴 영역 자르기
+            face_img = img[y_min:y_max, x_min:x_max]
+            cv2.imshow("Cropped Face", face_img)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
+
+            return face_img
+    return None
+
+# 이미지에서 얼굴 부분만 잘라내는 함수
+def crop_face_from_image(img_path):
+    face_img = process_image('/content/drive/MyDrive/실전프로젝트/data/봄웜/봄1142.jpg')
+    if face_img is not None:
+        # 얼굴을 자른 후 결과를 출력
+        # cv2_imshow("Cropped Face", face_img)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
+
+        # 결과 저장 (선택사항)
+        output_path = 'cropped_face.jpg'
+        cv2.imwrite(output_path, face_img)
+        print(f"Face cropped and saved to {output_path}")
+    else:
+        print("No face detected in the image.")
+
+# 예시 이미지 경로
+img_path = 'your_image.jpg'
+crop_face_from_image(img_path)
+
 def analyze_face_shape(image_base64):
     # Base64 이미지를 PIL 이미지로 변환
     image_data = base64.b64decode(image_base64.split(",")[1])  # 'data:image/png;base64,...' 부분 제거 후 디코딩
     image = Image.open(BytesIO(image_data)).convert("RGB")
+
+    # 이미지 자르기   
 
     # 이미지를 모델 입력 형식으로 변환
     inputs = processor(images=image, return_tensors="pt")
@@ -311,9 +372,6 @@ def find_nearest_values(target, gender):
     # 결과 조합: 더 큰 값 2개와 더 작은 값 1개
     result = greater[:2] + smaller[:1]
     return result
-    
-
- 
 
 
 
