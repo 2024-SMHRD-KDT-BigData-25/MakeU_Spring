@@ -1,9 +1,9 @@
-const cartDiv = document.getElementById('cartDiv');
+var cartDiv = document.getElementById('cartDiv');
 cartDiv.style.display = "none"
 // console.log('trEST')
 //const cartDivBtn = document.getElementById('cartDivBtn');
 
-let pos = false;
+var pos = false;
 
 function printMdal() {
     if (pos) {

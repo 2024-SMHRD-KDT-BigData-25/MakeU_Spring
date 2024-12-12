@@ -15,7 +15,7 @@ CORS(app, resources={r"/analyze": {"origins": "http://localhost:8089"}})
 
 # 모델 및 프로세서 로드
 MODEL_NAME = "metadome/face_shape_classification"
-processor = AutoProcessor.from_pretrained(MODEL_NAME)
+processor = AutoProcessor.from_pretrained(MODEL_NAME )
 
 face_shape_model = AutoModelForImageClassification.from_pretrained(MODEL_NAME)
 personal_color_model = load_model("./model/best_model.keras")
@@ -26,10 +26,13 @@ def test():
     return 'test222'
 
 
+
 def analyze_face_shape(image_base64):
     # Base64 이미지를 PIL 이미지로 변환
     image_data = base64.b64decode(image_base64.split(",")[1])  # 'data:image/png;base64,...' 부분 제거 후 디코딩
     image = Image.open(BytesIO(image_data)).convert("RGB")
+
+    # 이미지 자르기   
 
     # 이미지를 모델 입력 형식으로 변환
     inputs = processor(images=image, return_tensors="pt")
@@ -65,41 +68,7 @@ def analyze_personal_color(image_base64):
 
     return label, confidence
 
-@app.route('/analyze', methods=['POST'])
-def analyze():
-    data = request.get_json()
-    gender = data.get('gender')
-    image = data.get('image')  # Base64 인코딩된 이미지 데이터
 
-    try:
-        # 얼굴형 분석
-        print('test1')
-        face_shape, face_confidence = analyze_face_shape(image)
-        # 퍼스널컬러 분석
-        print('test2')
-        personal_color, color_confidence = analyze_personal_color(image)
-        # 눈생김새 분석
-        print('test3')
-        yt_eye = analyze_eye(image)
-        
-        
-        # 결과 반환
-        return jsonify({
-            "faceShape": {
-                "label" : face_shape,
-                "confidence": face_confidence
-            },
-            "personalColor":{
-                "label": personal_color,
-                "confidence": color_confidence
-            },
-            "eye":{
-                "label" : yt_eye
-            }    
-        });
-    except Exception as e:
-        print(f"Error: {e}")
-        return jsonify({"error": "분석 실패"}), 500
 
 
 
@@ -185,6 +154,64 @@ for number in range(len(man_result)) :
 for number2 in range(len(woman_result)) :
     woman_list.append(woman_result[number2][1])
 
+
+
+# OpenCV로 이미지 읽기
+def process_image(image_base64):
+
+    mp_face_mesh = mp.solutions.face_mesh
+    face_mesh = mp_face_mesh.FaceMesh(min_detection_confidence=0.5, min_tracking_confidence=0.5)
+    
+    # Base64 이미지를 PIL 이미지로 변환
+    image_data = base64.b64decode(image_base64.split(",")[1])  # 'data:image/png;base64,...' 부분 제거 후 디코딩
+    #image = Image.open(BytesIO(image_data)).convert("RGB")
+    
+    np_arr = np.frombuffer(image_data, np.uint8)
+    # OpenCV 이미지로 디코딩
+    img = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+    
+    # 이미지 가져오기
+    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+    # 얼굴 랜드마크 예측
+    results = face_mesh.process(img_rgb)
+
+    # MediaPipe Face Mesh 모델 초기화
+
+
+    if results.multi_face_landmarks:
+        # 얼굴이 감지되었을 경우
+        for face_landmarks in results.multi_face_landmarks:
+            # 얼굴 윤곽을 추출 (주로 0~17번 랜드마크)
+            face_coords = []
+            face_point = [10 , 356, 152, 127]
+            for i in face_point:  # 얼굴 윤곽 (0~16번)
+                x = int(face_landmarks.landmark[i].x * img.shape[1])
+                y = int(face_landmarks.landmark[i].y * img.shape[0])
+                face_coords.append((x, y))
+
+            for point in face_coords:
+                cv2.circle(img, point, 2, (0, 255, 0), -1)  # 초록색 점   
+
+            # cv2.imshow("Eye Angle Visualization", img)
+            # cv2.waitKey(0)
+            # cv2.destroyAllWindows()            
+
+            # 얼굴 윤곽에 사각형을 그려 얼굴 영역 자르기
+            x_min = min(face_coords, key=lambda x: x[0])[0]-35
+            x_max = max(face_coords, key=lambda x: x[0])[0]+35
+            y_min = min(face_coords, key=lambda x: x[1])[1]-65
+            y_max = max(face_coords, key=lambda x: x[1])[1]+15
+
+            # 얼굴 영역 자르기
+            face_img = img[y_min:y_max, x_min:x_max]
+            
+            # cv2.imshow("Cropped Face", face_img)
+            # cv2.waitKey(0)
+            # cv2.destroyAllWindows()
+
+            return analyze_eye(face_img)
+
 # 각도 계산 함수
 def calculate_angle(pointA, pointB, pointC):
     AB = np.array([pointA[0] - pointB[0], pointA[1] - pointB[1]])
@@ -230,92 +257,81 @@ eye_landmark_sets = {
     "Left Eye": [133, 159, 33]
 }
 
-def analyze_eye(image_base64):
+def analyze_eye(face_img):
+    try:
+        with mp.solutions.face_mesh.FaceMesh(refine_landmarks=True) as face_mesh:
+            rgb_image = cv2.cvtColor(face_img, cv2.COLOR_BGR2RGB)
+            results = face_mesh.process(rgb_image)
 
-    # gender = data.get('gender')
-    gender = 'female'
+            if results.multi_face_landmarks:
+                for face_landmarks in results.multi_face_landmarks:
+                    left_eye_points = [face_landmarks.landmark[i] for i in [33, 133]]
+                    right_eye_points = [face_landmarks.landmark[i] for i in [362, 263]]
 
-    # Base64 이미지를 PIL 이미지로 변환
-    image_data = base64.b64decode(image_base64.split(",")[1])  # 'data:image/png;base64,...' 부분 제거 후 디코딩
-    #image = Image.open(BytesIO(image_data)).convert("RGB")
+                    aligned_image, left_eye_center, right_eye_center = align_face_with_landmarks(
+                        face_img, left_eye_points, right_eye_points
+                    )
+
+                    rgb_image = cv2.cvtColor(aligned_image, cv2.COLOR_BGR2RGB)
+                    results = face_mesh.process(rgb_image)
+
+                    if results.multi_face_landmarks:
+                        for face_landmarks in results.multi_face_landmarks:
+                            for eye_name, landmark_indices in eye_landmark_sets.items():
+                                points = [
+                                    (
+                                        int(face_landmarks.landmark[i].x * aligned_image.shape[1]),
+                                        int(face_landmarks.landmark[i].y * aligned_image.shape[0])
+                                    )
+                                    for i in landmark_indices
+                                ]
+                                angle = calculate_angle(points[0], points[1], points[2])
+                                print(angle)
+                                return round(angle, 2)
+        return "Eye landmarks not detected"
+    except Exception as e:
+        print(f"눈 분석 실패: {e}")
+        return "Error analyzing eye"
+   
+
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    data = request.get_json()
+    gender = data.get('gender')
+    image = data.get('image')  # Base64 인코딩된 이미지 데이터
+
+    try:
+        # 얼굴형 분석
+        print('test1')
+        face_shape, face_confidence = analyze_face_shape(image)
+        print(face_shape)
+        # 퍼스널컬러 분석
+        print('test2')
+        personal_color, color_confidence = analyze_personal_color(image)
+        # 눈생김새 분석
+        # print('test3')
+        eye_shape = process_image(image)
+        print('test3')
+        
+        
+        # 결과 반환
+        return jsonify({
+            "faceShape": {
+                "label" : face_shape,
+                "confidence" : face_confidence
+            },
+            "personalColor":{
+                "label" : personal_color,
+                "confidence" : color_confidence
+            },
+            "eyeShape": {
+            "label" : eye_shape if eye_shape else "Not Detected"
+            }
+        })
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": "분석 실패"}), 500
     
-    np_arr = np.frombuffer(image_data, np.uint8)
-    # OpenCV 이미지로 디코딩
-    image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-
-    
-    # MediaPipe 초기화
-    mp_face_mesh = mp.solutions.face_mesh
-
-        # MediaPipe FaceMesh 사용
-    with mp.solutions.face_mesh.FaceMesh(refine_landmarks=True) as face_mesh:
-            # 얼굴 랜드마크 탐지
-        rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        results = face_mesh.process(rgb_image)
-
-        if results.multi_face_landmarks:
-            for face_landmarks in results.multi_face_landmarks:
-                    # 양쪽 눈 중심 좌표 계산
-                left_eye_points = [face_landmarks.landmark[i] for i in [33, 133]]
-                right_eye_points = [face_landmarks.landmark[i] for i in [362, 263]]
-
-                    # 얼굴 정렬
-                aligned_image, left_eye_center, right_eye_center = align_face_with_landmarks(
-                    image, left_eye_points, right_eye_points
-                )
-
-                rgb_image = cv2.cvtColor(aligned_image, cv2.COLOR_BGR2RGB)
-                results = face_mesh.process(rgb_image)                
-
-                if results.multi_face_landmarks:
-                    for face_landmarks in results.multi_face_landmarks:  
-                        
-                            # 정렬된 이미지에서 랜드마크 각도 계산
-                        
-                        for eye_name, landmark_indices in eye_landmark_sets.items():
-                            points = [
-                                (
-                                    int(face_landmarks.landmark[i].x * aligned_image.shape[1]),
-                                    int(face_landmarks.landmark[i].y * aligned_image.shape[0])
-                                )
-                                for i in landmark_indices
-                            ]
-                            angle = calculate_angle(points[0], points[1], points[2])
-                            values = round(angle, 2)  # 각도를 저장
-
-                            # returnList = findNearNum(values)
-
-                            # resemble_yt = man_result[returnList[0]][0]
-                        
-                        # 결과 저장
-                        return find_nearest_values(values, gender)
-
-
-def find_nearest_values(target, gender):
-    
-    if gender == 'male':
-        selected_list = man_list
-    elif gender == 'female':
-        selected_list = woman_list
-    
-    # 리스트 값과 인덱스를 함께 저장
-    indexed_lst = [(value, idx) for idx, value in enumerate(selected_list)]
-    
-    # 리스트를 기준값과의 절대 차이로 정렬
-    indexed_lst_sorted = sorted(indexed_lst, key=lambda x: abs(x[0] - target))
-    
-    # 기준값보다 큰 값과 작은 값을 분리
-    greater = [item for item in indexed_lst_sorted if item[0] > target]
-    smaller = [item for item in indexed_lst_sorted if item[0] < target]
-    
-    # 결과 조합: 더 큰 값 2개와 더 작은 값 1개
-    result = greater[:2] + smaller[:1]
-    return result
-    
-
- 
-
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
