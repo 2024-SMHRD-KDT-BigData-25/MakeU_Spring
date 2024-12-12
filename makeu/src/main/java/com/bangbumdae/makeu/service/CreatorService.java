@@ -18,4 +18,8 @@ public class CreatorService {
     public List<Creator> getCreatorsByFaceTypeAndPersonalColor(Integer facetypeidx, Integer personalcoloridx){
         return creatorRepository.findByFacetypeidxAndPersonalcoloridx(facetypeidx, personalcoloridx);
     }
+
+    public List<Creator> getAllCreators() {
+        return creatorRepository.findAll();
+    }
 }

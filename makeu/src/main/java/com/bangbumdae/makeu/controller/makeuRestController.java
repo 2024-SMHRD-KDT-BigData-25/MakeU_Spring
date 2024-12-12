@@ -80,15 +80,15 @@ public class makeuRestController {
         shopInfoService.updateShopInfo(entity);
     }
 
-    // /matching 엔드포인트: 결과 가져오기
-    @GetMapping("/matching")
-    public ResponseEntity<List<Creator>> getAllCreators() {
-        List<Creator> creators = creatorService.getAllCreators();
-        if (creators.isEmpty()) {
-            return ResponseEntity.noContent().build(); // 204 No Content
-        }
-        return ResponseEntity.ok(creators); // 200 OK와 결과 반환
-    }
+    // // /matching 엔드포인트: 결과 가져오기
+    // @GetMapping("/matching")
+    // public ResponseEntity<List<Creator>> getAllCreators() {
+    //     List<Creator> creators = creatorService.getAllCreators();
+    //     if (creators.isEmpty()) {
+    //         return ResponseEntity.noContent().build(); // 204 No Content
+    //     }
+    //     return ResponseEntity.ok(creators); // 200 OK와 결과 반환
+    // }
 
     // /result 엔드포인트: 결과 조회
     @PostMapping("/result")
