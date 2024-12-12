@@ -134,20 +134,6 @@ public class memberController {
         return "index";
     }
 
-    @PostMapping("reservation")
-    public void addReservation(@RequestParam int shopidx, @RequestParam String reservationdatetime,
-            @RequestParam String servicetype, @RequestParam String requirement, HttpSession session) {
-        Members members = (Members) session.getAttribute("members");
-        if (members == null) {
-            System.out.println("로그인하세요");
-            return;
-        }
-
-        ShopReservation newReservation = new ShopReservation(shopidx, members.getMemid(),
-                Timestamp.valueOf(reservationdatetime + ":00"), servicetype, requirement);
-        reservationService.addReservation(newReservation);
-    }
-
     // 장바구니 추가
     @PostMapping("/shops")
     public String addShop(@RequestParam int shopIdx, HttpSession session) {

@@ -1,5 +1,6 @@
 package com.bangbumdae.makeu.controller;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,9 @@ import com.bangbumdae.makeu.model.Members;
 import com.bangbumdae.makeu.model.ShopCart;
 import com.bangbumdae.makeu.model.ShopInfo;
 import com.bangbumdae.makeu.model.ShopPortfolio;
+import com.bangbumdae.makeu.model.ShopReservation;
 import com.bangbumdae.makeu.service.CreatorService;
+import com.bangbumdae.makeu.service.ReservationService;
 import com.bangbumdae.makeu.service.ShopInfoService;
 import com.bangbumdae.makeu.service.makeuplikesService;
 import com.bangbumdae.makeu.service.portpolioService;
@@ -41,6 +44,7 @@ public class makeuRestController {
     private final shopTagsService shopTagsService;
     private final CreatorService creatorService;
     private final shopcartService shopcartService;
+    private final ReservationService reservationService;
 
     @GetMapping("/main/list")
     public List<ShopPortfolio> getPortpolios() {
@@ -103,5 +107,18 @@ public class makeuRestController {
         List<ShopInfo> cart = shopcartService.getCartShopInfo(memid);
         System.out.println(cart.size());
         return cart;
+    }
+
+    @PostMapping("reservation")
+    public String addReservation(@RequestParam int shopidx, @RequestParam String reservationdatetime, @RequestParam String servicetype, @RequestParam String requirement, HttpSession session) {
+        Members members = (Members)session.getAttribute("members");
+        if (members == null) {
+            System.out.println("로그인하세요");
+            return "error!!";
+        }
+
+        ShopReservation newReservation = new ShopReservation(shopidx, members.getMemid(), Timestamp.valueOf(reservationdatetime + ":00"), servicetype, requirement);
+        reservationService.addReservation(newReservation);
+        return members.getMemid();
     }
 }
