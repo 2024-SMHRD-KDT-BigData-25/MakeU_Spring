@@ -15,7 +15,7 @@ CORS(app, resources={r"/analyze": {"origins": "http://localhost:8089"}})
 
 # 모델 및 프로세서 로드
 MODEL_NAME = "metadome/face_shape_classification"
-processor = AutoProcessor.from_pretrained(MODEL_NAME)
+processor = AutoProcessor.from_pretrained(MODEL_NAME )
 
 face_shape_model = AutoModelForImageClassification.from_pretrained(MODEL_NAME)
 personal_color_model = load_model("./model/best_model.keras")
