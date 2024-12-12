@@ -63,18 +63,28 @@
       </div>
 
       <div class="recommendation">
-        <div th:each="c, iter : ${session.creators}" th:text="${c.creatorname}"></div>
-        
+        <div class="recommendation_form">
+          <h1 class="title">얼굴형 + 퍼스널컬러 유튜버 추천</h1>
+          <div th:each="c, iter : ${session.creators}" class="shape_color">
+            <a th:href="${c.creatorlink}" target="_blank">
+                <img th:src="@{'img/creator_profile/' + ${c.creatorname} + '.jpg'}" class="youtuber_img" alt="Creator Image" />
+            </a>
+            <div th:text="${c.creatorname}" class="youtuber_name" id="youtuber_font"></div>
+          </div>
+        </div>
+
+        <div class="recommendation_form">
+          <h1 class="title">눈 모양 유튜버 추천</h1>
+        </div>
       </div>
 
       <div class="buttons">
-        <button class="btn home">HOME</button>
+        <button class="btn home" th:onclick="|location.href='@{/}'|">HOME</button>
         <button class="btn save">SAVE</button>
       </div>
     </div>
   </div>
-  <h2>얼굴형: <span th:text="${faceShape}"></span></h2>
-  <h2>퍼스널컬러: <span th:text="${personalColor}"></span></h2>
+  
 </body>
 <script src="js/result.js"></script>
 </html>
