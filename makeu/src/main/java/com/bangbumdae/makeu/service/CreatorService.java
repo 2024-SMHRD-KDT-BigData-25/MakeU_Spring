@@ -2,6 +2,8 @@ package com.bangbumdae.makeu.service;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.bangbumdae.makeu.model.Creator;
@@ -17,5 +19,9 @@ public class CreatorService {
 
     public List<Creator> getCreatorsByFaceTypeAndPersonalColor(Integer facetypeidx, Integer personalcoloridx){
         return creatorRepository.findByFacetypeidxAndPersonalcoloridx(facetypeidx, personalcoloridx);
+    }
+
+    public List<Creator> getAllCreators() {
+        return creatorRepository.findAll();
     }
 }

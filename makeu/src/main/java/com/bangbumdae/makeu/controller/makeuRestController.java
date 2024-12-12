@@ -1,9 +1,11 @@
 package com.bangbumdae.makeu.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +27,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
@@ -83,38 +86,15 @@ public class makeuRestController {
         shopInfoService.updateShopInfo(entity);
     }
 
-    @PostMapping("/result")
-    public ResponseEntity<List<Creator>> getCreators(@RequestBody Map<String, String> request) {
-        
-        String faceShape = request.get("faceShape");
-        String personalColor = request.get("personalColor");
-
-        // Mapping faceShape와 personalColor 값을 인덱스로 변환
-        Map<String, Integer> faceShapeMap = Map.of(
-            "Heart", 1,
-            "Oval", 2,
-            "Oblong", 3,
-            "Round", 4,
-            "Square",5
-        );
-
-        Map<String, Integer> personalColorMap = Map.of(
-            "Spring", 1,
-            "Summer", 2,
-            "Autumn", 3,
-            "Winter", 4
-        );
-        
-        Integer facetypeidx = faceShapeMap.get(faceShape);
-        Integer personalcoloridx = personalColorMap.get(personalColor);
-
-        if (facetypeidx == null || personalcoloridx == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        List<Creator> creators = creatorService.getCreatorsByFaceTypeAndPersonalColor(facetypeidx, personalcoloridx);
-        return ResponseEntity.ok(creators);
-    }
+    // // /matching 엔드포인트: 결과 가져오기
+    // @GetMapping("/matching")
+    // public ResponseEntity<List<Creator>> getAllCreators() {
+    //     List<Creator> creators = creatorService.getAllCreators();
+    //     if (creators.isEmpty()) {
+    //         return ResponseEntity.noContent().build(); // 204 No Content
+    //     }
+    //     return ResponseEntity.ok(creators); // 200 OK와 결과 반환
+    // }
 
     @GetMapping("/shop-cart")
     public List<ShopInfo> getCartShopInfo(HttpSession session, Model model) {

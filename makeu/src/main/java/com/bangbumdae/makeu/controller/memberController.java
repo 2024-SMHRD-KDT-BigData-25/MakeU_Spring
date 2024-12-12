@@ -1,12 +1,16 @@
 package com.bangbumdae.makeu.controller;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,11 +21,12 @@ import com.bangbumdae.makeu.model.PersonalColor;
 import com.bangbumdae.makeu.model.ShopCart;
 import com.bangbumdae.makeu.model.ShopPortfolio;
 import com.bangbumdae.makeu.model.ShopReservation;
+import com.bangbumdae.makeu.service.shopcartService;
 import com.bangbumdae.makeu.service.ReservationService;
 import com.bangbumdae.makeu.service.makeuplikesService;
 import com.bangbumdae.makeu.service.matchingresultService;
 import com.bangbumdae.makeu.service.memberService;
-import com.bangbumdae.makeu.service.shopcartService;
+import com.bangbumdae.makeu.service.CreatorService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +39,7 @@ public class memberController {
     private final matchingresultService matchingresultService;
     private final ReservationService reservationService;
     private final shopcartService shopcartService;
+    private final CreatorService creatorService;
 
     @GetMapping("/login")
     public String loginPage() {
@@ -81,17 +87,7 @@ public class memberController {
     }
 
     @GetMapping("/result")
-    public String resultPage(HttpSession session, Model model) {
-        String faceshape = (String) session.getAttribute("faceShape");
-        float faceConfidence = (float) session.getAttribute("faceConfidence");
-        String personalcolor = (String) session.getAttribute("personalColor");
-        float colorConfidence = (float) session.getAttribute("colorConfidence");
-
-        model.addAttribute("faceShape", faceshape);
-        model.addAttribute("faceConfidence", faceConfidence);
-        model.addAttribute("personalColor", personalcolor);
-        model.addAttribute("colorConfidence", colorConfidence);
-
+    public String resultPage() {
         return "matching_result";
     }
 
@@ -185,8 +181,43 @@ public class memberController {
             return "서버 오류 발생";
         }
     }
+     // /result 엔드포인트: 결과 조회
+    @PostMapping("/result")
+    public String getCreators(@RequestBody HashMap<String, String> request, HttpSession session) {
+        String faceShape = request.get("faceShape");
+        String personalColor = request.get("personalColor");
 
-    
-    
+        // Mapping faceShape와 personalColor 값을 인덱스로 변환
+        Map<String, Integer> faceShapeMap = Map.of(
+            "Heart", 1,
+            "Oval", 2,
+            "Oblong", 3,
+            "Round", 4,
+            "Square", 5
+        );
 
+        Map<String, Integer> personalColorMap = Map.of(
+            "Spring", 1,
+            "Summer", 2,
+            "Autumn", 3,
+            "Winter", 4
+        );
+
+        // String 값을 Integer로 변환
+        int faceTypeIdx = faceShapeMap.get(faceShape);
+        int personalColorIdx = personalColorMap.get(personalColor);
+        // 서비스 메서드 호출
+        List<Creator> creators = creatorService.getCreatorsByFaceTypeAndPersonalColor(faceTypeIdx, personalColorIdx);
+
+        // 결과 처리
+        if (creators.isEmpty()) {
+            return "error"; // 204 No Content
+        }
+        for (Creator c : creators) {
+            System.out.println(c.toString());
+        }
+        session.setAttribute("creators", creators);
+
+        return "matching_result"; // 200 OK
+    }
 }
