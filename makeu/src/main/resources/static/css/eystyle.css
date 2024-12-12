@@ -499,6 +499,7 @@ body {
 .shopMain {
     display: flex;
     justify-content: center;
+    
     margin: 3% auto; /* 헤더 높이를 감안해 아래로 내림 */
     width: 90%; /* 전체 화면 너비에서 양쪽 여백 */
     height: 100%;
@@ -507,26 +508,26 @@ body {
 
 /* 각 섹션 */
 .section-center {
-    padding: 3%;
-    position: absolute;
+    position: absolute; /* fixed에서 absolute로 변경 */
     z-index: 2; /* map 위에 보이도록 설정 */
-    width: 30%; /* 가로 크기 */
-    height: 59%; /* 세로 크기 */
+    width: 25%; /* 가로 크기 */
+    height: 70vh; /* 세로 크기 */
     font-weight: bold;
     overflow-y: auto; /* 내부 스크롤 가능 */
     overflow-x: hidden;
-    top: 26.5%;
-    left: 34.7%;
+    top: 27.15%; /* 원하는 상단 위치 */
+    left: 45vw; /* section-left 옆에 위치하도록 설정 */
     background-color: white;
 }
+
 /* 배경색으로 영역 구분 */
 .section-left {
-    width: 50%; /* 가로 크기 */
-    height: 70vh; /* 세로 크기 */
-    border-radius: 5px 0 0 5px;
-    overflow-y: scroll;
+    width: 38vw; /* 고정된 가로 크기 */
+    height: 70vh; /* 고정된 세로 크기 */
+    overflow-y: scroll; /* 스크롤 활성화 */
     overflow-x: hidden;
-    background-color: white /* 투명도 추가 */
+    margin-right: 15px;
+    background-color: white;
 }
 
 .section-right {
@@ -536,8 +537,8 @@ body {
 
 /* Kakao Map 스타일 */
 #map {
-    z-index: 1; /* 낮은 우선순위 */
-    width: 90vw;
+    z-index: 1; /*낮은 우선순위*/
+    width: 70vw;
     height: 70vh;
     border-radius: 5px;
 }
