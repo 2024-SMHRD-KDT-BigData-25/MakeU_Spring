@@ -62,6 +62,7 @@
 #cartModal{
     width: 300px;
     height: 500px;
+    border-radius: 10px;
 }
 
 .shop_name{
@@ -74,6 +75,28 @@
     font-weight: bold;
     font-size: 1.0em;
     position: relative;
+    left: -20px;
+}
+
+.shop_path{
+    font-size: 0.8em;
+    position: relative;
+    left: -20px;
+}
+
+.cart_select{
+    position: relative;
     left: 10px;
 }
 
+#cart_btn{
+    background-color: #E01013;
+    color: white;
+    border: none;
+    width: 87%;
+    border-radius: 10px;
+    padding: 2% 0 2% 0;
+    position: relative;
+    top: 323px;
+    left: 35px;
+}

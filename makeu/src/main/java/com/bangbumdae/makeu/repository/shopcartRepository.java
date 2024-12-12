@@ -5,12 +5,15 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.bangbumdae.makeu.model.Members;
 import com.bangbumdae.makeu.model.ShopCart;
+import com.bangbumdae.makeu.model.ShopInfo;
 
 
 public interface shopcartRepository extends JpaRepository<ShopCart, Integer> {
     
+    
+    @Query("SELECT i FROM ShopCart c JOIN ShopInfo i on c.shopidx = i.shopidx WHERE c.memid = :memid")
+    List<ShopInfo> findByMemId(String memid);
     //특정 회원의 장바구니 목록 조회
     // @Query("SELECT i.shopname, i.shoplocation FROM shop_cart c JOIN shop_info i WHERE i.shopidx = :shopidx")
     // List<Members> findByMemberId(int shopidx);

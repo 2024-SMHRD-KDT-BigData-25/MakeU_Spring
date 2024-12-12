@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bangbumdae.makeu.model.Creator;
 import com.bangbumdae.makeu.model.Members;
+import com.bangbumdae.makeu.model.ShopCart;
 import com.bangbumdae.makeu.model.ShopInfo;
 import com.bangbumdae.makeu.model.ShopPortfolio;
 import com.bangbumdae.makeu.service.CreatorService;
@@ -17,7 +18,9 @@ import com.bangbumdae.makeu.service.ShopInfoService;
 import com.bangbumdae.makeu.service.makeuplikesService;
 import com.bangbumdae.makeu.service.portpolioService;
 import com.bangbumdae.makeu.service.shopTagsService;
+import com.bangbumdae.makeu.service.shopcartService;
 
+import org.springframework.ui.Model;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +37,7 @@ public class makeuRestController {
     private final portpolioService portpolioService;
     private final shopTagsService shopTagsService;
     private final CreatorService creatorService;
+    private final shopcartService shopcartService;
 
     @GetMapping("/main/list")
     public List<ShopPortfolio> getPortpolios() {
@@ -110,5 +114,14 @@ public class makeuRestController {
 
         List<Creator> creators = creatorService.getCreatorsByFaceTypeAndPersonalColor(facetypeidx, personalcoloridx);
         return ResponseEntity.ok(creators);
+    }
+
+    @GetMapping("/shop-cart")
+    public List<ShopInfo> getCartShopInfo(HttpSession session, Model model) {
+        Members members = (Members) session.getAttribute("members");
+        String memid = members.getMemid();
+        List<ShopInfo> cart = shopcartService.getCartShopInfo(memid);
+        System.out.println(cart.size());
+        return cart;
     }
 }
