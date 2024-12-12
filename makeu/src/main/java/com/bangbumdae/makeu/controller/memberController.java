@@ -181,7 +181,6 @@ public class memberController {
             return "서버 오류 발생";
         }
     }
-
      // /result 엔드포인트: 결과 조회
     @PostMapping("/result")
     public String getCreators(@RequestBody HashMap<String, String> request, HttpSession session) {

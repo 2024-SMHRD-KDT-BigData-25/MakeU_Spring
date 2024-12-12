@@ -29,11 +29,9 @@ def test():
 
 def analyze_face_shape(image_base64):
     # Base64 이미지를 PIL 이미지로 변환
-    image_data = base64.b64decode(image_base64.split(",")[1])  # 'data:image/png;base64,...' 부분 제거 후 디코딩
-    image = Image.open(BytesIO(image_data)).convert("RGB")
-
-    # 이미지 자르기   
-
+    # image_data = base64.b64decode(image_base64.split(",")[1])  # 'data:image/png;base64,...' 부분 제거 후 디코딩
+    # image = Image.open(BytesIO(image_data)).convert("RGB") 
+    image = image_base64
     # 이미지를 모델 입력 형식으로 변환
     inputs = processor(images=image, return_tensors="pt")
 
@@ -41,7 +39,7 @@ def analyze_face_shape(image_base64):
     outputs = face_shape_model(**inputs)
     logits = outputs.logits
     predicted_class = logits.argmax(-1).item()
-
+    print("shape")
     # 라벨과 신뢰도 추출
     label = face_shape_model.config.id2label[predicted_class]
     confidence = float(logits.softmax(-1).max().item())
@@ -50,13 +48,18 @@ def analyze_face_shape(image_base64):
 
 def analyze_personal_color(image_base64):
     # Base64 이미지를 PIL 이미지로 변환
-    image_data = base64.b64decode(image_base64.split(",")[1])
-    image = Image.open(BytesIO(image_data)).convert("RGB").resize((64, 64))  # 입력 크기 조정
+    # image_data = base64.b64decode(image_base64.split(",")[1])
+    # image = Image.open(BytesIO(image_data)).convert("RGB").resize((64, 64))  # 입력 크기 조정
+    face_img_rgb = cv2.cvtColor(image_base64, cv2.COLOR_BGR2RGB)  # BGR -> RGB 변환
+    pil_image = Image.fromarray(face_img_rgb)
 
+    image = pil_image.resize((64, 64))
+    print("이미지 리사이즈")
     # 이미지를 NumPy 배열로 변환
     image_array = np.array(image) / 255.0  # 정규화
+    print(image_array.flags)
     image_array = np.expand_dims(image_array, axis=0)  # 배치 차원 추가
-
+    print("psc")
     # 퍼스널컬러 모델 추론
     predictions = personal_color_model.predict(image_array)
     predicted_class = np.argmax(predictions)
@@ -145,16 +148,6 @@ woman_result = [['10시엔 디붕', 122.7],
  ['효진조 Hyojin Cho', 136.29],
  ['효현', 122.68]]
 
-man_list = []
-woman_list = []
-
-for number in range(len(man_result)) :
-    man_list.append(man_result[number][1])
-
-for number2 in range(len(woman_result)) :
-    woman_list.append(woman_result[number2][1])
-
-
 
 # OpenCV로 이미지 읽기
 def process_image(image_base64):
@@ -198,19 +191,15 @@ def process_image(image_base64):
             # cv2.destroyAllWindows()            
 
             # 얼굴 윤곽에 사각형을 그려 얼굴 영역 자르기
-            x_min = min(face_coords, key=lambda x: x[0])[0]-35
-            x_max = max(face_coords, key=lambda x: x[0])[0]+35
-            y_min = min(face_coords, key=lambda x: x[1])[1]-65
-            y_max = max(face_coords, key=lambda x: x[1])[1]+15
+            x_min = min(face_coords, key=lambda x: x[0])[0]-40
+            x_max = max(face_coords, key=lambda x: x[0])[0]+40
+            y_min = min(face_coords, key=lambda x: x[1])[1]-55
+            y_max = max(face_coords, key=lambda x: x[1])[1]+40
 
             # 얼굴 영역 자르기
-            face_img = img[y_min:y_max, x_min:x_max]
-            
-            # cv2.imshow("Cropped Face", face_img)
-            # cv2.waitKey(0)
-            # cv2.destroyAllWindows()
+            face_img = img[y_min:y_max, x_min:x_max]          
 
-            return analyze_eye(face_img)
+            return face_img
 
 # 각도 계산 함수
 def calculate_angle(pointA, pointB, pointC):
@@ -285,7 +274,15 @@ def analyze_eye(face_img):
                                     )
                                     for i in landmark_indices
                                 ]
+
+                                for point in points:
+                                    cv2.circle(aligned_image, point, 2, (0, 255, 0), -1)  # 초록색 점
+                                # 점을 잇는 선 시각화
+                                for i in range(len(points) - 1):
+                                    cv2.line(aligned_image, points[i], points[i + 1], (255, 0, 0), 1)  # 파란색 선
+
                                 angle = calculate_angle(points[0], points[1], points[2])
+                             
                                 print(angle)
                                 return round(angle, 2)
         return "Eye landmarks not detected"
@@ -298,7 +295,8 @@ def analyze_eye(face_img):
 def analyze():
     data = request.get_json()
     gender = data.get('gender')
-    image = data.get('image')  # Base64 인코딩된 이미지 데이터
+    image = process_image(data.get('image'))  # Base64 인코딩된 이미지 데이터
+    image2 = data.get('image')
 
     try:
         # 얼굴형 분석
@@ -310,7 +308,7 @@ def analyze():
         personal_color, color_confidence = analyze_personal_color(image)
         # 눈생김새 분석
         # print('test3')
-        eye_shape = process_image(image)
+        eye_shape = analyze_eye(image)
         print('test3')
         
         
