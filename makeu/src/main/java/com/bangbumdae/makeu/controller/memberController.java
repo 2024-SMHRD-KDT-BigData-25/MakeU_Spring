@@ -81,17 +81,7 @@ public class memberController {
     }
 
     @GetMapping("/result")
-    public String resultPage(HttpSession session, Model model) {
-        String faceshape = (String) session.getAttribute("faceShape");
-        float faceConfidence = (float) session.getAttribute("faceConfidence");
-        String personalcolor = (String) session.getAttribute("personalColor");
-        float colorConfidence = (float) session.getAttribute("colorConfidence");
-
-        model.addAttribute("faceShape", faceshape);
-        model.addAttribute("faceConfidence", faceConfidence);
-        model.addAttribute("personalColor", personalcolor);
-        model.addAttribute("colorConfidence", colorConfidence);
-
+    public String resultPage() {
         return "matching_result";
     }
 

@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
@@ -79,9 +80,19 @@ public class makeuRestController {
         shopInfoService.updateShopInfo(entity);
     }
 
+    // /matching 엔드포인트: 결과 가져오기
+    @GetMapping("/matching")
+    public ResponseEntity<List<Creator>> getAllCreators() {
+        List<Creator> creators = creatorService.getAllCreators();
+        if (creators.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        }
+        return ResponseEntity.ok(creators); // 200 OK와 결과 반환
+    }
+
+    // /result 엔드포인트: 결과 조회
     @PostMapping("/result")
     public ResponseEntity<List<Creator>> getCreators(@RequestBody Map<String, String> request) {
-        
         String faceShape = request.get("faceShape");
         String personalColor = request.get("personalColor");
 
@@ -91,7 +102,7 @@ public class makeuRestController {
             "Oval", 2,
             "Oblong", 3,
             "Round", 4,
-            "Square",5
+            "Square", 5
         );
 
         Map<String, Integer> personalColorMap = Map.of(
@@ -100,15 +111,23 @@ public class makeuRestController {
             "Autumn", 3,
             "Winter", 4
         );
-        
-        Integer facetypeidx = faceShapeMap.get(faceShape);
-        Integer personalcoloridx = personalColorMap.get(personalColor);
 
-        if (facetypeidx == null || personalcoloridx == null) {
-            return ResponseEntity.badRequest().build();
+        // String 값을 Integer로 변환
+        Integer faceTypeIdx = faceShapeMap.get(faceShape);
+        Integer personalColorIdx = personalColorMap.get(personalColor);
+
+        // 변환된 값이 null일 경우 Bad Request 반환
+        if (faceTypeIdx == null || personalColorIdx == null) {
+            return ResponseEntity.badRequest().build(); // 400 Bad Request
         }
 
-        List<Creator> creators = creatorService.getCreatorsByFaceTypeAndPersonalColor(facetypeidx, personalcoloridx);
-        return ResponseEntity.ok(creators);
+        // 서비스 메서드 호출
+        List<Creator> creators = creatorService.getCreatorsByFaceTypeAndPersonalColor(faceTypeIdx, personalColorIdx);
+
+        // 결과 처리
+        if (creators.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        }
+        return ResponseEntity.ok(creators); // 200 OK
     }
 }
