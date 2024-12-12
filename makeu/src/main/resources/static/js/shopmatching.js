@@ -64,6 +64,8 @@ function shop_info(idx) {
     $("#shop_detail_div").show();
     $("#shop_reservation_div").hide();
 
+    toggleSectionCenter(true); // 섹션 열릴 때 지도 크기 조정
+
     // 예약 버튼 클릭 시 이벤트 설정
     $("#reserv_btn").on("click", function () {
         openReservDiv(idx);
@@ -84,7 +86,7 @@ function shop_info(idx) {
             document.getElementById("shop_detail_location").textContent = shop.shoplocation;
             document.getElementById("shop_detail_tags").textContent = tags;
             document.getElementById("shop_detail_idx").textContent = idx;
-            
+
             document.getElementById("reserv_title").textContent = shop.shopname;
             document.getElementById("reserv_idx").textContent = idx;
 
@@ -138,7 +140,10 @@ function closeShopDetail() {
     document.querySelectorAll(".shop_info_table table").forEach(item => {
         item.classList.remove("selected_table");
     });
+
+    toggleSectionCenter(false); // 섹션 닫을 때 지도 크기 원래대로
 }
+
 function closeShopReserv() {
     shop_reservation_div.style.display = "none";
 }
@@ -146,6 +151,7 @@ function closeShopReserv() {
 function openReservDiv(idx) {
     $("#shop_reservation_div").show();
 }
+// 나머지 코드는 동일하게 유지
 
 var today = new Date();
 function buildCalendar() {
@@ -185,6 +191,8 @@ function buildCalendar() {
                 cell.classList.remove('date_selected');
                 cell.style.backgroundColor = ''; // 초기화
             });
+            
+
 
             // 현재 날짜 정보 가져오기
             const clickedYear = today.getFullYear();
@@ -247,15 +255,15 @@ document.querySelectorAll(".time_table div").forEach(timeSlot => {
             slot.classList.remove("time_selected");
             slot.style.backgroundColor = ""; // 기본 배경색으로 초기화
             slot.style.color = ""; // 기본 글자색으로 초기화
-            slot.style.border = ""; 
+            slot.style.border = "";
         });
 
         // 클릭된 요소에 선택 스타일 추가
         this.classList.add("time_selected");
-        this.style.backgroundColor="#e01013";
-        this.style.color="white";
-        this.style.border="none";
-        
+        this.style.backgroundColor = "#e01013";
+        this.style.color = "white";
+        this.style.border = "none";
+
         document.getElementById("time").textContent = timeSlot.textContent;
     });
 });
@@ -302,35 +310,35 @@ document.querySelectorAll(".shop_info_table table").forEach(table => {
 function makeReservation() {
     var selected_date = document.getElementById("date").textContent;
     var selected_time = document.getElementById("time").textContent;
-    var selected_service = document.getElementById("service").textContent;
+    var selected_service = document.querySelector(".service_checkbox.checked + .service_name div").textContent;
     var requirement = document.getElementById('requirement').value;
     var selected_information = document.getElementById("information").textContent;
 
-    if (selected_date =="") {
+    if (selected_date == "") {
         alert("날짜를 선택해주세요!");
         return;
     }
     else {
         // 날짜 확인 로직
     }
-    if (selected_time =="") {
+    if (selected_time == "") {
         alert("시간을 선택해주세요!");
         return;
     }
     else {
         // 예약 가능한 시간인지 확인
     }
-    if (selected_service =="") {
+    if (selected_service == "") {
         alert("서비스를 선택해주세요!");
         return;
     }
-    if (selected_information =="") {
+    if (selected_information == "") {
         alert("정보 전송 여부를 선택해주세요!");
         return;
     }
 
     // const shopname = $("#reserv_detail_title").text;
-    
+
     console.log("selected_date " + selected_date);
     console.log("selected_time " + selected_time);
     console.log("selected_service " + selected_service);
@@ -341,16 +349,50 @@ function makeReservation() {
         url: "reservation", // 쿼리 파라미터로 idx 전달
         type: "post",
         data: {
-            shopidx : $("#reserv_idx").text(),
-            reservationdatetime : selected_date + " " + selected_time,
-            servicetype : selected_service,
-            requirement : requirement
+            shopidx: $("#reserv_idx").text(),
+            reservationdatetime: selected_date + " " + selected_time,
+            servicetype: selected_service,
+            requirement: requirement
         },
-        success : function () {
+        success: function () {
             console.log("예약 완료");
         },
-        error : function() {
+        error: function () {
             alert("예약 불가!");
         }
     });
 }
+
+// 지도 크기 조정 함수
+function toggleSectionCenter(isOpen) {
+    var mapElement = document.getElementById('map');
+    var sectionCenter = document.querySelector('.section-center');
+    var sectionLeft = document.querySelector('.section-left');
+
+    if (isOpen) {
+        mapElement.style.width = '30vw'; // 지도 크기 변경
+        sectionLeft.style.width = '30vw'; 
+        sectionLeft.style.marginRight = '25%'; // section-left 옆에 공간 확보
+        sectionCenter.style.display = 'block'; // 센터 열기
+        sectionCenter.style.position = 'absolute';
+        sectionCenter.style.left = '38vw'; // section-left 옆에 위치
+    } else {
+        mapElement.style.width = '70vw'; // 원래 크기 복구
+        sectionLeft.style.width = '38vw';
+        sectionLeft.style.marginRight = '0';
+        sectionCenter.style.display = 'none'; // 센터 닫기
+        sectionLeft.style.width = '38vw'; // 원래 크기 유지
+    }
+
+    map.relayout(); // 지도 크기 변화 반영
+}
+
+
+document.getElementById('openSectionBtn').addEventListener('click', function () {
+    toggleSectionCenter(true);
+});
+
+// 예시: 섹션 닫기 버튼 클릭 이벤트
+document.getElementById('closeSectionBtn').addEventListener('click', function () {
+    toggleSectionCenter(false);
+});
