@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bangbumdae.makeu.model.Creator;
+import com.bangbumdae.makeu.model.MatchingResult;
 import com.bangbumdae.makeu.model.Members;
 import com.bangbumdae.makeu.model.ShopCart;
 import com.bangbumdae.makeu.model.ShopInfo;
@@ -18,6 +19,7 @@ import com.bangbumdae.makeu.model.ShopPortfolio;
 import com.bangbumdae.makeu.service.CreatorService;
 import com.bangbumdae.makeu.service.ShopInfoService;
 import com.bangbumdae.makeu.service.makeuplikesService;
+import com.bangbumdae.makeu.service.matchingresultService;
 import com.bangbumdae.makeu.service.portpolioService;
 import com.bangbumdae.makeu.service.shopTagsService;
 import com.bangbumdae.makeu.service.shopcartService;
@@ -41,6 +43,7 @@ public class makeuRestController {
     private final shopTagsService shopTagsService;
     private final CreatorService creatorService;
     private final shopcartService shopcartService;
+    private final matchingresultService matchingresultService;
 
     @GetMapping("/main/list")
     public List<ShopPortfolio> getPortpolios() {
@@ -103,5 +106,20 @@ public class makeuRestController {
         List<ShopInfo> cart = shopcartService.getCartShopInfo(memid);
         System.out.println(cart.size());
         return cart;
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<String> saveMatchingResult(@RequestBody MatchingResult matchingResult) {
+        try {
+            matchingresultService.saveMatchingResult(
+                matchingResult.getMemid(),
+                matchingResult.getMatched1(),
+                matchingResult.getMatched2(),
+                matchingResult.getMatched3()
+            );
+            return ResponseEntity.ok("매칭 결과가 성공적으로 저장되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("매칭 결과 저장 중 오류가 발생했습니다.");
+        }
     }
 }
