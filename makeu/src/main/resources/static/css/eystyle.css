@@ -508,10 +508,11 @@ body {
 
 /* 각 섹션 */
 .section-center {
+    padding-top: 1%; /* 상단에 추가적인 여백을 설정 */
     position: absolute; /* fixed에서 absolute로 변경 */
     z-index: 2; /* map 위에 보이도록 설정 */
     width: 25%; /* 가로 크기 */
-    height: 70vh; /* 세로 크기 */
+    height: 464.284px; /* 세로 크기 */
     font-weight: bold;
     overflow-y: auto; /* 내부 스크롤 가능 */
     overflow-x: hidden;
