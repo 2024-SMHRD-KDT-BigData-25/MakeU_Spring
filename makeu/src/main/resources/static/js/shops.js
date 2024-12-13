@@ -110,3 +110,24 @@ $(document).on('click', '#cartDivBtn', function () {
 function reserveShop(productId) {
     window.location.href = 'shop/' + shopIdx;  // 예약 페이지로 리다이렉트
 }
+
+$(document).ready(function () {
+    $(".cancel_reservation_btn").off("click").on("click", function () {
+        const reservationId = $(this).data("id");
+
+        if (confirm("정말로 예약을 취소하시겠습니까?")) {
+            $.ajax({
+                url: `cancel/${reservationId}`,
+                type: "POST",
+                success: function (response) {
+                    alert("예약이 취소되었습니다.");
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    alert("예약 취소에 실패했습니다: " + xhr.responseText);
+                },
+            });
+        }
+    });
+});
+

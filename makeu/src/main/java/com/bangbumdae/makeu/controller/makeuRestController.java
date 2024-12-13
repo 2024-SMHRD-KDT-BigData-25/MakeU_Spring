@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -139,5 +140,21 @@ public class makeuRestController {
             return ResponseEntity.status(500).body("매칭 결과 저장 중 오류가 발생했습니다.");
         }
 
+    }
+
+    @PostMapping("/cancel/{reservationId}")
+    public ResponseEntity<?> cancelReservation(@PathVariable Integer reservationId, HttpSession session) {
+        System.out.println("취소 요청 - 예약 ID: " + reservationId); // 로그 추가
+        Members member = (Members) session.getAttribute("members");
+        if (member == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+    
+        boolean isCancelled = reservationService.cancelReservation(reservationId, member.getMemid());
+        if (isCancelled) {
+            return ResponseEntity.ok("예약이 취소되었습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("예약 취소에 실패했습니다.");
+        }
     }
 }
