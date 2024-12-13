@@ -1,7 +1,7 @@
+// sessionStorage에서 데이터 가져오기
+const faceShape = sessionStorage.getItem('faceShape');
+const personalColor = sessionStorage.getItem('personalColor');
 document.addEventListener('DOMContentLoaded', () => {
-    // sessionStorage에서 데이터 가져오기
-    const faceShape = sessionStorage.getItem('faceShape');
-    const personalColor = sessionStorage.getItem('personalColor');
 
     // 얼굴형과 퍼스널 컬러 강조
     const faceShapeElements = document.querySelectorAll('.face-shape .shape img');
@@ -56,13 +56,21 @@ function saveMatchingResult() {
     $.ajax({
         url: 'save', // 요청을 보낼 URL
         type: "POST", // HTTP 메서드
+        data : {
+            faceShape : faceShape,
+            personalColor : personalColor
+        }
+        ,
         success: function (result) {
             if (result === "login_error") { // 서버에서 로그인 오류를 반환
                 alert("로그인을 해주세요!");
+                window.location.href = '/makeu/login';
             } else if (result === "save_error") { // 서버에서 저장 오류를 반환
                 alert("저장 실패!");
+                window.location.href = '/makeu/matching';
             } else if (result == "save_success"){
                 alert("저장 성공!");
+                window.location.href = '/makeu';
             }
         },
         error: function (xhr, status, error) {

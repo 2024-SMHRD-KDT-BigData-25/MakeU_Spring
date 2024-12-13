@@ -66,9 +66,3 @@
   font-weight: 400;
   font-style: normal;
 }
-
-@font-face {
-	font-family: 'SUITE';
-	font-weight: 400 900;
-	src: url('./SUITE-Variable.woff2') format('woff2-variations');
-}

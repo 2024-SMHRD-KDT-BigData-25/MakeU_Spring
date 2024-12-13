@@ -225,21 +225,17 @@ public class memberController {
         // 눈 각도 값차이가 작은 순서대로 점수 차등 부여
         int point = 20;
         for (int i = 0; i < 10; i++) {
-            System.out.println(sameGender.get(i).eye_val);
             sameGender.get(i).score += point;
             point-=2;
         }
 
         sameGender.sort((o1, o2) -> Integer.compare(o2.score, o1.score));
-        
-        for(ViewEyesCreator temp : sameGender) {
-            System.out.println(temp.toString());
-        }
         // 결과 처리
         if (sameGender.isEmpty()) {
             return "error"; // 204 No Content
         }
-        session.setAttribute("creators", sameGender);
+        
+        session.setAttribute("creators", sameGender.subList(0, 3));
 
         return "matching_result"; // 200 OK
     }

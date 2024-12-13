@@ -2,6 +2,8 @@ package com.bangbumdae.makeu.controller;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -14,10 +16,12 @@ import com.bangbumdae.makeu.model.Members;
 import com.bangbumdae.makeu.model.ShopInfo;
 import com.bangbumdae.makeu.model.ShopPortfolio;
 import com.bangbumdae.makeu.model.ShopReservation;
+import com.bangbumdae.makeu.model.ViewEyesCreator;
 import com.bangbumdae.makeu.service.ReservationService;
 import com.bangbumdae.makeu.service.ShopInfoService;
 import com.bangbumdae.makeu.service.makeuplikesService;
 import com.bangbumdae.makeu.service.matchingresultService;
+import com.bangbumdae.makeu.service.memberService;
 import com.bangbumdae.makeu.service.portpolioService;
 import com.bangbumdae.makeu.service.shopTagsService;
 import com.bangbumdae.makeu.service.shopcartService;
@@ -40,6 +44,7 @@ public class makeuRestController {
     private final shopcartService shopcartService;
     private final ReservationService reservationService;
     private final matchingresultService matchingresultService;
+    private final memberService memberService;
 
     @GetMapping("/main/list")
     public List<ShopPortfolio> getPortpolios() {
@@ -108,20 +113,40 @@ public class makeuRestController {
     }
     
     @PostMapping("/save")
-    public String saveMatchingResult(HttpSession session) {
-        List<Creator> creators = (List<Creator>) session.getAttribute("creators");
+    public String saveMatchingResult(@RequestParam String faceShape, @RequestParam String personalColor, HttpSession session) {
+        List<ViewEyesCreator> creators = (List<ViewEyesCreator>) session.getAttribute("creators");
         Members member = (Members) session.getAttribute("members");
         
         if(member == null){
             return "login_error";
         }
         
-        Integer matched1 = (creators.size() > 0) ? creators.get(0).getCreatoridx() : null;
-        Integer matched2 = (creators.size() > 1) ? creators.get(1).getCreatoridx() : null;
-        Integer matched3 = (creators.size() > 2) ? creators.get(2).getCreatoridx() : null;
+        int matched1 = (creators.size() > 0) ? creators.get(0).getCreatoridx() : null;
+        int matched2 = (creators.size() > 1) ? creators.get(1).getCreatoridx() : null;
+        int matched3 = (creators.size() > 2) ? creators.get(2).getCreatoridx() : null;
 
         // 매칭 결과 저장
         matchingresultService.saveMatchingResult(member.getMemid(), matched1, matched2, matched3);
+
+        Map<String, Integer> faceShapeMap = Map.of(
+            "Heart", 1,
+            "Oval", 2,
+            "Oblong", 3,
+            "Round", 4,
+            "Square", 5
+        );
+
+        Map<String, Integer> personalColorMap = Map.of(
+            "Spring", 1,
+            "Summer", 2,
+            "Autumn", 3,
+            "Winter", 4
+        );
+
+        //퍼컬, 얼굴형 정보 저장
+        member.setFacetypeidx(faceShapeMap.get(faceShape));
+        member.setPersonalcoloridx(personalColorMap.get(personalColor));
+        memberService.updateMember(member);
 
         return "save_success"; // 성공 처리 (예: 성공 메시지나 페이지 리다이렉션)
     }

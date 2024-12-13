@@ -322,6 +322,7 @@ video {
     color: white;
     font-size: 1vw;;
     border-radius: 10px;
+    margin: 0.5%;
 }
 
 .btn:hover {
@@ -399,6 +400,8 @@ video {
 .color img,
 .color p {
     transition: opacity 0.3s ease, filter 0.3s ease;
+    font-size: 1.2vw;
+    margin-top: 5%;
 }
 
 #loading {
@@ -437,7 +440,7 @@ video {
 .recommendation_form {
     text-align: center;
     font-family: 'Arial', sans-serif;
-    width:50%;
+    width:80%;
 }
 
 .title {
@@ -448,19 +451,24 @@ video {
 }
 
 .shape_color {
-    display: inline-block;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
     text-align: center;
     margin: 15px;
-    width: 150px; /* 카드 크기 지정 */
 }
 
 .youtuber_img {
-    width: 150px;
-    height: 150px;
+    width: 12vw;
+    height: 12vw;
     border-radius: 50%; /* 원형 이미지 */
     object-fit: cover;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out; /* 호버 시 확대 효과 추가 */
+}
+
+.youtuber_item {
+    display: grid;
+    width: 100%;
 }
 
 .youtuber_img:hover {
@@ -468,14 +476,16 @@ video {
 }
 
 .youtuber_name {
-    margin-top: 10px;
-    font-size: 16px;
-    color: white;
-    background-color: #e01013; /* 빨간색 배경 */
-    padding: 5px 10px;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#youtuber_font {
-    text-transform: capitalize; /* 이름의 첫 글자를 대문자로 표시 (필요하면 유지) */
+.youtuber_name div {
+    width: 50%;
+    font-size: 1vw;
+    margin-top: 3%;
+    padding: 1% 3%;
+    background-color: #e01013; /* 빨간색 배경 */
+    color: white;
 }

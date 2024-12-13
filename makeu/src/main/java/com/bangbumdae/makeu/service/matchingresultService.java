@@ -15,13 +15,13 @@ import lombok.RequiredArgsConstructor;
 public class matchingresultService {
     private final matchingresultRepository mrRepository;
     public Creator getMatched1(String memid) {
-        return mrRepository.findMatched1ByMemid(memid);
+        return mrRepository.findMatched1ByMemid(memid).get(0);
     }
     public Creator getMatched2(String memid) {
-        return mrRepository.findMatched2ByMemid(memid);
+        return mrRepository.findMatched2ByMemid(memid).get(0);
     }
     public Creator getMatched3(String memid) {
-        return mrRepository.findMatched3ByMemid(memid);
+        return mrRepository.findMatched3ByMemid(memid).get(0);
     }
     public void saveMatchingResult(String memid, int matched1, int matched2, int matched3) {
         MatchingResult matchingResult = new MatchingResult();
