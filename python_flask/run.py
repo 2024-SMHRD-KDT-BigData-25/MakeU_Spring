@@ -314,6 +314,7 @@ def analyze():
         
         # 결과 반환
         return jsonify({
+            "gender": gender,
             "faceShape": {
                 "label" : face_shape,
                 "confidence" : face_confidence

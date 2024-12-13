@@ -17,8 +17,8 @@ public class CreatorService {
         this.creatorRepository = creatorRepository;
     }
 
-    public List<Creator> getCreatorsByFaceTypeAndPersonalColor(Integer facetypeidx, Integer personalcoloridx){
-        return creatorRepository.findByFacetypeidxAndPersonalcoloridx(facetypeidx, personalcoloridx);
+    public List<Creator> getCreatorsByFaceTypeAndPersonalColorAndcreatorgender(Integer facetypeidx, Integer personalcoloridx, String creatorgender){
+        return creatorRepository.findByFacetypeidxAndPersonalcoloridxAndCreatorgender(facetypeidx, personalcoloridx, creatorgender);
     }
 
     public List<Creator> getAllCreators() {

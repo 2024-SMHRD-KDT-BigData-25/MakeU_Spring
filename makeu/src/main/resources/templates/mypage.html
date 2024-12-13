@@ -57,21 +57,28 @@
                     </table>
                 </td>
                 <td>
-                    <div th:if="${session.members != null}" th:each="reserv : ${reservations}" class="reservation_div">
-                        <div th:text="${#dates.format(reserv.reservationdatetime, 'yy.MM.dd')}" class="reservation_date">12.24(화)</div>
-                        <div class="reservation_shop_title">
-                            <div class="icon_div"><img class="reservation_icon1" src="img/makeup.png" alt=""></div>
-                            <span th:text="${reserv.shopname}" class="mypage_reservation_shop" style="font-weight: bold;"></span>
+                    <div class="reservation_div">
+                        <div class="reservation_div_1" th:if="${session.members != null}" th:each="reserv : ${reservations}">
+                            <div th:text="${#dates.format(reserv.reservationdatetime, 'yy.MM.dd')}"
+                                class="reservation_date">12.24(화)</div>
+                            <div class="reservation_shop_title">
+                                <div class="icon_div"><img class="reservation_icon1" src="img/makeup.png" alt=""></div>
+                                <span th:text="${reserv.shopname}" class="mypage_reservation_shop"
+                                    style="font-weight: bold;"></span>
+                            </div>
+                            <div th:text="${reserv.servicetype + ', ' + #dates.format(reserv.reservationdatetime, 'HH:mm~')}"
+                                class="reservation_service_name">스냅 사진 메이크업, 전남 오천동</div>
+                            <div class="reservation_detail_div"><button>예약 내역 보기</button>
+                            <button class="cancel_reservation_btn" th:data-id="${reserv.reservationidx}">예약 취소</button>
+                            </div>
                         </div>
-                        <div th:text="${reserv.servicetype + ', ' + #dates.format(reserv.reservationdatetime, 'HH:mm~')}"
-                        class="reservation_service_name">스냅 사진 메이크업, 전남 오천동</div>
-                        <div class="reservation_detail_div"><button>예약 내역 보기</button></div>
-                    </div>
-                    <div class="mypage_creator_warning" th:if="${session.members == null}">
-                        로그인을 해주세요!
-                    </div>
-                    <div class="mypage_creator_warning" th:if="${session.members != null && reservations.size() <= 0}">
-                        예약 내역이 없습니다.
+                        <div class="mypage_creator_warning" th:if="${session.members == null}">
+                            로그인을 해주세요!
+                        </div>
+                        <div class="mypage_creator_warning"
+                            th:if="${session.members != null && reservations.size() <= 0}">
+                            예약 내역이 없습니다.
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -140,6 +147,7 @@
             </tr>
         </table>
     </div>
+    <script src="./js/shops.js"></script>    
 </body>
 
 </html>

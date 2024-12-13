@@ -114,7 +114,6 @@ $(document).on('click', '#cartDivBtn', function () {
 //     });
 // }
 
-
 function closeShopReserv() {
     cart_reservation_div.style.display = "none";
 }
@@ -426,3 +425,4 @@ document.querySelectorAll(".shop_info_table table").forEach(table => {
         this.classList.add("selected_table");
     });
 });
+

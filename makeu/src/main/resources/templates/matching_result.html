@@ -63,18 +63,38 @@
       </div>
 
       <div class="recommendation">
-        <div th:each="c, iter : ${session.creators}" th:text="${c.creatorname}"></div>
-        
+        <div class="recommendation_form">
+          <h1 class="title">얼굴형 + 퍼스널컬러 유튜버 추천</h1>
+          <div th:if="${not #lists.isEmpty(session.creators)}" class="shape_color">
+            <div th:each="c, iter : ${session.creators}" 
+                 th:if="${iter.index < 3}"
+                 class="youtuber_item">
+                 
+                <a th:href="${c.creatorlink}" target="_blank">
+                    <!-- gender 값을 기준으로 이미지 경로 설정 -->
+                    <img th:src="@{'img/creator_profile/' + ${c.creatorgender} + '/' + ${c.creatorname} + '.jpg'}"
+                         class="youtuber_img" alt="Creator Image" />
+                </a>
+                <div th:text="${c.creatorname}" class="youtuber_name" id="youtuber_font"></div>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(session.creators)}" class="no_recommendation">
+            <p>추천할 유튜버가 없습니다.</p>
+        </div>
+        </div>
+
+        <div class="recommendation_form">
+          <h1 class="title">눈 모양 유튜버 추천</h1>
+        </div>
       </div>
 
       <div class="buttons">
-        <button class="btn home">HOME</button>
-        <button class="btn save">SAVE</button>
+        <button class="btn home" th:onclick="|location.href='@{/}'|">HOME</button>
+        <button class="btn save" onclick="saveMatchingResult()">SAVE</button>
       </div>
     </div>
   </div>
-  <h2>얼굴형: <span th:text="${faceShape}"></span></h2>
-  <h2>퍼스널컬러: <span th:text="${personalColor}"></span></h2>
+  
 </body>
 <script src="js/result.js"></script>
 </html>

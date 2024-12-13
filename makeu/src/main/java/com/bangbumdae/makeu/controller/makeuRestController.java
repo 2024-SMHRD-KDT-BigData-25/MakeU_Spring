@@ -1,9 +1,12 @@
 package com.bangbumdae.makeu.controller;
 
+import java.lang.reflect.Member;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,13 +14,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bangbumdae.makeu.model.Creator;
+import com.bangbumdae.makeu.model.MatchingResult;
 import com.bangbumdae.makeu.model.Members;
 import com.bangbumdae.makeu.model.ShopCart;
 import com.bangbumdae.makeu.model.ShopInfo;
 import com.bangbumdae.makeu.model.ShopPortfolio;
+import com.bangbumdae.makeu.model.ShopReservation;
 import com.bangbumdae.makeu.service.CreatorService;
+import com.bangbumdae.makeu.service.ReservationService;
 import com.bangbumdae.makeu.service.ShopInfoService;
 import com.bangbumdae.makeu.service.makeuplikesService;
+import com.bangbumdae.makeu.service.matchingresultService;
 import com.bangbumdae.makeu.service.portpolioService;
 import com.bangbumdae.makeu.service.shopTagsService;
 import com.bangbumdae.makeu.service.shopcartService;
@@ -41,6 +48,8 @@ public class makeuRestController {
     private final shopTagsService shopTagsService;
     private final CreatorService creatorService;
     private final shopcartService shopcartService;
+    private final ReservationService reservationService;
+    private final matchingresultService matchingresultService;
 
     @GetMapping("/main/list")
     public List<ShopPortfolio> getPortpolios() {
@@ -104,4 +113,54 @@ public class makeuRestController {
         System.out.println(cart.size());
         return cart;
     }
+
+    @PostMapping("reservation")
+    public String addReservation(@RequestParam int shopidx, @RequestParam String reservationdatetime, @RequestParam String servicetype, @RequestParam String requirement, HttpSession session) {
+        Members members = (Members)session.getAttribute("members");
+        if (members == null) {
+            System.out.println("로그인하세요");
+            return "error!!";
+        }
+
+        ShopReservation newReservation = new ShopReservation(shopidx, members.getMemid(), Timestamp.valueOf(reservationdatetime + ":00"), servicetype, requirement);
+        reservationService.addReservation(newReservation);
+        return members.getMemid();
+    }
+    
+    @PostMapping("/save")
+    public String saveMatchingResult(HttpSession session) {
+        List<Creator> creators = (List<Creator>) session.getAttribute("creators");
+        Members member = (Members) session.getAttribute("members");
+        
+        if(member == null){
+            return "login_error";
+        }
+        
+        Integer matched1 = (creators.size() > 0) ? creators.get(0).getCreatoridx() : null;
+        Integer matched2 = (creators.size() > 1) ? creators.get(1).getCreatoridx() : null;
+        Integer matched3 = (creators.size() > 2) ? creators.get(2).getCreatoridx() : null;
+
+        // 매칭 결과 저장
+        matchingresultService.saveMatchingResult(member.getMemid(), matched1, matched2, matched3);
+
+        return "save_success"; // 성공 처리 (예: 성공 메시지나 페이지 리다이렉션)
+    }
+
+    @PostMapping("/cancel/{reservationId}")
+    public ResponseEntity<?> cancelReservation(@PathVariable Integer reservationId, HttpSession session) {
+        System.out.println("취소 요청 - 예약 ID: " + reservationId); // 로그 추가
+        Members member = (Members) session.getAttribute("members");
+        if (member == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+    
+        boolean isCancelled = reservationService.cancelReservation(reservationId, member.getMemid());
+        if (isCancelled) {
+            return ResponseEntity.ok("예약이 취소되었습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("예약 취소에 실패했습니다.");
+        }
+    }
 }
+
+

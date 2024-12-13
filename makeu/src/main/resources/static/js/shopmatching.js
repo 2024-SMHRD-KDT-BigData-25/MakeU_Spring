@@ -277,7 +277,8 @@ document.querySelectorAll(".service_checkbox").forEach(checkbox => {
 
         // 현재 클릭된 체크박스에 "checked" 클래스를 추가
         this.classList.add("checked");
-        document.getElementById("service").textContent = this.id;
+        console.log(this.id.split('_')[1]);
+        document.getElementById("service").textContent = this.id.split('_')[1];
     });
 });
 
@@ -310,7 +311,7 @@ document.querySelectorAll(".shop_info_table table").forEach(table => {
 function makeReservation() {
     var selected_date = document.getElementById("date").textContent;
     var selected_time = document.getElementById("time").textContent;
-    var selected_service = document.querySelector(".service_checkbox.checked + .service_name div").textContent;
+    var selected_service = document.getElementById("service").textContent;
     var requirement = document.getElementById('requirement').value;
     var selected_information = document.getElementById("information").textContent;
 
@@ -338,24 +339,19 @@ function makeReservation() {
     }
 
     // const shopname = $("#reserv_detail_title").text;
-
-    console.log("selected_date " + selected_date);
-    console.log("selected_time " + selected_time);
-    console.log("selected_service " + selected_service);
-    console.log("requirement " + requirement);
-    console.log("selected_information " + selected_information);
-    // console.log(shopname)
+    const service_name = document.getElementById('service_name_' + selected_service).textContent;
     $.ajax({
         url: "reservation", // 쿼리 파라미터로 idx 전달
         type: "post",
         data: {
             shopidx: $("#reserv_idx").text(),
             reservationdatetime: selected_date + " " + selected_time,
-            servicetype: selected_service,
+            servicetype: service_name,
             requirement: requirement
         },
-        success: function () {
+        success: function (memid) {
             console.log("예약 완료");
+            location.href = 'mypage?memid='+ memid;
         },
         error: function () {
             alert("예약 불가!");
@@ -386,13 +382,3 @@ function toggleSectionCenter(isOpen) {
 
     map.relayout(); // 지도 크기 변화 반영
 }
-
-
-document.getElementById('openSectionBtn').addEventListener('click', function () {
-    toggleSectionCenter(true);
-});
-
-// 예시: 섹션 닫기 버튼 클릭 이벤트
-document.getElementById('closeSectionBtn').addEventListener('click', function () {
-    toggleSectionCenter(false);
-});
