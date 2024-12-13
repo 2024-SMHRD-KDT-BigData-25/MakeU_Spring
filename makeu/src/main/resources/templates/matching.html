@@ -71,7 +71,6 @@
                 .then((response) => response.json())
                 .then((data) => {
                     console.log("Python 분석 결과:", data);
-
                     // Spring 서버에 결과 전송
                     return fetch('http://localhost:8089/makeu/result', {
                         method: 'POST',
@@ -81,7 +80,8 @@
                             faceConfidence: data.faceShape.confidence,
                             personalColor: data.personalColor.label,
                             colorConfidence: data.personalColor.confidence,
-                            gender : data.gender
+                            gender : data.gender,
+                            eye : data.eyeShape.label
                         }),
                     }).then(() => data); // Spring 서버 전송 후 Python 결과 반환
                 })
@@ -101,6 +101,7 @@
                 .catch((error) => {
                     console.error("서버 요청 중 오류:", error);
                     alert("오류가 발생했습니다. 다시 시도해주세요.");
+                    window.location.href = '/makeu/matching';
                 });
         }
 

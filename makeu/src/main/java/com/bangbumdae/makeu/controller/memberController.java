@@ -1,11 +1,11 @@
 package com.bangbumdae.makeu.controller;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +21,10 @@ import com.bangbumdae.makeu.model.PersonalColor;
 import com.bangbumdae.makeu.model.ShopCart;
 import com.bangbumdae.makeu.model.ShopPortfolio;
 import com.bangbumdae.makeu.model.ShopReservation;
+import com.bangbumdae.makeu.model.ViewEyesCreator;
 import com.bangbumdae.makeu.service.shopcartService;
 import com.bangbumdae.makeu.service.ReservationService;
+import com.bangbumdae.makeu.service.ViewEyesCreatorService;
 import com.bangbumdae.makeu.service.makeuplikesService;
 import com.bangbumdae.makeu.service.matchingresultService;
 import com.bangbumdae.makeu.service.memberService;
@@ -40,6 +42,7 @@ public class memberController {
     private final ReservationService reservationService;
     private final shopcartService shopcartService;
     private final CreatorService creatorService;
+    private final ViewEyesCreatorService viewEyesCreatorService;
 
     @GetMapping("/login")
     public String loginPage() {
@@ -173,8 +176,7 @@ public class memberController {
         String faceShape = request.get("faceShape");
         String personalColor = request.get("personalColor");
         String gender = request.get("gender");
-
-        System.out.println(gender);
+        float angle = Float.parseFloat(request.get("eye"));
 
         // Mapping faceShape와 personalColor 값을 인덱스로 변환
         Map<String, Integer> faceShapeMap = Map.of(
@@ -201,18 +203,43 @@ public class memberController {
         int faceTypeIdx = faceShapeMap.get(faceShape);
         int personalColorIdx = personalColorMap.get(personalColor);
         String creatorGender = genderMap.get(gender);
-        
-        // 서비스 메서드 호출
-        List<Creator> creators = creatorService.getCreatorsByFaceTypeAndPersonalColorAndcreatorgender(faceTypeIdx, personalColorIdx, creatorGender);
 
+
+        System.out.println(gender);
+        List<ViewEyesCreator> sameGender = viewEyesCreatorService.findByCreatorgender(creatorGender);                
+        
+        // 퍼스널 컬러, 얼굴형별 점수 부여
+        for (ViewEyesCreator temp : sameGender) {
+            if (temp.getFacetypeidx() == faceTypeIdx) { 
+                temp.score += 5;
+            }
+            if (temp.getPersonalcoloridx() == personalColorIdx) {
+                temp.score += 10;
+            }
+            
+            temp.eye_val = Math.abs(temp.eye_val - angle);
+        }
+
+        sameGender.sort((o1, o2) -> Float.compare(o1.eye_val, o2.eye_val));
+
+        // 눈 각도 값차이가 작은 순서대로 점수 차등 부여
+        int point = 20;
+        for (int i = 0; i < 10; i++) {
+            System.out.println(sameGender.get(i).eye_val);
+            sameGender.get(i).score += point;
+            point-=2;
+        }
+
+        sameGender.sort((o1, o2) -> Integer.compare(o2.score, o1.score));
+        
+        for(ViewEyesCreator temp : sameGender) {
+            System.out.println(temp.toString());
+        }
         // 결과 처리
-        if (creators.isEmpty()) {
+        if (sameGender.isEmpty()) {
             return "error"; // 204 No Content
         }
-        for (Creator c : creators) {
-            System.out.println(c.toString());
-        }
-        session.setAttribute("creators", creators);
+        session.setAttribute("creators", sameGender);
 
         return "matching_result"; // 200 OK
     }
