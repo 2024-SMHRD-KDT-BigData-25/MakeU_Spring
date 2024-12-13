@@ -41,18 +41,18 @@
     <div style="display: none;" id="cart_reservation_div" class="section-center">
         <div class="shop_detail_info">
             <img style="width:6%;" src="img/back.png" alt="" onclick="closeShopReserv()">
-            <div id="reserv_title"></div>
-            <div style="display: none;" id="reserv_idx"></div>
+            <div id="cart_reserv_title"></div>
+            <div style="display: none;" id="cart_reserv_idx"></div>
         </div>
-        <div id="reserve_cal">
+        <div id="cart_reserve_cal">
             <div class="cal_title">
                 <img style="width:6%;margin-right: 1%;" src="img/calendar.png" alt="">
                 날짜 선택하기
             </div>
-            <table id="calendar" align="center">
+            <table id="cart_calendar" align="center">
                 <tr>
                     <td align="center"><label onclick="prevCalendar()"> &lt; </label></td>
-                    <td colspan="5" align="center" id="calendarTitle">yyyy년 m월</td>
+                    <td colspan="5" align="center" id="cart_calendarTitle">yyyy년 m월</td>
                     <td align="center"><label onclick="nextCalendar()">&gt;</label></td>
                 </tr>
                 <tr>
@@ -69,7 +69,7 @@
             </table>
         </div>
         <div style="display: none;" id="c_date"></div>
-        <div id="reserv_time">
+        <div id="cart_reserv_time">
             오전
             <div class="time_table">
                 <div>6:00</div>
@@ -99,7 +99,7 @@
         <table class="service_table">
             <tr>
                 <td class="check_td">
-                    <div id="service_1" class="service_checkbox"></div>
+                    <div id="cart_service_1" class="service_checkbox"></div>
                 </td>
                 <td class="service_name"><div>데일리 메이크업</div></td>
             </tr>
@@ -111,7 +111,7 @@
             </tr>
             <tr>
                 <td class="check_td">
-                    <div id="service_2" class="service_checkbox"></div>
+                    <div id="cart_service_2" class="service_checkbox"></div>
                 </td>
                 <td class="service_name"><div>면접 메이크업</div></td>
             </tr>
@@ -123,7 +123,7 @@
             </tr>
             <tr>
                 <td class="check_td">
-                    <div id="service_3" class="service_checkbox"></div>
+                    <div id="cart_service_3" class="service_checkbox"></div>
                 </td>
                 <td class="service_name"><div>증명 사진 메이크업</div></td>
             </tr>
@@ -135,7 +135,7 @@
             </tr>
             <tr>
                 <td class="check_td">
-                    <div id="service_4" class="service_checkbox"></div>
+                    <div id="cart_service_4" class="service_checkbox"></div>
                 </td>
                 <td class="service_name"><div>스냅 사진 메이크업</div></td>
             </tr>
@@ -147,7 +147,7 @@
             </tr>
             <tr>
                 <td class="check_td">
-                    <div id="service_5" class="service_checkbox"></div>
+                    <div id="cart_service_5" class="service_checkbox"></div>
                 </td>
                 <td class="service_name"><div>웨딩 메이크업</div></td>
             </tr>
@@ -158,7 +158,7 @@
                 <td class="service_desc">평생에 단 한 번! 가장 아름다운 신부가 되세요!</td>
             </tr>
         </table>
-        <div style="display: none;"  id="service"></div>
+        <div style="display: none;"  id="cart_service"></div>
         <div class="cal_title">
             <img style="width:6%;margin-right: 1%;" src="img/lightbulb.png" alt="">
             추가 요청 사항
@@ -176,22 +176,22 @@
         </div>
         <div class="reserv_warning">
             <div style="color: black;font-size: 1.2vw;">
-                Make you에서 분석한 <span id="name_span">홍길동</span>님의 얼굴 정보를 전달할까요?<br>
+                Make you에서 분석한 <span id="cart_name_span">홍길동</span>님의 얼굴 정보를 전달할까요?<br>
                 (아티스트가 메이크업 시 참고할 수 있습니다.)
             </div>
         </div>
-        <div id="info_table">
-                <div id="yes_checked" class="info_checkbox"></div>
+        <div id="cart_info_table">
+                <div id="cart_yes_checked" class="info_checkbox"></div>
                 <div>YES</div>
-                <div id="no_checked" class="info_checkbox"></div>
+                <div id="cart_no_checked" class="info_checkbox"></div>
                 <div>NO</div>
         </div>
         <div style="display: none;" id="c_information"></div>
         <div class="reserv_button_div">
-            <button id="make_reserv_btn" onclick="makeReservation()">예약하기</button>
+            <button id="cart_make_reserv_btn" onclick="makeReservation()">예약하기</button>
         </div>
     </div>
-    <script src="./js/shops.js"></script>
+    <!-- <script src="./js/shops.js"></script> -->
 </body>
 
 </html>

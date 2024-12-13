@@ -58,7 +58,8 @@
                 </td>
                 <td>
                     <div class="reservation_div">
-                        <div class="reservation_div_1" th:if="${session.members != null}" th:each="reserv : ${reservations}">
+                        <div class="reservation_div_1" th:if="${session.members != null}"
+                            th:each="reserv : ${reservations}">
                             <div th:text="${#dates.format(reserv.reservationdatetime, 'yy.MM.dd')}"
                                 class="reservation_date">12.24(화)</div>
                             <div class="reservation_shop_title">
@@ -69,7 +70,8 @@
                             <div th:text="${reserv.servicetype + ', ' + #dates.format(reserv.reservationdatetime, 'HH:mm~')}"
                                 class="reservation_service_name">스냅 사진 메이크업, 전남 오천동</div>
                             <div class="reservation_detail_div"><button>예약 내역 보기</button>
-                            <button class="cancel_reservation_btn" th:data-id="${reserv.reservationidx}">예약 취소</button>
+                                <button class="cancel_reservation_btn" th:data-id="${reserv.reservationidx}">예약
+                                    취소</button>
                             </div>
                         </div>
                         <div class="mypage_creator_warning" th:if="${session.members == null}">
@@ -147,7 +149,26 @@
             </tr>
         </table>
     </div>
-    <script src="./js/shops.js"></script>    
+    <script>
+        $(document).ready(function () {
+            $(".cancel_reservation_btn").off("click").on("click", function () {
+                const reservationId = $(this).data("id");
+                if (confirm("정말로 예약을 취소하시겠습니까?")) {
+                    $.ajax({
+                        url: `cancel/${reservationId}`,
+                        type: "POST",
+                        success: function (response) {
+                            alert("예약이 취소되었습니다.");
+                            location.reload();
+                        },
+                        error: function (xhr, status, error) {
+                            alert("예약 취소에 실패했습니다: " + xhr.responseText);
+                        },
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

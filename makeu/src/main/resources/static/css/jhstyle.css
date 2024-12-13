@@ -215,7 +215,8 @@ video {
 }
 
 .result_form {
-    padding: 5vh;
+    width: 80vw;
+    padding: 3vw;
     margin: 5% auto 5% auto;
     background-color: white;
     
@@ -275,13 +276,13 @@ video {
 }
 
 .shape img {
-    width: 150px;
-    height: 150px;
+    width: 8vw;
+    height: 8vw;
 }
 
 .color img {
-    width: 150px;
-    height: 150px;
+    width: 8vw;
+    height: 8vw;
     border-radius: 50%;
 }
 
@@ -290,10 +291,8 @@ video {
     padding: 20px;
     border-radius: 8px;
     display: flex;
-}
-
-.recommendation h3 {
-    font-size: 18px;
+    align-items: center;
+    justify-content: center;
 }
 
 .creators {
@@ -317,14 +316,12 @@ video {
 }
 
 .btn {
-    background: #e74c3c;
-    color: white;
+    padding: 1vw;
+    background-color: #e01013;
     border: none;
-    padding: 10px 20px;
-    margin: 0 10px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 16px;
+    color: white;
+    font-size: 1vw;;
+    border-radius: 10px;
 }
 
 .btn:hover {
@@ -444,7 +441,7 @@ video {
 }
 
 .title {
-    font-size: 24px;
+    font-size: 2vw;
     font-weight: bold;
     color: #333;
     margin-bottom: 20px;
@@ -474,7 +471,7 @@ video {
     margin-top: 10px;
     font-size: 16px;
     color: white;
-    background-color: #d32f2f; /* 빨간색 배경 */
+    background-color: #e01013; /* 빨간색 배경 */
     padding: 5px 10px;
     display: inline-block;
 }

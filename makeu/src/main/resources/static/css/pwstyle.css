@@ -10,11 +10,11 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-end; /* 컨테이너를 바닥에 붙임 */
-    height: 100vh;
+    height: 50vh;
     padding: 20px;
 }
 
-.form-container {
+.login_form {
     background-color: #ffffff;
     padding: 50px;
     border-radius: 10px;
@@ -26,13 +26,13 @@ body {
     height: 100%;
 }
 
-.form-container h1 {
+.login_form h1 {
     margin-bottom: 20px;
     font-size: 32px;
     color: #333;
 }
 
-.form-container input {
+.login_form input {
     max-width: 360px;
     width: 100%;
     padding: 10px;
@@ -42,7 +42,7 @@ body {
     font-size: 16px;
 }
 
-.form-container button {
+.login_form button {
     background-color: #e01013;
     color: #ffffff;
     padding: 10px 20px;
@@ -54,16 +54,29 @@ body {
     width: 100%;
 }
 
-.form-container h1 {
+.login_form h1 {
     font-family: 'NanumSquare', sans-serif;
     margin-bottom: 50px; /* 아래 간격 */
 }
 
-.form-container input {
+.login_form input {
     margin-bottom: 30px; /* 입력 칸 사이 간격 */
 }
 
-.form-container button {
+.login_form button {
     margin-top: 10px; /* 버튼 위 간격 */
 }
 
+.login_form {
+    padding: 5vh;
+    margin: 5% auto 0 auto;
+    background-color: white;
+    width: 60%;
+}
+
+.main_content {
+    background-color: #EFF2F3;
+    display: flex;
+    align-items: flex-end;
+    height: 77vh;
+}

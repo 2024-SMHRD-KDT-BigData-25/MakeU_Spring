@@ -149,15 +149,8 @@ function shop_info(idx) {
                 return;
             }
 
-            // 데이터 삽입
-            // var tags = document.getElementById("shop_tag_div_" + idx).textContent;
-            // document.getElementById("shop_detail_title").textContent = shop.shopname;
-            // document.getElementById("shop_detail_location").textContent = shop.shoplocation;
-            // document.getElementById("shop_detail_tags").textContent = tags;
-            // document.getElementById("shop_detail_idx").textContent = idx;
-
-            document.getElementById("reserv_title").textContent = shop.shopname;
-            document.getElementById("reserv_idx").textContent = idx;
+            document.getElementById("cart_reserv_title").textContent = shop.shopname;
+            document.getElementById("cart_reserv_idx").textContent = idx;
 
             $(document).on('click', '#cartDivBtn', function () {
                 shop_info(shop.shopidx);
@@ -191,8 +184,8 @@ function buildCalendar() {
     var cnt = 0;
     var today_date = new Date().getDate();
     var today_month = new Date().getMonth();
-    var calendarTable = document.getElementById("calendar");
-    var calendarTableTitle = document.getElementById("calendarTitle");
+    var calendarTable = document.getElementById("cart_calendar");
+    var calendarTableTitle = document.getElementById("cart_calendarTitle");
     calendarTableTitle.innerHTML = today.getFullYear() + "년" + (today.getMonth() + 1) + "월";
     var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
     var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
@@ -218,9 +211,9 @@ function buildCalendar() {
 
         cell.onclick = function (event) {
             // 이전 선택된 셀의 스타일 초기화
-            const selectedCells = document.querySelectorAll('.date_selected');
+            const selectedCells = document.querySelectorAll('.cart_date_selected');
             selectedCells.forEach(cell => {
-                cell.classList.remove('date_selected');
+                cell.classList.remove('cart_date_selected');
                 cell.style.backgroundColor = ''; // 초기화
             });
 
@@ -235,11 +228,11 @@ function buildCalendar() {
             const clickedYMD = `${clickedYear}-${clickedMonth}-${clickedDate}`;
 
             // 셀 강조 표시
-            event.target.classList.add('date_selected');
+            event.target.classList.add('cart_date_selected');
             event.target.style.backgroundColor = "#6666";
 
             // 선택된 날짜 표시
-            document.getElementById("date").textContent = clickedYMD;
+            document.getElementById("c_date").textContent = clickedYMD;
         }
 
         if (cnt % 7 == 1) {
@@ -253,13 +246,13 @@ function buildCalendar() {
 
 
         if (i == today_date && today.getMonth() == today_month) {
-            cell.innerHTML += "<br><span style='font-size:0.8em;' id='today_span'>오늘</span>";
+            cell.innerHTML += "<br><span style='font-size:0.8em;' id='cart_today_span'>오늘</span>";
             cell.style.color = "#E01013";
             cell.style.border = "#E01013 2px solid";
             cell.style.borderRadius = "10px";
 
         } else {
-            cell.innerHTML += "<br><span style='visibility:hidden;font-size:0.8em;' id='today_span'>오늘</span>";
+            cell.innerHTML += "<br><span style='visibility:hidden;font-size:0.8em;' id='cart_today_span'>오늘</span>";
         }
     }
 
@@ -323,7 +316,7 @@ function makeReservation() {
         url: "reservation", // 쿼리 파라미터로 idx 전달
         type: "post",
         data: {
-            shopidx: $("#reserv_idx").text(),
+            shopidx: $("#cart_reserv_idx").text(),
             reservationdatetime: selected_date + " " + selected_time,
             servicetype: selected_service,
             requirement: requirement
@@ -337,29 +330,6 @@ function makeReservation() {
     });
 }
 
-// 지도 크기 조정 함수
-function toggleSectionCenter(isOpen) {
-    var mapElement = document.getElementById('map');
-    var sectionCenter = document.querySelector('.section-center');
-    var sectionLeft = document.querySelector('.section-left');
-
-    if (isOpen) {
-        mapElement.style.width = '30vw'; // 지도 크기 변경
-        sectionLeft.style.width = '30vw';
-        sectionLeft.style.marginRight = '25%'; // section-left 옆에 공간 확보
-        sectionCenter.style.display = 'block'; // 센터 열기
-        sectionCenter.style.position = 'absolute';
-        sectionCenter.style.left = '38vw'; // section-left 옆에 위치
-    } else {
-        mapElement.style.width = '70vw'; // 원래 크기 복구
-        sectionLeft.style.width = '38vw';
-        sectionLeft.style.marginRight = '0';
-        sectionCenter.style.display = 'none'; // 센터 닫기
-        sectionLeft.style.width = '38vw'; // 원래 크기 유지
-    }
-
-    map.relayout(); // 지도 크기 변화 반영
-}
 
 function getShopIdxFromId(idx) {
     // "selected_shop_" 기준으로 분리하고, 두 번째 부분(숫자)을 반환
@@ -371,19 +341,19 @@ document.querySelectorAll(".time_table div").forEach(timeSlot => {
     timeSlot.addEventListener("click", function () {
         // 모든 time_table div의 선택 스타일 초기화
         document.querySelectorAll(".time_table div").forEach(slot => {
-            slot.classList.remove("time_selected");
+            slot.classList.remove("cart_time_selected");
             slot.style.backgroundColor = ""; // 기본 배경색으로 초기화
             slot.style.color = ""; // 기본 글자색으로 초기화
             slot.style.border = "";
         });
 
         // 클릭된 요소에 선택 스타일 추가
-        this.classList.add("time_selected");
+        this.classList.add("cart_time_selected");
         this.style.backgroundColor = "#e01013";
         this.style.color = "white";
         this.style.border = "none";
 
-        document.getElementById("time").textContent = timeSlot.textContent;
+        document.getElementById("c_time").textContent = timeSlot.textContent;
     });
 });
 

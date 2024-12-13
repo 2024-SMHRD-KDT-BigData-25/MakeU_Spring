@@ -95,7 +95,7 @@ public class memberController {
     @PostMapping("/members")
     public String addMember(Members m) {
         memberService.addMember(m);
-        return "index";
+        return "Login";
     }
 
     @GetMapping("/logout")
