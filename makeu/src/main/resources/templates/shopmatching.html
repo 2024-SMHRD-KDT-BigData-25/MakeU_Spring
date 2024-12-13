@@ -201,7 +201,7 @@
             </div>
             <div class="reserv_warning">
                 <div style="color: black;font-size: 1.2vw;">
-                    Make you에서 분석한 <span id="name_span" th:text="${session.members.memname}">홍길동</span>님의 얼굴 정보를 전달할까요?<br>
+                    Make you에서 분석한 <span th:if="${session.members!=null}" id="name_span" th:text="${session.members.memname}">홍길동</span>님의 얼굴 정보를 전달할까요?<br>
                     (아티스트가 메이크업 시 참고할 수 있습니다.)
                 </div>
             </div>
