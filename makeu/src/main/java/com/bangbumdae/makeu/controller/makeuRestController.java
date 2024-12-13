@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bangbumdae.makeu.model.Creator;
 import com.bangbumdae.makeu.model.Members;
 import com.bangbumdae.makeu.model.ShopInfo;
 import com.bangbumdae.makeu.model.ShopPortfolio;
