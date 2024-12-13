@@ -1,5 +1,6 @@
 package com.bangbumdae.makeu.controller;
 
+import java.lang.reflect.Member;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -127,19 +128,22 @@ public class makeuRestController {
     }
     
     @PostMapping("/save")
-    public ResponseEntity<String> saveMatchingResult(@RequestBody MatchingResult matchingResult) {
-        try {
-            matchingresultService.saveMatchingResult(
-                matchingResult.getMemid(),
-                matchingResult.getMatched1(),
-                matchingResult.getMatched2(),
-                matchingResult.getMatched3()
-            );
-            return ResponseEntity.ok("매칭 결과가 성공적으로 저장되었습니다.");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("매칭 결과 저장 중 오류가 발생했습니다.");
+    public String saveMatchingResult(HttpSession session) {
+        List<Creator> creators = (List<Creator>) session.getAttribute("creators");
+        Members member = (Members) session.getAttribute("members");
+        
+        if(member == null){
+            return "login_error";
         }
+        
+        Integer matched1 = (creators.size() > 0) ? creators.get(0).getCreatoridx() : null;
+        Integer matched2 = (creators.size() > 1) ? creators.get(1).getCreatoridx() : null;
+        Integer matched3 = (creators.size() > 2) ? creators.get(2).getCreatoridx() : null;
 
+        // 매칭 결과 저장
+        matchingresultService.saveMatchingResult(member.getMemid(), matched1, matched2, matched3);
+
+        return "save_success"; // 성공 처리 (예: 성공 메시지나 페이지 리다이렉션)
     }
 
     @PostMapping("/cancel/{reservationId}")
@@ -158,3 +162,5 @@ public class makeuRestController {
         }
     }
 }
+
+
