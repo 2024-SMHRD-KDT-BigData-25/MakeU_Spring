@@ -65,12 +65,22 @@
       <div class="recommendation">
         <div class="recommendation_form">
           <h1 class="title">얼굴형 + 퍼스널컬러 유튜버 추천</h1>
-          <div th:each="c, iter : ${session.creators}" class="shape_color">
-            <a th:href="${c.creatorlink}" target="_blank">
-                <img th:src="@{'img/creator_profile/' + ${c.creatorname} + '.jpg'}" class="youtuber_img" alt="Creator Image" />
-            </a>
-            <div th:text="${c.creatorname}" class="youtuber_name" id="youtuber_font"></div>
-          </div>
+          <div th:if="${not #lists.isEmpty(session.creators)}" class="shape_color">
+            <div th:each="c, iter : ${session.creators}" 
+                 th:if="${iter.index < 3}"
+                 class="youtuber_item">
+                 
+                <a th:href="${c.creatorlink}" target="_blank">
+                    <!-- gender 값을 기준으로 이미지 경로 설정 -->
+                    <img th:src="@{'img/creator_profile/' + ${c.creatorgender} + '/' + ${c.creatorname} + '.jpg'}"
+                         class="youtuber_img" alt="Creator Image" />
+                </a>
+                <div th:text="${c.creatorname}" class="youtuber_name" id="youtuber_font"></div>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(session.creators)}" class="no_recommendation">
+            <p>추천할 유튜버가 없습니다.</p>
+        </div>
         </div>
 
         <div class="recommendation_form">

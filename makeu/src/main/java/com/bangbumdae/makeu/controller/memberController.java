@@ -172,6 +172,9 @@ public class memberController {
     public String getCreators(@RequestBody HashMap<String, String> request, HttpSession session) {
         String faceShape = request.get("faceShape");
         String personalColor = request.get("personalColor");
+        String gender = request.get("gender");
+
+        System.out.println(gender);
 
         // Mapping faceShape와 personalColor 값을 인덱스로 변환
         Map<String, Integer> faceShapeMap = Map.of(
@@ -189,11 +192,18 @@ public class memberController {
             "Winter", 4
         );
 
+        Map<String, String> genderMap = Map.of(
+            "female", "F",
+            "male", "M" 
+        );
+
         // String 값을 Integer로 변환
         int faceTypeIdx = faceShapeMap.get(faceShape);
         int personalColorIdx = personalColorMap.get(personalColor);
+        String creatorGender = genderMap.get(gender);
+        
         // 서비스 메서드 호출
-        List<Creator> creators = creatorService.getCreatorsByFaceTypeAndPersonalColor(faceTypeIdx, personalColorIdx);
+        List<Creator> creators = creatorService.getCreatorsByFaceTypeAndPersonalColorAndcreatorgender(faceTypeIdx, personalColorIdx, creatorGender);
 
         // 결과 처리
         if (creators.isEmpty()) {

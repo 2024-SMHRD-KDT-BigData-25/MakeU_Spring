@@ -11,6 +11,6 @@ import com.bangbumdae.makeu.model.Creator;
     
 @Repository
 public interface CreatorRepository extends JpaRepository <Creator, Integer>{
-    List<Creator> findByFacetypeidxAndPersonalcoloridx(Integer facetypeidx, Integer personalcoloridx);
+    List<Creator> findByFacetypeidxAndPersonalcoloridxAndCreatorgender(Integer facetypeidx, Integer personalcoloridx, String creatorgender);
 }
 
