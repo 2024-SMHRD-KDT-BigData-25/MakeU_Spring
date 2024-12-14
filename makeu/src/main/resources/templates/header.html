@@ -6,17 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/eystyle.css">
+    <link rel="stylesheet" href="css/cart.css">
     <title>Make U</title>
-    
+
 </head>
 
 <body>
     <header>
         <div class="title_img" th:onclick="|location.href='@{/}'|">
             <img id="make_u_title" src="img/title.png" alt="MakeU Title">
-        </div>
-        <div id="cartDiv">
-        <!-- <div th:replace="~{shops}" ></div>  -->
         </div>
         <div class="header_menu_bar">
             <table class="header_menu_bar_table">
@@ -31,10 +29,7 @@
                         메이크업 둘러보기
                     </td>
                     <td id="header_menu_bar_empty"></td>
-                    <!-- <td th:if="${session.members == null}" th:onclick="|location.href='@{/shops}'|"
-                        class="header_menu_bar_td"> SHOPS</td> -->
-                    <td onclick="printMdal()"
-                        class="header_menu_bar_td" id="cartDivBtn"> SHOPS</td>
+                    <td onclick="printMdal()" class="header_menu_bar_td" id="cartDivBtn"> SHOPS</td>
                     <td th:if="${session.members != null}"
                         th:onclick="|location.href='@{/mypage(memid=${session.members.memid})}'|"
                         class="header_menu_bar_td">MyPage</td>
@@ -46,9 +41,24 @@
             </table>
         </div>
 
+        <div style="display: none;" id="cartModal" class="modal">
+            <div class="modal-content">
+                <div class="cart-title">장바구니
+                    <span style="font-size: inherit;" class="close-button" id="closeButton" onclick="printMdal()">&times;</span>
+                </div>
+                <div class="cart_list_table_div">
+                    <div id="cart_list_table">
+                    </div>
+                </div>
+                <div class="cart_btn_div">
+                    <div id="shop_idx" style="display: none;"></div>
+                    <button id="cart_reserv_btn">예약하기</button>
+                </div>
+            </div>
+        </div>
     </header>
-    <!-- <script src="./js/shops.js"></script> -->
-    
+    <script src="./js/header.js"></script>
+
 </body>
 
 </html>

@@ -1,6 +1,7 @@
 package com.bangbumdae.makeu.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -20,5 +21,15 @@ public class shopcartService {
 
     public List<ShopInfo> getCartShopInfo(String memid){
         return shopcartRepository.findByMemId(memid);
+    }
+    
+    public boolean deleteCart(int cartidx, String memid) {
+        Optional<ShopCart> cart = shopcartRepository.findByShopidxAndMemid(cartidx, memid);
+    
+        if (cart.isPresent()) {
+            shopcartRepository.delete(cart.get());
+            return true;
+        }
+        return false;
     }
 }

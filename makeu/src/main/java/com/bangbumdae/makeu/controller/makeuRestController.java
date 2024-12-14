@@ -165,6 +165,22 @@ public class makeuRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("예약 취소에 실패했습니다.");
         }
     }
+
+    @PostMapping("/cartDelete/{shopIdx}")
+    public ResponseEntity<?> cartDelete(@PathVariable int shopIdx, HttpSession session) {
+        System.out.println("취소 요청 - 예약 ID: " + shopIdx); // 로그 추가
+        Members member = (Members) session.getAttribute("members");
+        if (member == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+    
+        boolean isCancelled = shopcartService.deleteCart(shopIdx, member.getMemid());
+        if (isCancelled) {
+            return ResponseEntity.ok("장바구니 아이템이 삭제되었습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("장바구니 아이템 삭제에 실패했습니다.");
+        }
+    }
 }
 
 

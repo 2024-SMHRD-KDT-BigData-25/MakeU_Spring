@@ -538,7 +538,7 @@ body {
 #map {
     z-index: 1; /* 낮은 우선순위 */
     width: 90vw;
-    height: 64vw;
+    height: 46vw;
     border-radius: 5px;
 }
 

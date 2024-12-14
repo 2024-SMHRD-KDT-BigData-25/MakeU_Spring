@@ -84,8 +84,10 @@ function shop_info(idx) {
             document.getElementById("shop_detail_location").textContent = shop.shoplocation;
             document.getElementById("shop_detail_tags").textContent = tags;
 
+
             document.getElementById("reserv_title").textContent = shop.shopname;
             document.getElementById("reserv_idx").textContent = idx;
+            document.getElementById("shop_detail_idx").textContent=idx;
 
             getPortpolios(idx);
 
@@ -354,3 +356,23 @@ function makeReservation() {
         }
     });
 }
+
+// 장바구니 담기 버튼 클릭 시
+$(document).on('click', '.add-to-cart', function () {
+    const shopIdx = $("#shop_detail_idx").text();
+
+    // AJAX 요청 보내기
+    $.ajax({
+        url: 'shops',  // 서버의 API 엔드포인트
+        type: 'POST',
+        data: {
+            shopIdx: shopIdx
+        },
+        success: function () {
+            alert('장바구니에 담겼습니다!');
+        },
+        error: function (xhr, status, error) {
+            alert('장바구니에 담기 실패');
+        }
+    });
+});
