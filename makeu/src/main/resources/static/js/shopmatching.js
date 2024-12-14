@@ -382,7 +382,7 @@ function makeReservation() {
             requirement: requirement
         },
         success: function (memid) {
-            console.log("예약 완료");
+            alert("예약 완료");
             window.location.href = "mypage?memid=" + memid;
         },
         error: function () {
