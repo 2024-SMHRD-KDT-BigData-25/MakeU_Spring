@@ -512,18 +512,17 @@ body {
     position: absolute;
     z-index: 2; /* map 위에 보이도록 설정 */
     width: 30%; /* 가로 크기 */
-    height: 59%; /* 세로 크기 */
+    height: 40vw;
     font-weight: bold;
     overflow-y: auto; /* 내부 스크롤 가능 */
     overflow-x: hidden;
-    top: 26.5%;
-    left: 34.7%;
+    left: 34.9%;
     background-color: white;
 }
 /* 배경색으로 영역 구분 */
 .section-left {
     width: 50%; /* 가로 크기 */
-    height: 70vh; /* 세로 크기 */
+    height: 46vw; /* 세로 크기 */
     border-radius: 5px 0 0 5px;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -539,7 +538,7 @@ body {
 #map {
     z-index: 1; /* 낮은 우선순위 */
     width: 90vw;
-    height: 70vh;
+    height: 64vw;
     border-radius: 5px;
 }
 
