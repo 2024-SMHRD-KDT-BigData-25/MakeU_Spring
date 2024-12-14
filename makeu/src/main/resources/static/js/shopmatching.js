@@ -1,5 +1,19 @@
 var shop_info_div = document.getElementById("shop_detail_div");
 var shop_reservation_div = document.getElementById("shop_reservation_div");
+
+// URL 파라미터에서 shopidx 추출
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+const shopidx = getQueryParam('shopidx');
+if (shopidx) {
+    shop_info(shopidx);
+    openReservDiv(shopidx); // shop_info 함수 호출
+}
+
+
 var center = new kakao.maps.LatLng(34.950705, 127.487627);
 if (navigator.geolocation) {
 
@@ -87,7 +101,7 @@ function shop_info(idx) {
 
             document.getElementById("reserv_title").textContent = shop.shopname;
             document.getElementById("reserv_idx").textContent = idx;
-            document.getElementById("shop_detail_idx").textContent=idx;
+            document.getElementById("shop_detail_idx").textContent = idx;
 
             getPortpolios(idx);
 
@@ -147,6 +161,24 @@ function closeShopReserv() {
 
 function openReservDiv(idx) {
     $("#shop_reservation_div").show();
+
+    $(".date_selected").removeClass("date_selected").css({
+        backgroundColor: "",
+        color: "",
+        border: ""
+    });
+
+    $(".time_table div.time_selected").removeClass("time_selected").css({
+        backgroundColor: "",
+        color: "",
+        border: ""
+    });
+    $(".service_checkbox.checked").removeClass("checked");
+    $(".info_checkbox.checked").removeClass("checked");
+    $(".shop_info_table table.selected_table").removeClass("selected_table");
+    
+    $("#date, #time, #service, #information").text("");
+    
 }
 
 var today = new Date();
@@ -249,15 +281,15 @@ document.querySelectorAll(".time_table div").forEach(timeSlot => {
             slot.classList.remove("time_selected");
             slot.style.backgroundColor = ""; // 기본 배경색으로 초기화
             slot.style.color = ""; // 기본 글자색으로 초기화
-            slot.style.border = ""; 
+            slot.style.border = "";
         });
 
         // 클릭된 요소에 선택 스타일 추가
         this.classList.add("time_selected");
-        this.style.backgroundColor="#e01013";
-        this.style.color="white";
-        this.style.border="none";
-        
+        this.style.backgroundColor = "#e01013";
+        this.style.color = "white";
+        this.style.border = "none";
+
         document.getElementById("time").textContent = timeSlot.textContent;
     });
 });
@@ -271,7 +303,8 @@ document.querySelectorAll(".service_checkbox").forEach(checkbox => {
 
         // 현재 클릭된 체크박스에 "checked" 클래스를 추가
         this.classList.add("checked");
-        document.getElementById("service").textContent = this.id;
+        const serviceidx = this.id.split("_")[1];
+        document.getElementById("service").textContent = $(`#service_name_${serviceidx}`).text();
     });
 });
 
@@ -308,31 +341,31 @@ function makeReservation() {
     var requirement = document.getElementById('requirement').value;
     var selected_information = document.getElementById("information").textContent;
 
-    if (selected_date =="") {
+    if (selected_date == "") {
         alert("날짜를 선택해주세요!");
         return;
     }
     else {
         // 날짜 확인 로직
     }
-    if (selected_time =="") {
+    if (selected_time == "") {
         alert("시간을 선택해주세요!");
         return;
     }
     else {
         // 예약 가능한 시간인지 확인
     }
-    if (selected_service =="") {
+    if (selected_service == "") {
         alert("서비스를 선택해주세요!");
         return;
     }
-    if (selected_information =="") {
+    if (selected_information == "") {
         alert("정보 전송 여부를 선택해주세요!");
         return;
     }
 
     // const shopname = $("#reserv_detail_title").text;
-    
+
     console.log("selected_date " + selected_date);
     console.log("selected_time " + selected_time);
     console.log("selected_service " + selected_service);
@@ -343,15 +376,16 @@ function makeReservation() {
         url: "reservation", // 쿼리 파라미터로 idx 전달
         type: "post",
         data: {
-            shopidx : $("#reserv_idx").text(),
-            reservationdatetime : selected_date + " " + selected_time,
-            servicetype : selected_service,
-            requirement : requirement
+            shopidx: $("#reserv_idx").text(),
+            reservationdatetime: selected_date + " " + selected_time,
+            servicetype: selected_service,
+            requirement: requirement
         },
-        success : function () {
+        success: function (memid) {
             console.log("예약 완료");
+            window.location.href = "mypage?memid=" + memid;
         },
-        error : function() {
+        error: function () {
             alert("예약 불가!");
         }
     });

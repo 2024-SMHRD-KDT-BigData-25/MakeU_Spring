@@ -64,3 +64,24 @@ function delete_cart(idx) {
         });
     }
 }
+
+$("#cart_reserv_btn").on("click", function () {
+    var selected_toggled_id;
+    document.querySelectorAll(".cart_select").forEach(item => {
+        if (item.checked) {
+            selected_toggled_id = item.id;
+        }
+    });
+
+    if (selected_toggled_id == null) {
+        alert("예약할 샵을 선택해주세요!")
+        return;
+    }
+
+    const select_shopidx = selected_toggled_id.split("_")[2];
+    console.log(select_shopidx);
+    if (confirm("예약 창으로 이동합니다")) {
+        window.location.href = `shopmatching?shopidx=${select_shopidx}`;
+    }
+});
+
