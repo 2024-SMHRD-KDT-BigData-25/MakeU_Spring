@@ -8,6 +8,8 @@ function getQueryParam(param) {
 }
 
 const shopidx = getQueryParam('shopidx');
+const cartidx = getQueryParam('cartidx');
+
 if (shopidx) {
     shop_info(shopidx);
     openReservDiv(shopidx); // shop_info 함수 호출
@@ -379,7 +381,8 @@ function makeReservation() {
             shopidx: $("#reserv_idx").text(),
             reservationdatetime: selected_date + " " + selected_time,
             servicetype: selected_service,
-            requirement: requirement
+            requirement: requirement,
+            cartidx : cartidx
         },
         success: function (memid) {
             alert("예약 완료");

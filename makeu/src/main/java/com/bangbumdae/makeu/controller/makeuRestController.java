@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bangbumdae.makeu.model.CartShop;
 import com.bangbumdae.makeu.model.Members;
 import com.bangbumdae.makeu.model.ShopInfo;
 import com.bangbumdae.makeu.model.ShopPortfolio;
 import com.bangbumdae.makeu.model.ShopReservation;
 import com.bangbumdae.makeu.model.ViewEyesCreator;
+import com.bangbumdae.makeu.service.CartShopService;
 import com.bangbumdae.makeu.service.ReservationService;
 import com.bangbumdae.makeu.service.ShopInfoService;
 import com.bangbumdae.makeu.service.makeuplikesService;
@@ -41,6 +43,7 @@ public class makeuRestController {
     private final portpolioService portpolioService;
     private final shopTagsService shopTagsService;
     private final shopcartService shopcartService;
+    private final CartShopService cartShopService;
     private final ReservationService reservationService;
     private final matchingresultService matchingresultService;
     private final memberService memberService;
@@ -90,16 +93,16 @@ public class makeuRestController {
     }
 
     @GetMapping("/shop-cart")
-    public List<ShopInfo> getCartShopInfo(HttpSession session, Model model) {
+    public List<CartShop> getCartShopInfo(HttpSession session, Model model) {
         Members members = (Members) session.getAttribute("members");
         String memid = members.getMemid();
-        List<ShopInfo> cart = shopcartService.getCartShopInfo(memid);
+        List<CartShop> cart = cartShopService.findCartShopsByMemid(memid);
         System.out.println(cart.size());
         return cart;
     }
 
     @PostMapping("reservation")
-    public String addReservation(@RequestParam int shopidx, @RequestParam String reservationdatetime, @RequestParam String servicetype, @RequestParam String requirement, HttpSession session) {
+    public String addReservation(@RequestParam int shopidx, @RequestParam String reservationdatetime, @RequestParam String servicetype, @RequestParam String requirement, @RequestParam(required = false) Integer cartidx,HttpSession session) {
         Members members = (Members)session.getAttribute("members");
         if (members == null) {
             System.out.println("로그인하세요");
@@ -108,6 +111,10 @@ public class makeuRestController {
 
         ShopReservation newReservation = new ShopReservation(shopidx, members.getMemid(), Timestamp.valueOf(reservationdatetime + ":00"), servicetype, requirement);
         reservationService.addReservation(newReservation);
+
+        if (cartidx != null) {
+            shopcartService.deleteCart(cartidx, members.getMemid());
+        }
         return members.getMemid();
     }
     
@@ -166,15 +173,15 @@ public class makeuRestController {
         }
     }
 
-    @PostMapping("/cartDelete/{shopIdx}")
-    public ResponseEntity<?> cartDelete(@PathVariable int shopIdx, HttpSession session) {
-        System.out.println("취소 요청 - 예약 ID: " + shopIdx); // 로그 추가
+    @PostMapping("/cartDelete/{cartIdx}")
+    public ResponseEntity<?> cartDelete(@PathVariable int cartIdx, HttpSession session) {
+        System.out.println("취소 요청 - 예약 ID: " + cartIdx); // 로그 추가
         Members member = (Members) session.getAttribute("members");
         if (member == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
         }
     
-        boolean isCancelled = shopcartService.deleteCart(shopIdx, member.getMemid());
+        boolean isCancelled = shopcartService.deleteCart(cartIdx, member.getMemid());
         if (isCancelled) {
             return ResponseEntity.ok("장바구니 아이템이 삭제되었습니다.");
         } else {

@@ -18,8 +18,9 @@ function printMdal() {
                 cartTable.innerHTML = "";
                 cart.forEach((c) => {
                     var addHTML = `<div class="cart_items_wrap">
+                                        <div style="display:none" id="cart_item_${c.cartidx}"></div>
                                         <div class="cart-list">
-                                            <input id="selected_shop_${c.shopidx}" class="cart_select" type="radio" name="gender" value="샵이름">
+                                            <input id="selected_shop_${c.shopidx}_${c.cartidx}" class="cart_select" type="radio" name="gender" value="샵이름">
                                         </div>
                                         <div id="shop_info_img" class="shop_info_img">
                                             <div class="cart_shops_img_div">
@@ -30,7 +31,7 @@ function printMdal() {
                                             <span class="shop_name">${c.shopname}</span>
                                             <span class="shop_loca">${c.shoplocation}</span>
                                         </div>
-                                         <div class="cart-delete" onclick="delete_cart(${c.shopidx})">
+                                         <div class="cart-delete" onclick="delete_cart(${c.cartidx})">
                                          &times;
                                          </div>
                                     </div>`;
@@ -79,9 +80,10 @@ $("#cart_reserv_btn").on("click", function () {
     }
 
     const select_shopidx = selected_toggled_id.split("_")[2];
+    const cartidx = selected_toggled_id.split("_")[3];
     console.log(select_shopidx);
     if (confirm("예약 창으로 이동합니다")) {
-        window.location.href = `shopmatching?shopidx=${select_shopidx}`;
+        window.location.href = `shopmatching?shopidx=${select_shopidx}&cartidx=${cartidx}`;
     }
 });
 

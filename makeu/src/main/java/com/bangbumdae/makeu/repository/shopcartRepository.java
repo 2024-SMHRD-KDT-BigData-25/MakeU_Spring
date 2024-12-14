@@ -15,6 +15,6 @@ public interface shopcartRepository extends JpaRepository<ShopCart, Integer> {
     
     @Query("SELECT i FROM ShopCart c JOIN ShopInfo i on c.shopidx = i.shopidx WHERE c.memid = :memid")
     List<ShopInfo> findByMemId(String memid);
-    Optional<ShopCart> findByShopidxAndMemid(int shopidx, String memid);
+    Optional<ShopCart> findByCartidxAndMemid(int cartidx, String memid);
     
 }

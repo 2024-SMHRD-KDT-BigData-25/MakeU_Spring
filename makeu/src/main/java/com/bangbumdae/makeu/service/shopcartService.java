@@ -24,7 +24,7 @@ public class shopcartService {
     }
     
     public boolean deleteCart(int cartidx, String memid) {
-        Optional<ShopCart> cart = shopcartRepository.findByShopidxAndMemid(cartidx, memid);
+        Optional<ShopCart> cart = shopcartRepository.findByCartidxAndMemid(cartidx, memid);
     
         if (cart.isPresent()) {
             shopcartRepository.delete(cart.get());
