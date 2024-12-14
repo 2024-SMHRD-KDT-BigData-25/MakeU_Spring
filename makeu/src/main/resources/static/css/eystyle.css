@@ -508,27 +508,26 @@ body {
 
 /* 각 섹션 */
 .section-center {
-    padding-top: 1%; /* 상단에 추가적인 여백을 설정 */
-    position: absolute; /* fixed에서 absolute로 변경 */
+    padding: 3%;
+    position: absolute;
     z-index: 2; /* map 위에 보이도록 설정 */
-    width: 25%; /* 가로 크기 */
-    height: 464.284px; /* 세로 크기 */
+    width: 30%; /* 가로 크기 */
+    height: 59%; /* 세로 크기 */
     font-weight: bold;
     overflow-y: auto; /* 내부 스크롤 가능 */
     overflow-x: hidden;
-    top: 27.15%; /* 원하는 상단 위치 */
-    left: 45vw; /* section-left 옆에 위치하도록 설정 */
+    top: 26.5%;
+    left: 34.7%;
     background-color: white;
 }
-
 /* 배경색으로 영역 구분 */
 .section-left {
-    width: 38vw; /* 고정된 가로 크기 */
-    height: 70vh; /* 고정된 세로 크기 */
-    overflow-y: scroll; /* 스크롤 활성화 */
+    width: 50%; /* 가로 크기 */
+    height: 70vh; /* 세로 크기 */
+    border-radius: 5px 0 0 5px;
+    overflow-y: scroll;
     overflow-x: hidden;
-    margin-right: 15px;
-    background-color: white;
+    background-color: white /* 투명도 추가 */
 }
 
 .section-right {
@@ -538,8 +537,8 @@ body {
 
 /* Kakao Map 스타일 */
 #map {
-    z-index: 1; /*낮은 우선순위*/
-    width: 70vw;
+    z-index: 1; /* 낮은 우선순위 */
+    width: 90vw;
     height: 70vh;
     border-radius: 5px;
 }
@@ -827,10 +826,6 @@ body {
 }
 #info_table div {
     font-size: 1.3vw;
-}
-
-.reservation_detail_table {
-    height: 30vh;
 }
 .icon_div {
     background-color: #D9D9D9;
