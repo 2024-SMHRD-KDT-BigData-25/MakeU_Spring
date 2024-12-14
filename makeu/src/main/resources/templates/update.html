@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/eystyle.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>update</title>
 </head>
 
@@ -16,23 +17,23 @@
             <form action="update" method="post" onsubmit="return validateForm()">
                 <table class="login_form_table">
                     <tr>
-                        <td class="login_title nanum-gothic-regular" colspan="2">Update
+                        <td class="login_title" colspan="2">Update
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input class="readonly" type="text" placeholder="아이디를 입력해주세요" name="memid" id="memId" th:value="${session.members.memid}"
+                            <input class="readonly" type="text" placeholder="아이디를 입력해주세요" name="memid" id="memid" th:value="${session.members.memid}"
                                 readonly><br>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input type="password" placeholder="비밀번호를 입력해주세요" name="mempw" id="memPw"><br>
+                            <input type="password" placeholder="비밀번호를 입력해주세요" name="mempw" id="mempw"><br>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input type="password" placeholder="비밀번호 확인" name="pw_confirm" id="pw_confirm"><br>
+                            <input type="password" placeholder="비밀번호 확인" name="pwconfirm" id="pwconfirm"><br>
                         </td>
                     </tr>
                     <tr>
@@ -42,17 +43,18 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input type="text" placeholder="이름을 입력해주세요" name="memname" id="memName" th:value="${session.members.memname}"><br>
+                            <input type="text" placeholder="이름을 입력해주세요" name="memname" id="memname" th:value="${session.members.memname}"><br>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input type="text" placeholder="닉네임을 입력해주세요" name="memnickname" id="memNickname" th:value="${session.members.memnickname}"><br>
+                            <input type="text" placeholder="닉네임을 입력해주세요" name="memnickname" id="memnickname" th:value="${session.members.memnickname}"><br>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">
-                            <button id="login_btn">Submit</button>
+                        <td class="login_btn_td" colspan="2">
+                            <button class="login_form_btn">정보 수정</button>
+                            <div class="login_form_btn" onclick="deleteMember()">회원 탈퇴</div>
                         </td>
                     </tr>
                 </table>

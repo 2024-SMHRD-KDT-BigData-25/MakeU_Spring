@@ -1,6 +1,8 @@
 package com.bangbumdae.makeu.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.bangbumdae.makeu.model.FaceType;
@@ -23,6 +25,14 @@ public class memberService {
         return memberRepository.findByMemidAndMempw(memid, memPw);
     }
 
+    public Members findMemberByMemid(String memid) {
+        Optional<Members> m = memberRepository.findById(memid);
+        if (m.isPresent()) {
+            return m.get();
+        }
+        return null;
+    }
+
     @Transactional
     public Members updateMember(Members updatedMember) {
        return memberRepository.save(updatedMember); // 기존 Primary Key가 존재하면 업데이트 처리
@@ -42,4 +52,7 @@ public class memberService {
         return members.get(0); // 첫 번째 결과 반환
     }
     
+    public void quitMember(Members m) {
+        memberRepository.delete(m);
+    }
 }

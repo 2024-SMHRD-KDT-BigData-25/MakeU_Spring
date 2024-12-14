@@ -8,7 +8,7 @@ body {
 
 * {
     font-size: 1vw;
-    font-family: "SUITE-Regular";
+    font-family: "SUITE";
     font-weight: 100;
 }
 
@@ -40,14 +40,15 @@ body {
     background-color: #EFF2F3;
     display: flex;
     align-items: flex-end;
-    height: 77vh;
+    height: 80vh;
 }
 
 .login_title {
     font-size: 3em;
     text-align: center;
-    height: 15vh;
-    padding: 3vh;
+    height: 10vh;
+    padding: 2vh;
+    font-weight: bold;
 }
 
 .login_form {
@@ -109,7 +110,20 @@ body {
     border-radius: 10px;
     padding: 2% 0 2% 0;
 }
+.login_btn_td {
+    display: flex;
+    justify-content: center;
+}
 
+.login_form_btn {
+    background-color: #E01013;
+    color: white;
+    border: none;
+    width: 40%;
+    margin: auto;
+    border-radius: 10px;
+    padding: 2% 0 2% 0;
+}
 .login_more {
     padding: 3% 5% 3% 5%;
     width: 50%;
@@ -387,6 +401,7 @@ body {
 #mypage_table td {
     text-align: center;
     font-size: 1.2em;
+    padding: 1vh;
 }
 
 #mypage_table_tr1, #mypage_table_tr2 {
@@ -462,7 +477,6 @@ body {
     background-color: #F7F7F7;
     height: 95%;
     border-radius: 10px;
-    margin: 1%;
     padding: 3%;
     overflow-y: auto;
 }
@@ -885,4 +899,17 @@ body {
     background-color: rgba(255, 255, 255, 0.624);
     padding: 3%;
     border-radius: 10px;
+}
+
+.member_info_td {
+    display: flex;
+    align-items: baseline;
+}
+
+.member_info_td img:hover {
+    transform: scale(1.2);
+}
+
+.member_info_td div {
+    width: 25%;
 }

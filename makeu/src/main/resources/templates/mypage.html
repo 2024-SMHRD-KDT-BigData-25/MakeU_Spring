@@ -19,9 +19,12 @@
     <div class="mypage_container">
         <table id="mypage_table">
             <tr id="mypage_table_tr1">
-                <td>
-                    <span th:if="${session.members != nul}" id="member_name"
-                        th:text="${session.members.memname}"></span>님
+                <td class="member_info_td">
+                    <div>
+                        <span th:if="${session.members != nul}" id="member_name"
+                            th:text="${session.members.memname}"></span>님
+                        </div>
+                        <img style="width: 5%;" src="img/pencil.png" onclick="location.href='update'">
                 </td>
                 <td>
                     메이크업 샵 예약 내역

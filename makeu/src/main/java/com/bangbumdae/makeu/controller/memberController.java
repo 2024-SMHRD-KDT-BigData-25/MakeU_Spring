@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +28,6 @@ import com.bangbumdae.makeu.service.ViewEyesCreatorService;
 import com.bangbumdae.makeu.service.makeuplikesService;
 import com.bangbumdae.makeu.service.matchingresultService;
 import com.bangbumdae.makeu.service.memberService;
-import com.bangbumdae.makeu.service.CreatorService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,6 @@ public class memberController {
     private final matchingresultService matchingresultService;
     private final ReservationService reservationService;
     private final shopcartService shopcartService;
-    private final CreatorService creatorService;
     private final ViewEyesCreatorService viewEyesCreatorService;
 
     @GetMapping("/login")
@@ -63,10 +63,13 @@ public class memberController {
         // memId 파라미터 값 출력
         List<ShopPortfolio> liked = makeuplikesService.getAllLikedPortpolios(memid);
         model.addAttribute("liked", liked);
+        
         Creator[] mathcedCreators = new Creator[3];
-        mathcedCreators[0] = matchingresultService.getMatched1(memid);
-        mathcedCreators[1] = matchingresultService.getMatched2(memid);
-        mathcedCreators[2] = matchingresultService.getMatched3(memid);
+        if (matchingresultService.checkResult(memid)) { 
+            mathcedCreators[0] = matchingresultService.getMatched1(memid);
+            mathcedCreators[1] = matchingresultService.getMatched2(memid);
+            mathcedCreators[2] = matchingresultService.getMatched3(memid);
+        }
 
         model.addAttribute("matched", mathcedCreators);
 
@@ -128,11 +131,17 @@ public class memberController {
     @PostMapping("/update")
     public String updateMember(Members m, HttpSession session) {
         System.out.println(m.toString());
-        Members result = memberService.updateMember(m);
+        Members target = memberService.findMemberByMemid(m.getMemid());
+        if (target != null) {
+            target.setMemname(m.getMemname());
+            target.setMemnickname(m.getMemnickname());
+            target.setMempw(m.getMempw());
+        }
+        Members result = memberService.updateMember(target);
         if (result != null) {
             session.setAttribute("members", result);
         }
-        return "index";
+        return "redirect:mypage?memid="+m.getMemid();
     }
 
     // 장바구니 추가
@@ -236,5 +245,18 @@ public class memberController {
         session.setAttribute("creators", sameGender.subList(0, 3));
 
         return "matching_result"; // 200 OK
+    }
+
+    @GetMapping("/quit")
+    public String quitMember(HttpSession session) {
+        Members member = (Members) session.getAttribute("members");
+        if (member == null) {
+            return "redirect:";
+        }
+
+        memberService.quitMember(member);
+        session.invalidate();
+
+        return "redirect:";
     }
 }

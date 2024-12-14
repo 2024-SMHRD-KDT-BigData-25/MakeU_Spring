@@ -1,6 +1,7 @@
 package com.bangbumdae.makeu.service;
 
 import java.sql.Timestamp;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,11 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class matchingresultService {
     private final matchingresultRepository mrRepository;
+    public boolean checkResult(String memid) {
+        if (mrRepository.getCountBymemid(memid) > 0)
+            return true;    
+        return false;
+    }
     public Creator getMatched1(String memid) {
         return mrRepository.findMatched1ByMemid(memid).get(0);
     }

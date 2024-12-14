@@ -1,11 +1,9 @@
-
-
 function validateForm() {
-	const mem_id = document.getElementById('mem_id').value.trim()
-	const mem_pw = document.getElementById('mem_pw').value.trim()
-	const pw_confirm = document.getElementById('pw_confirm').value.trim()
-	const mem_name = document.getElementById('mem_name').value.trim()
-	const mem_nickname = document.getElementById('mem_nickname').value.trim()
+	const mem_id = document.getElementById('memid').value.trim()
+	const mem_pw = document.getElementById('mempw').value.trim()
+	const pw_confirm = document.getElementById('pwconfirm').value.trim()
+	const mem_name = document.getElementById('memname').value.trim()
+	const mem_nickname = document.getElementById('memnickname').value.trim()
 	// 작성된 값 가져오기 
 	if (mem_id === "") {
 		alert("아이디를 입력해주세요")
@@ -60,3 +58,9 @@ pw_confirm.addEventListener('input', function () {
 		errorMessage.textContent = '비밀번호가 일치합니다!';
 	}
 });
+
+function deleteMember() {
+	if (confirm("정말 탈퇴하시겠습니까?")) {
+        window.location.href = 'quit';
+    }
+}
