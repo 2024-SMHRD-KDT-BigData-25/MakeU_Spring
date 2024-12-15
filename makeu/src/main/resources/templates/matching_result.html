@@ -64,7 +64,7 @@
 
       <div class="recommendation">
         <div class="recommendation_form">
-          <h1 class="title">얼굴형 + 퍼스널컬러 유튜버 추천</h1>
+          <h1 class="title">뷰티 크리에이터 추천</h1>
           <div th:if="${not #lists.isEmpty(session.creators)}" class="shape_color">
             <div th:each="c, iter : ${session.creators}" th:if="${iter.index < 3}" class="youtuber_item">
 
