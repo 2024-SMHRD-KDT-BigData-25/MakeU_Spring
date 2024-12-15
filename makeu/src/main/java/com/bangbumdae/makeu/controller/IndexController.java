@@ -7,10 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.bangbumdae.makeu.model.Members;
+import com.bangbumdae.makeu.model.PortpolioTags;
 import com.bangbumdae.makeu.model.ShopInfo;
-import com.bangbumdae.makeu.model.ShopPortfolio;
 import com.bangbumdae.makeu.service.makeuplikesService;
-import com.bangbumdae.makeu.service.portpolioService;
+import com.bangbumdae.makeu.service.PortpolioTagsService;
 import com.bangbumdae.makeu.service.ShopInfoService;
 import com.bangbumdae.makeu.service.shopTagsService;
 
@@ -21,10 +21,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
-    private final portpolioService pService;
     private final makeuplikesService makeuplikesService;
     private final ShopInfoService shopInfoService;
     private final shopTagsService shopTagsService;
+    private final PortpolioTagsService portpolioTagsService;
     @GetMapping("/shopmatching")
     public String shopmatchingPage(Model model, HttpSession session) {
         List<ShopInfo> slist;
@@ -57,7 +57,7 @@ public class IndexController {
     
     @GetMapping("/")
     public String mainPage(Model model, HttpSession session) {
-        List<ShopPortfolio> list = pService.getPortfolios();
+        List<PortpolioTags> list = portpolioTagsService.getPortpolioTags();
         model.addAttribute("portpolios", list);
         Members m = (Members)session.getAttribute("members");
         if (m != null) {

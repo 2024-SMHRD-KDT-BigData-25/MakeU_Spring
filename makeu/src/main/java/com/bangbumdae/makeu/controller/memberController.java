@@ -144,19 +144,6 @@ public class memberController {
         return "redirect:mypage?memid="+m.getMemid();
     }
 
-    // 장바구니 추가
-    @PostMapping("/shops")
-    public String addShop(@RequestParam int shopIdx, HttpSession session) {
-        Members mem = (Members) session.getAttribute("members");
-        if (mem == null) {
-            System.out.println("로그인을 해주세요");
-            return "redirect:/";
-        }
-
-        shopcartService.addShop(new ShopCart(mem.getMemid(), shopIdx));
-        return "index";
-    }
-
     @GetMapping("/find-password")
     public String findPasswordPage() {
         return "find_password";

@@ -53,3 +53,11 @@ function hoverFunction(idx) {
         },
     });
 }
+
+// 페이지 상단으로 이동하는 함수
+function scrollToTop() {
+    window.scrollTo({
+        top: 0, // 상단으로 이동
+        behavior: 'smooth' // 부드럽게 이동
+    });
+}

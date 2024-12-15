@@ -409,7 +409,7 @@ $(document).on('click', '.add-to-cart', function () {
             alert('장바구니에 담겼습니다!');
         },
         error: function (xhr, status, error) {
-            alert('장바구니에 담기 실패');
+            alert(xhr.responseText);
         }
     });
 });

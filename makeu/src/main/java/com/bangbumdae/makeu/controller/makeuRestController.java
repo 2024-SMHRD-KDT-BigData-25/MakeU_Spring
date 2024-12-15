@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bangbumdae.makeu.model.CartShop;
 import com.bangbumdae.makeu.model.Members;
+import com.bangbumdae.makeu.model.ShopCart;
 import com.bangbumdae.makeu.model.ShopInfo;
 import com.bangbumdae.makeu.model.ShopPortfolio;
 import com.bangbumdae.makeu.model.ShopReservation;
@@ -187,6 +188,20 @@ public class makeuRestController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("장바구니 아이템 삭제에 실패했습니다.");
         }
+    }
+
+
+    // 장바구니 추가
+    @PostMapping("/shops")
+    public ResponseEntity<?> addShop(@RequestParam int shopIdx, HttpSession session) {
+        Members mem = (Members) session.getAttribute("members");
+        if (mem == null) {
+            System.out.println("로그인을 해주세요");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+
+        shopcartService.addShop(new ShopCart(mem.getMemid(), shopIdx));
+        return ResponseEntity.ok("장바구니 아이템이 추가되었습니다.");
     }
 }
 
